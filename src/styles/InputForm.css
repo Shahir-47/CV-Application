@@ -1,0 +1,11 @@
+.accordion-content form div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	gap: 1rem;
+}
+
+.accordion-content form div label {
+	text-wrap: nowrap;
+}

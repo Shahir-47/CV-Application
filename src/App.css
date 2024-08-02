@@ -1,0 +1,12 @@
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+}
+
+.main-page {
+	display: grid;
+	grid-template-columns: min-content 1fr 2fr;
+	grid-gap: 1rem;
+}
