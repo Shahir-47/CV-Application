@@ -164,6 +164,22 @@ function InputForm() {
 		setWorkExperienceDetails(updatedDetails);
 	};
 
+	const handleAddEducation = (data) => {
+		const newEntry = {
+			title: data.universityName,
+			content: { ...data },
+		};
+		setEducationDetails([...educationDetails, newEntry]);
+	};
+
+	const handleAddWorkExperience = (data) => {
+		const newEntry = {
+			title: data.position,
+			content: { ...data },
+		};
+		setWorkExperienceDetails([...workExperienceDetails, newEntry]);
+	};
+
 	return (
 		<div>
 			<Accordion
@@ -186,6 +202,7 @@ function InputForm() {
 					items={educationItems}
 					onSave={handleSaveEducationDetails}
 					data={educationDetails}
+					onAdd={handleAddEducation}
 				/>
 			</Accordion>
 			<Accordion
@@ -197,6 +214,7 @@ function InputForm() {
 					items={workExperienceItems}
 					onSave={handleSaveWorkExperienceDetails}
 					data={workExperienceDetails}
+					onAdd={handleAddWorkExperience}
 				/>
 			</Accordion>
 		</div>
