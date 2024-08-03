@@ -1,4 +1,3 @@
-// InputForm.jsx
 import { useState } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
@@ -158,13 +157,32 @@ const educationItems = {
 
 function InputForm() {
 	const [activeAccordionIndex, setActiveAccordionIndex] = useState(-1);
-	const [personalDetails, setPersonalDetails] = useState({});
-	const [educationDetails, setEducationDetails] = useState(educationItems.data);
-	const [workExperienceDetails, setWorkExperienceDetails] = useState(
-		workExperienceItems.data
-	);
-	const [projectDetails, setProjectDetails] = useState(projectItems.data);
-	const [customSections, setCustomSections] = useState([]);
+	const [sections, setSections] = useState([
+		{
+			title: "Personal Details",
+			data: null,
+			form: personalDetailForm,
+			type: "Personal",
+		},
+		{
+			title: "Education",
+			data: educationItems.data,
+			form: educationForm,
+			type: "Education",
+		},
+		{
+			title: "Work Experience",
+			data: workExperienceItems.data,
+			form: workExperienceForm,
+			type: "Work Experience",
+		},
+		{
+			title: "Projects",
+			data: projectItems.data,
+			form: projectForm,
+			type: "Project",
+		},
+	]);
 	const [isAddingSection, setIsAddingSection] = useState(false);
 	const [newSectionName, setNewSectionName] = useState("");
 	const [newSectionType, setNewSectionType] = useState("Education");
@@ -175,84 +193,57 @@ function InputForm() {
 		setActiveAccordionIndex((prevIndex) => (prevIndex === index ? -1 : index));
 	};
 
-	const handleSavePersonalDetails = (data) => {
-		setPersonalDetails(data);
+	const handleSaveDetails = (index, itemIndex, data) => {
+		const updatedSections = [...sections];
+		const section = updatedSections[index];
+
+		// Update the data within the section
+		if (section.type === "Personal") {
+			section.data = data;
+		} else {
+			section.data[itemIndex] = {
+				...section.data[itemIndex],
+				title:
+					data[
+						section.type === "Education"
+							? "universityName"
+							: section.type === "Work Experience"
+							? "position"
+							: "projectName"
+					], // Update title based on section type
+				content: { ...data },
+			};
+		}
+
+		setSections(updatedSections);
 	};
 
-	const handleSaveEducationDetails = (index, data) => {
-		const updatedDetails = [...educationDetails];
-		updatedDetails[index] = {
-			...updatedDetails[index],
-			title: data.universityName, // Update title
-			content: { ...data },
-		};
-		setEducationDetails(updatedDetails);
-	};
+	const handleAddEntry = (index, data) => {
+		const updatedSections = [...sections];
+		const section = updatedSections[index];
 
-	const handleSaveWorkExperienceDetails = (index, data) => {
-		const updatedDetails = [...workExperienceDetails];
-		updatedDetails[index] = {
-			...updatedDetails[index],
-			title: data.position, // Update title
-			content: { ...data },
-		};
-		setWorkExperienceDetails(updatedDetails);
-	};
-
-	const handleSaveProjectDetails = (index, data) => {
-		const updatedDetails = [...projectDetails];
-		updatedDetails[index] = {
-			...updatedDetails[index],
-			title: data.projectName, // Update title
-			content: { ...data },
-		};
-		setProjectDetails(updatedDetails);
-	};
-
-	const handleAddEducation = (data) => {
 		const newEntry = {
-			title: data.universityName,
+			title:
+				data[
+					section.type === "Education"
+						? "universityName"
+						: section.type === "Work Experience"
+						? "position"
+						: "projectName"
+				],
 			content: { ...data },
 		};
-		setEducationDetails([...educationDetails, newEntry]);
-		setActiveAccordionIndex(-1); // Close accordion after adding
+
+		section.data.push(newEntry);
+		setSections(updatedSections);
 	};
 
-	const handleAddWorkExperience = (data) => {
-		const newEntry = {
-			title: data.position,
-			content: { ...data },
-		};
-		setWorkExperienceDetails([...workExperienceDetails, newEntry]);
-		setActiveAccordionIndex(-1); // Close accordion after adding
-	};
-
-	const handleAddProject = (data) => {
-		const newEntry = {
-			title: data.projectName,
-			content: { ...data },
-		};
-		setProjectDetails([...projectDetails, newEntry]);
-		setActiveAccordionIndex(-1); // Close accordion after adding
-	};
-
-	const handleCancel = () => {
-		setActiveAccordionIndex(-1);
-	};
-
-	const handleDeleteEducation = (index) => {
-		const updatedDetails = educationDetails.filter((_, i) => i !== index);
-		setEducationDetails(updatedDetails);
-	};
-
-	const handleDeleteWorkExperience = (index) => {
-		const updatedDetails = workExperienceDetails.filter((_, i) => i !== index);
-		setWorkExperienceDetails(updatedDetails);
-	};
-
-	const handleDeleteProject = (index) => {
-		const updatedDetails = projectDetails.filter((_, i) => i !== index);
-		setProjectDetails(updatedDetails);
+	const handleDeleteEntry = (sectionIndex, itemIndex) => {
+		const updatedSections = [...sections];
+		updatedSections[sectionIndex].data = updatedSections[
+			sectionIndex
+		].data.filter((_, i) => i !== itemIndex);
+		setSections(updatedSections);
 	};
 
 	const handleAddSection = () => {
@@ -268,7 +259,7 @@ function InputForm() {
 
 	const handleSaveNewSection = () => {
 		const newSection = {
-			name: newSectionName,
+			title: newSectionName,
 			type: newSectionType,
 			data: [],
 			form:
@@ -278,123 +269,105 @@ function InputForm() {
 					? workExperienceForm
 					: projectForm,
 		};
-		setCustomSections([...customSections, newSection]);
+		setSections([...sections, newSection]);
 		handleCancelAddSection(); // Reset form and close
 	};
 
-	const handleSaveCustomDetails = (sectionIndex, itemIndex, data) => {
-		const updatedSections = [...customSections];
-		updatedSections[sectionIndex].data[itemIndex] = {
-			...updatedSections[sectionIndex].data[itemIndex],
-			title:
-				data[
-					updatedSections[sectionIndex].type === "Education"
-						? "universityName"
-						: updatedSections[sectionIndex].type === "Work Experience"
-						? "position"
-						: "projectName"
-				], // Update title based on section type
-			content: { ...data },
-		};
-		setCustomSections(updatedSections);
+	const handleDeleteSection = (index) => {
+		const updatedSections = sections.filter((_, i) => i !== index);
+		setSections(updatedSections);
+		setActiveAccordionIndex(-1); // Collapse active accordion after deleting
 	};
 
-	const handleAddCustomEntry = (sectionIndex, data) => {
-		const newEntry = {
-			title:
-				data[
-					customSections[sectionIndex].type === "Education"
-						? "universityName"
-						: customSections[sectionIndex].type === "Work Experience"
-						? "position"
-						: "projectName"
-				],
-			content: { ...data },
-		};
-		const updatedSections = [...customSections];
-		updatedSections[sectionIndex].data.push(newEntry);
-		setCustomSections(updatedSections);
-	};
+	const handleMoveSection = (index, direction) => {
+		const updatedSections = [...sections];
+		const sectionToMove = updatedSections[index];
 
-	const handleDeleteCustomEntry = (sectionIndex, itemIndex) => {
-		const updatedSections = [...customSections];
-		updatedSections[sectionIndex].data = updatedSections[
-			sectionIndex
-		].data.filter((_, i) => i !== itemIndex);
-		setCustomSections(updatedSections);
+		// Move section up or down
+		if (direction === "up" && index > 0) {
+			updatedSections.splice(index, 1);
+			updatedSections.splice(index - 1, 0, sectionToMove);
+			if (activeAccordionIndex === index) {
+				setActiveAccordionIndex(index - 1); // Keep the accordion open
+			}
+		} else if (direction === "down" && index < updatedSections.length - 1) {
+			updatedSections.splice(index, 1);
+			updatedSections.splice(index + 1, 0, sectionToMove);
+			if (activeAccordionIndex === index) {
+				setActiveAccordionIndex(index + 1); // Keep the accordion open
+			}
+		}
+
+		// Ensure the accordion stays open
+		if (direction === "up" && activeAccordionIndex === index) {
+			setActiveAccordionIndex(index - 1);
+		} else if (direction === "down" && activeAccordionIndex === index) {
+			setActiveAccordionIndex(index + 1);
+		} else {
+			// Re-find the accordion by its unique identifier or title
+			const openSection = updatedSections.findIndex(
+				(section) => section.title === sections[activeAccordionIndex].title
+			);
+			setActiveAccordionIndex(openSection);
+		}
+
+		setSections(updatedSections);
 	};
 
 	return (
 		<div>
-			<Accordion
-				title="Personal Details"
-				isActive={activeAccordionIndex === 0}
-				onClick={() => handleAccordionClick(0)}
-			>
-				<Form
-					form={personalDetailForm}
-					initialValues={personalDetails}
-					onSave={handleSavePersonalDetails}
-					onCancel={handleCancel}
-				/>
-			</Accordion>
-			<Accordion
-				title="Education"
-				isActive={activeAccordionIndex === 1}
-				onClick={() => handleAccordionClick(1)}
-			>
-				<List
-					items={educationItems}
-					onSave={handleSaveEducationDetails}
-					data={educationDetails}
-					onAdd={handleAddEducation}
-					onDelete={handleDeleteEducation}
-				/>
-			</Accordion>
-			<Accordion
-				title="Work Experience"
-				isActive={activeAccordionIndex === 2}
-				onClick={() => handleAccordionClick(2)}
-			>
-				<List
-					items={workExperienceItems}
-					onSave={handleSaveWorkExperienceDetails}
-					data={workExperienceDetails}
-					onAdd={handleAddWorkExperience}
-					onDelete={handleDeleteWorkExperience}
-				/>
-			</Accordion>
-			<Accordion
-				title="Projects"
-				isActive={activeAccordionIndex === 3}
-				onClick={() => handleAccordionClick(3)}
-			>
-				<List
-					items={projectItems}
-					onSave={handleSaveProjectDetails}
-					data={projectDetails}
-					onAdd={handleAddProject}
-					onDelete={handleDeleteProject}
-				/>
-			</Accordion>
-			{customSections.map((section, sectionIndex) => (
+			{sections.map((section, index) => (
 				<Accordion
-					key={sectionIndex + 4} // Offset to avoid conflicts with existing indexes
-					title={section.name}
-					isActive={activeAccordionIndex === sectionIndex + 4}
-					onClick={() => handleAccordionClick(sectionIndex + 4)}
+					key={index}
+					title={section.title}
+					isActive={activeAccordionIndex === index}
+					onClick={() => handleAccordionClick(index)}
+					controls={
+						<div className="section-controls">
+							<button
+								type="button"
+								onClick={() => handleMoveSection(index, "up")}
+								className="move-up-button"
+								disabled={index === 0} // Disable if at the top
+							>
+								Up
+							</button>
+							<button
+								type="button"
+								onClick={() => handleMoveSection(index, "down")}
+								className="move-down-button"
+								disabled={index === sections.length - 1} // Disable if at the bottom
+							>
+								Down
+							</button>
+							<button
+								type="button"
+								onClick={() => handleDeleteSection(index)}
+								className="delete-section-button"
+							>
+								Delete
+							</button>
+						</div>
+					}
 				>
-					<List
-						items={{ form: section.form }}
-						onSave={(itemIndex, data) =>
-							handleSaveCustomDetails(sectionIndex, itemIndex, data)
-						}
-						data={section.data}
-						onAdd={(data) => handleAddCustomEntry(sectionIndex, data)}
-						onDelete={(itemIndex) =>
-							handleDeleteCustomEntry(sectionIndex, itemIndex)
-						}
-					/>
+					{section.type === "Personal" ? (
+						<Form
+							form={section.form}
+							initialValues={section.data || {}}
+							onSave={(data) => handleSaveDetails(index, null, data)}
+							onCancel={handleCancelAddSection}
+						/>
+					) : (
+						<List
+							items={{ form: section.form }}
+							onSave={(itemIndex, data) =>
+								handleSaveDetails(index, itemIndex, data)
+							}
+							data={section.data}
+							onAdd={(data) => handleAddEntry(index, data)}
+							onDelete={(itemIndex) => handleDeleteEntry(index, itemIndex)}
+						/>
+					)}
 				</Accordion>
 			))}
 			<button type="button" onClick={handleAddSection}>
