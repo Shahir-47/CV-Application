@@ -186,6 +186,16 @@ function InputForm() {
 		setActiveAccordionIndex(-1);
 	};
 
+	const handleDeleteEducation = (index) => {
+		const updatedDetails = educationDetails.filter((_, i) => i !== index);
+		setEducationDetails(updatedDetails);
+	};
+
+	const handleDeleteWorkExperience = (index) => {
+		const updatedDetails = workExperienceDetails.filter((_, i) => i !== index);
+		setWorkExperienceDetails(updatedDetails);
+	};
+
 	return (
 		<div>
 			<Accordion
@@ -210,6 +220,7 @@ function InputForm() {
 					onSave={handleSaveEducationDetails}
 					data={educationDetails}
 					onAdd={handleAddEducation}
+					onDelete={handleDeleteEducation}
 				/>
 			</Accordion>
 			<Accordion
@@ -222,6 +233,7 @@ function InputForm() {
 					onSave={handleSaveWorkExperienceDetails}
 					data={workExperienceDetails}
 					onAdd={handleAddWorkExperience}
+					onDelete={handleDeleteWorkExperience}
 				/>
 			</Accordion>
 		</div>

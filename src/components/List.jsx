@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Form from "./Form";
 
-function List({ items, onSave, data, onAdd }) {
+function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
 	const [isAdding, setIsAdding] = useState(false);
 
@@ -31,6 +31,10 @@ function List({ items, onSave, data, onAdd }) {
 		setActiveIndex(-1);
 	};
 
+	const handleDelete = (index) => {
+		onDelete(index); // Call the onDelete prop with the index to delete the item
+	};
+
 	return (
 		<div>
 			{data.map((item, index) => (
@@ -38,8 +42,15 @@ function List({ items, onSave, data, onAdd }) {
 					key={index}
 					className={`item ${activeIndex === index ? "active" : ""}`}
 				>
-					<div className="item-header" onClick={() => handleItemClick(index)}>
-						<h2>{item.title}</h2>
+					<div className="item-header">
+						<h2 onClick={() => handleItemClick(index)}>{item.title}</h2>
+						<button
+							type="button"
+							className="delete-button"
+							onClick={() => handleDelete(index)}
+						>
+							Delete
+						</button>
 					</div>
 					{activeIndex === index && (
 						<div className="item-content">

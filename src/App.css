@@ -7,6 +7,6 @@
 
 .main-page {
 	display: grid;
-	grid-template-columns: min-content 1fr 2fr;
+	/* grid-template-columns: min-content 1fr 2fr; */
 	grid-gap: 1rem;
 }
