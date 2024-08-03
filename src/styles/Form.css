@@ -18,6 +18,10 @@
 	align-self: flex-start;
 }
 
+#save-btn:disabled {
+	cursor: not-allowed;
+}
+
 .accordion-content form div.form-actions {
 	justify-content: space-evenly;
 }

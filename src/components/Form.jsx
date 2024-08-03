@@ -47,12 +47,23 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	const handleClear = () => {
 		// Reset formData to initial empty values
 		const clearedData = form.fields.reduce((acc, field) => {
-			acc[field.name] = ""; // Set each field to empty string
+			acc[field.name] = ""; // Set each field to an empty string
 			return acc;
 		}, {});
 
 		setFormData(clearedData);
 		setDescriptions([]); // Clear all descriptions
+	};
+
+	const isFormEmpty = () => {
+		// Check if all fields are empty and there are no descriptions
+		const areFieldsEmpty = form.fields.every(
+			(field) => !formData[field.name] || formData[field.name].trim() === ""
+		);
+		const areDescriptionsEmpty = descriptions.every(
+			(description) => description.trim() === ""
+		);
+		return areFieldsEmpty && areDescriptionsEmpty;
 	};
 
 	return (
@@ -91,7 +102,12 @@ function Form({ form, initialValues, onSave, onCancel }) {
 				</div>
 			</div>
 			<div className="form-actions">
-				<button type="button" onClick={handleSave}>
+				<button
+					id="save-btn"
+					type="button"
+					onClick={handleSave}
+					disabled={isFormEmpty()}
+				>
 					Save
 				</button>
 				{onCancel && (
