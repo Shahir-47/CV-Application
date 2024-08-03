@@ -6,8 +6,8 @@ export const workExperienceForm = {
 		{ label: "Company Name", type: "text", name: "companyName" },
 		{ label: "Position", type: "text", name: "position" },
 		{ label: "Location", type: "text", name: "location" },
-		{ label: "Start Date", type: "date", name: "startDate" },
-		{ label: "End Date", type: "date", name: "endDate" },
+		{ label: "Start Date", type: "month", name: "startDate" },
+		{ label: "End Date", type: "month", name: "endDate" },
 	],
 };
 
@@ -16,6 +16,190 @@ export const projectForm = {
 	fields: [
 		{ label: "Project Name", type: "text", name: "projectName" },
 		{ label: "Link", type: "url", name: "projectUrl" },
+	],
+};
+
+export const achievementsForm = {
+	id: "achievements-details",
+	fields: [
+		{ label: "Achievement", type: "text", name: "achievement" },
+		{ label: "Date", type: "month", name: "date" },
+	],
+};
+
+export const achievementsItems = {
+	form: achievementsForm,
+	data: [
+		{
+			title: "Achievement 1",
+			content: {
+				achievement: "Achievement 1",
+				date: "2021-06",
+			},
+		},
+		{
+			title: "Achievement 2",
+			content: {
+				achievement: "Achievement 2",
+				date: "2020-12",
+			},
+		},
+	],
+};
+
+export const certificationsForm = {
+	id: "certifications-details",
+	fields: [
+		{ label: "Certification", type: "text", name: "certification" },
+		{ label: "Date", type: "month", name: "date" },
+		{ label: "Link", type: "url", name: "certificationLink" },
+	],
+};
+
+export const certificationsItems = {
+	form: certificationsForm,
+	data: [
+		{
+			title: "Certification 1",
+			content: {
+				certification: "Certification 1",
+				date: "2021-06",
+				certificationLink: "https://certification1.com",
+			},
+		},
+		{
+			title: "Certification 2",
+			content: {
+				certification: "Certification 2",
+				date: "2020-12",
+				certificationLink: "https://certification2.com",
+			},
+		},
+	],
+};
+
+export const skillsForm = {
+	id: "skills-details",
+	fields: [{ label: "Skill", type: "text", name: "skill" }],
+};
+
+export const skillsItems = {
+	form: skillsForm,
+	data: [
+		{
+			title: "Skill 1",
+			content: {
+				skill: "Skill 1",
+			},
+		},
+		{
+			title: "Skill 2",
+			content: {
+				skill: "Skill 2",
+			},
+		},
+	],
+};
+
+export const languagesForm = {
+	id: "languages-details",
+	fields: [
+		{ label: "Language", type: "text", name: "language" },
+		{ label: "Proficiency", type: "text", name: "proficiency" },
+	],
+};
+
+export const languagesItems = {
+	form: languagesForm,
+	data: [
+		{
+			title: "Language 1",
+			content: { language: "Language 1", proficiency: "Proficient" },
+		},
+		{
+			title: "Language 2",
+			content: { language: "Language 2", proficiency: "Intermediate" },
+		},
+	],
+};
+
+export const hobbiesForm = {
+	id: "hobbies-details",
+	fields: [{ label: "Hobby", type: "text", name: "hobby" }],
+};
+
+export const hobbiesItems = {
+	form: hobbiesForm,
+	data: [
+		{
+			title: "Hobby 1",
+			content: {
+				hobby: "Hobby 1",
+			},
+		},
+		{
+			title: "Hobby 2",
+			content: {
+				hobby: "Hobby 2",
+			},
+		},
+	],
+};
+
+export const interestsForm = {
+	id: "interests-details",
+	fields: [{ label: "Interest", type: "text", name: "interest" }],
+};
+
+export const interestsItems = {
+	form: interestsForm,
+	data: [
+		{
+			title: "Interest 1",
+			content: {
+				interest: "Interest 1",
+			},
+		},
+		{
+			title: "Interest 2",
+			content: {
+				interest: "Interest 2",
+			},
+		},
+	],
+};
+
+export const otherForm = {
+	id: "other-details",
+	fields: [
+		{ label: "Title", type: "text", name: "title" },
+		{ label: "Date", type: "month", name: "date" },
+		{ label: "Location", type: "text", name: "location" },
+		{ label: "Link", type: "url", name: "link" },
+	],
+};
+
+export const otherItems = {
+	form: otherForm,
+	data: [
+		{
+			title: "Other 1",
+			content: {
+				title: "Other 1",
+				date: "2021-06",
+				location: "Location 1",
+				link: "https://other1.com",
+			},
+		},
+		{
+			title: "Other 2",
+			content: {
+				title: "Other 2",
+				date: "2020-12",
+				location: "Location 2",
+				link: "https://other2.com",
+			},
+		},
 	],
 };
 
@@ -175,5 +359,47 @@ export const sectionsData = [
 		data: projectItems.data,
 		form: projectForm,
 		type: "Project",
+	},
+	{
+		title: "Achievements",
+		data: achievementsItems.data,
+		form: achievementsForm,
+		type: "Achievement",
+	},
+	{
+		title: "Certifications",
+		data: certificationsItems.data,
+		form: certificationsForm,
+		type: "Certification",
+	},
+	{
+		title: "Skills",
+		data: skillsItems.data,
+		form: skillsForm,
+		type: "Skill",
+	},
+	{
+		title: "Languages",
+		data: languagesItems.data,
+		form: languagesForm,
+		type: "Language",
+	},
+	{
+		title: "Hobbies",
+		data: hobbiesItems.data,
+		form: hobbiesForm,
+		type: "Hobby",
+	},
+	{
+		title: "Interests",
+		data: interestsItems.data,
+		form: interestsForm,
+		type: "Interest",
+	},
+	{
+		title: "Other",
+		data: otherItems.data,
+		form: otherForm,
+		type: "Other",
 	},
 ];

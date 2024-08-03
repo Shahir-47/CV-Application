@@ -7,6 +7,13 @@ import {
 	educationForm,
 	workExperienceForm,
 	projectForm,
+	achievementsForm,
+	certificationsForm,
+	skillsForm,
+	languagesForm,
+	hobbiesForm,
+	interestsForm,
+	otherForm,
 } from "../data.js"; // Import sectionsData and other forms
 import "../styles/InputForm.css";
 
@@ -16,6 +23,19 @@ function InputForm() {
 	const [isAddingSection, setIsAddingSection] = useState(false);
 	const [newSectionName, setNewSectionName] = useState("");
 	const [newSectionType, setNewSectionType] = useState("Education");
+
+	const formTypes = {
+		Education: educationForm,
+		"Work Experience": workExperienceForm,
+		Project: projectForm,
+		Achievement: achievementsForm,
+		Certification: certificationsForm,
+		Skill: skillsForm,
+		Language: languagesForm,
+		Hobby: hobbiesForm,
+		Interest: interestsForm,
+		Other: otherForm,
+	};
 
 	const handleAccordionClick = (index) => {
 		// Collapse the "Add New Section" form whenever an accordion is clicked
@@ -39,7 +59,21 @@ function InputForm() {
 							? "universityName"
 							: section.type === "Work Experience"
 							? "position"
-							: "projectName"
+							: section.type === "Project"
+							? "projectName"
+							: section.type === "Achievement"
+							? "achievement"
+							: section.type === "Certification"
+							? "certification"
+							: section.type === "Skill"
+							? "skill"
+							: section.type === "Language"
+							? "language"
+							: section.type === "Hobby"
+							? "hobby"
+							: section.type === "Interest"
+							? "interest"
+							: "title" // Handle the "Other" form
 					], // Update title based on section type
 				content: { ...data },
 			};
@@ -59,7 +93,21 @@ function InputForm() {
 						? "universityName"
 						: section.type === "Work Experience"
 						? "position"
-						: "projectName"
+						: section.type === "Project"
+						? "projectName"
+						: section.type === "Achievement"
+						? "achievement"
+						: section.type === "Certification"
+						? "certification"
+						: section.type === "Skill"
+						? "skill"
+						: section.type === "Language"
+						? "language"
+						: section.type === "Hobby"
+						? "hobby"
+						: section.type === "Interest"
+						? "interest"
+						: "title" // Handle the "Other" form
 				],
 			content: { ...data },
 		};
@@ -92,12 +140,7 @@ function InputForm() {
 			title: newSectionName,
 			type: newSectionType,
 			data: [],
-			form:
-				newSectionType === "Education"
-					? educationForm
-					: newSectionType === "Work Experience"
-					? workExperienceForm
-					: projectForm,
+			form: formTypes[newSectionType],
 		};
 		setSections([...sections, newSection]);
 		handleCancelAddSection(); // Reset form and close
@@ -216,9 +259,11 @@ function InputForm() {
 						value={newSectionType}
 						onChange={(e) => setNewSectionType(e.target.value)}
 					>
-						<option value="Education">Education</option>
-						<option value="Work Experience">Work Experience</option>
-						<option value="Project">Project</option>
+						{Object.keys(formTypes).map((type) => (
+							<option key={type} value={type}>
+								{type}
+							</option>
+						))}
 					</select>
 					<button
 						type="button"

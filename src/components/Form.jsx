@@ -55,7 +55,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	};
 
 	const isFormInvalid = () => {
-		// Check if the required title field is empty or if all fields are empty
+		// Check if the required title field is empty for specific forms
 		const titleFieldName =
 			form.id === "education-details"
 				? "universityName"
@@ -63,16 +63,34 @@ function Form({ form, initialValues, onSave, onCancel }) {
 				? "position"
 				: form.id === "project-details"
 				? "projectName"
-				: ""; // Handle additional forms if necessary
+				: form.id === "achievements-details"
+				? "achievement"
+				: form.id === "certifications-details"
+				? "certification"
+				: form.id === "skills-details"
+				? "skill"
+				: form.id === "languages-details"
+				? "language"
+				: form.id === "hobbies-details"
+				? "hobby"
+				: form.id === "interests-details"
+				? "interest"
+				: form.id === "other-details"
+				? "title"
+				: null; // Handle additional forms if necessary
 
+		// Check if the specific title field is empty if applicable
 		const isTitleFieldEmpty =
-			!formData[titleFieldName] || formData[titleFieldName].trim() === "";
+			titleFieldName &&
+			(!formData[titleFieldName] || formData[titleFieldName].trim() === "");
 
-		const areFieldsEmpty = form.fields.every(
-			(field) => !formData[field.name] || formData[field.name].trim() === ""
-		);
+		// Only check if the form is empty if it requires a title field
+		if (titleFieldName) {
+			return isTitleFieldEmpty;
+		}
 
-		return isTitleFieldEmpty || (areFieldsEmpty && descriptions.length === 0);
+		// For forms that don't require a title field, allow saving as long as any field is filled
+		return false;
 	};
 
 	return (
