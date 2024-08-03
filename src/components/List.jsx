@@ -1,18 +1,17 @@
-import { useState } from "react";
-import InputField from "./InputField";
+// List.jsx
+import React, { useState } from "react";
 import Form from "./Form";
 
-function List({ items }) {
+function List({ items, onSave, data }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
 
-	// Function to handle the click event and toggle the active state
 	const handleItemClick = (index) => {
 		setActiveIndex((prevIndex) => (prevIndex === index ? -1 : index));
 	};
 
 	return (
 		<div>
-			{items.data.map((item, index) => (
+			{data.map((item, index) => (
 				<div
 					key={index}
 					className={`item ${activeIndex === index ? "active" : ""}`}
@@ -22,7 +21,11 @@ function List({ items }) {
 					</div>
 					{activeIndex === index && (
 						<div className="item-content">
-							<Form form={items.form} />
+							<Form
+								form={items.form}
+								initialValues={item.content}
+								onSave={(formData) => onSave(index, formData)}
+							/>
 						</div>
 					)}
 				</div>

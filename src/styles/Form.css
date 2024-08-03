@@ -1,0 +1,18 @@
+.accordion-content form div.bullet-points {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.accordion-content form div.description {
+	align-items: flex-start;
+}
+
+.accordion-content form div.description-field button {
+	padding: 0;
+}
+
+#add-bullet {
+	padding-left: 1.5rem;
+	align-self: flex-start;
+}
