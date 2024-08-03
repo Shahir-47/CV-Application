@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 import InputField from "./InputField";
 import "../styles/Form.css";
 
-function Form({ form, initialValues, onSave }) {
+function Form({ form, initialValues, onSave, onCancel }) {
 	const [formData, setFormData] = useState({});
 	const [descriptions, setDescriptions] = useState([]);
 
 	useEffect(() => {
 		setFormData(initialValues);
-
-		// Initialize descriptions array from initial values
 		if (initialValues.description) {
 			setDescriptions(initialValues.description);
 		} else {
@@ -34,7 +32,7 @@ function Form({ form, initialValues, onSave }) {
 	};
 
 	const handleAddDescription = () => {
-		setDescriptions([...descriptions, ""]); // Add an empty bullet point
+		setDescriptions([...descriptions, ""]);
 	};
 
 	const handleRemoveDescription = (index) => {
@@ -81,9 +79,16 @@ function Form({ form, initialValues, onSave }) {
 					</button>
 				</div>
 			</div>
-			<button type="button" onClick={handleSave}>
-				Save
-			</button>
+			<div className="form-actions">
+				<button type="button" onClick={handleSave}>
+					Save
+				</button>
+				{onCancel && (
+					<button type="button" onClick={onCancel}>
+						Cancel
+					</button>
+				)}
+			</div>
 		</form>
 	);
 }
@@ -101,6 +106,7 @@ Form.propTypes = {
 	}).isRequired,
 	initialValues: PropTypes.object.isRequired,
 	onSave: PropTypes.func.isRequired,
+	onCancel: PropTypes.func, // Handle cancel action
 };
 
 export default Form;

@@ -170,6 +170,7 @@ function InputForm() {
 			content: { ...data },
 		};
 		setEducationDetails([...educationDetails, newEntry]);
+		setActiveAccordionIndex(-1); // Close accordion after adding
 	};
 
 	const handleAddWorkExperience = (data) => {
@@ -178,6 +179,11 @@ function InputForm() {
 			content: { ...data },
 		};
 		setWorkExperienceDetails([...workExperienceDetails, newEntry]);
+		setActiveAccordionIndex(-1); // Close accordion after adding
+	};
+
+	const handleCancel = () => {
+		setActiveAccordionIndex(-1);
 	};
 
 	return (
@@ -191,6 +197,7 @@ function InputForm() {
 					form={personalDetailForm}
 					initialValues={personalDetails}
 					onSave={handleSavePersonalDetails}
+					onCancel={handleCancel}
 				/>
 			</Accordion>
 			<Accordion

@@ -1,18 +1,21 @@
 // List.jsx
-import { useState } from "react";
+import React, { useState } from "react";
 import Form from "./Form";
 
 function List({ items, onSave, data, onAdd }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
-	const [isAdding, setIsAdding] = useState(false); // State to manage adding new entries
+	const [isAdding, setIsAdding] = useState(false);
 
 	const handleItemClick = (index) => {
+		if (isAdding) {
+			setIsAdding(false); // Close add form when an existing item is clicked
+		}
 		setActiveIndex((prevIndex) => (prevIndex === index ? -1 : index));
 	};
 
 	const handleAddNew = () => {
 		setIsAdding(true);
-		setActiveIndex(-1); // Close other items while adding a new one
+		setActiveIndex(-1); // Close all items when adding a new one
 	};
 
 	const handleSaveNew = (newData) => {
@@ -22,6 +25,10 @@ function List({ items, onSave, data, onAdd }) {
 
 	const handleCancelAdd = () => {
 		setIsAdding(false);
+	};
+
+	const handleCancelEdit = () => {
+		setActiveIndex(-1);
 	};
 
 	return (
@@ -40,6 +47,7 @@ function List({ items, onSave, data, onAdd }) {
 								form={items.form}
 								initialValues={item.content}
 								onSave={(formData) => onSave(index, formData)}
+								onCancel={handleCancelEdit} // Close form on cancel
 							/>
 						</div>
 					)}
@@ -49,17 +57,17 @@ function List({ items, onSave, data, onAdd }) {
 				<div className="item new-item">
 					<Form
 						form={items.form}
-						initialValues={{}} // Start with empty values for new entries
+						initialValues={{}}
 						onSave={handleSaveNew}
+						onCancel={handleCancelAdd} // Close form on cancel
 					/>
-					<button type="button" onClick={handleCancelAdd}>
-						Cancel
-					</button>
 				</div>
 			)}
-			<button type="button" onClick={handleAddNew}>
-				Add New
-			</button>
+			{!isAdding && ( // Only show "Add New" button when not adding
+				<button type="button" onClick={handleAddNew}>
+					Add New
+				</button>
+			)}
 		</div>
 	);
 }
