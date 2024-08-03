@@ -1,5 +1,5 @@
 // List.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "./Form";
 
 function List({ items, onSave, data, onAdd }) {

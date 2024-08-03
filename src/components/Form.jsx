@@ -44,6 +44,17 @@ function Form({ form, initialValues, onSave, onCancel }) {
 		onSave({ ...formData, description: descriptions });
 	};
 
+	const handleClear = () => {
+		// Reset formData to initial empty values
+		const clearedData = form.fields.reduce((acc, field) => {
+			acc[field.name] = ""; // Set each field to empty string
+			return acc;
+		}, {});
+
+		setFormData(clearedData);
+		setDescriptions([]); // Clear all descriptions
+	};
+
 	return (
 		<form id={form.id}>
 			{form.fields.map((field, index) => (
@@ -88,6 +99,9 @@ function Form({ form, initialValues, onSave, onCancel }) {
 						Cancel
 					</button>
 				)}
+				<button type="button" onClick={handleClear}>
+					Clear
+				</button>
 			</div>
 		</form>
 	);
