@@ -274,6 +274,15 @@ export const personalDetailForm = {
 	],
 };
 
+export const personalDetails = {
+	fullName: "John Doe",
+	phoneNumber: "123-456-7890",
+	email: "johndoe@example.com",
+	github: "github.com/johndoe",
+	linkedin: "linkedin.com/in/johndoe",
+	address: "City, State 12345",
+};
+
 export const educationForm = {
 	id: "education-details",
 	fields: [
@@ -338,7 +347,7 @@ export const educationItems = {
 export const sectionsData = [
 	{
 		title: "Personal Details",
-		data: null,
+		data: personalDetails,
 		form: personalDetailForm,
 		type: "Personal",
 	},

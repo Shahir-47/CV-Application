@@ -1,3 +1,9 @@
+.content {
+	display: grid;
+	grid-template-columns: 1fr 1.5fr;
+	grid-gap: 1rem;
+}
+
 .accordion-content form div.bullet-points {
 	display: flex;
 	flex-direction: column;

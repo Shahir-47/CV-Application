@@ -2,6 +2,7 @@ import { useState } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
 import Form from "./Form";
+import PDFViewerComponent from "./PDFViewer";
 import {
 	sectionsData,
 	educationForm,
@@ -49,7 +50,7 @@ function InputForm() {
 
 		// Update the data within the section
 		if (section.type === "Personal") {
-			section.data = data;
+			section.data = data; // Update personal details
 		} else {
 			section.data[itemIndex] = {
 				...section.data[itemIndex],
@@ -187,96 +188,105 @@ function InputForm() {
 		setSections(updatedSections);
 	};
 
+	// Extract personal details
+	const personalDetails = sections.find(
+		(section) => section.type === "Personal"
+	)?.data;
+
 	return (
-		<div>
-			{sections.map((section, index) => (
-				<Accordion
-					key={index}
-					title={section.title}
-					isActive={activeAccordionIndex === index}
-					onClick={() => handleAccordionClick(index)}
-					controls={
-						<div className="section-controls">
-							<button
-								type="button"
-								onClick={() => handleMoveSection(index, "up")}
-								className="move-up-button"
-								disabled={index === 0} // Disable if at the top
-							>
-								Up
-							</button>
-							<button
-								type="button"
-								onClick={() => handleMoveSection(index, "down")}
-								className="move-down-button"
-								disabled={index === sections.length - 1} // Disable if at the bottom
-							>
-								Down
-							</button>
-							<button
-								type="button"
-								onClick={() => handleDeleteSection(index)}
-								className="delete-section-button"
-							>
-								Delete
-							</button>
-						</div>
-					}
-				>
-					{section.type === "Personal" ? (
-						<Form
-							form={section.form}
-							initialValues={section.data || {}}
-							onSave={(data) => handleSaveDetails(index, null, data)}
-							onCancel={handleCancelAddSection}
-						/>
-					) : (
-						<List
-							items={{ form: section.form }}
-							onSave={(itemIndex, data) =>
-								handleSaveDetails(index, itemIndex, data)
-							}
-							data={section.data}
-							onAdd={(data) => handleAddEntry(index, data)}
-							onDelete={(itemIndex) => handleDeleteEntry(index, itemIndex)}
-						/>
-					)}
-				</Accordion>
-			))}
-			<button type="button" onClick={handleAddSection}>
-				Add New Section
-			</button>
-			{isAddingSection && (
-				<div className="new-section-form">
-					<h3>Add New Section</h3>
-					<input
-						type="text"
-						placeholder="Section Name"
-						value={newSectionName}
-						onChange={(e) => setNewSectionName(e.target.value)}
-					/>
-					<select
-						value={newSectionType}
-						onChange={(e) => setNewSectionType(e.target.value)}
+		<div className="content">
+			<div className="input-form">
+				{sections.map((section, index) => (
+					<Accordion
+						key={index}
+						title={section.title}
+						isActive={activeAccordionIndex === index}
+						onClick={() => handleAccordionClick(index)}
+						controls={
+							<div className="section-controls">
+								<button
+									type="button"
+									onClick={() => handleMoveSection(index, "up")}
+									className="move-up-button"
+									disabled={index === 0} // Disable if at the top
+								>
+									Up
+								</button>
+								<button
+									type="button"
+									onClick={() => handleMoveSection(index, "down")}
+									className="move-down-button"
+									disabled={index === sections.length - 1} // Disable if at the bottom
+								>
+									Down
+								</button>
+								<button
+									type="button"
+									onClick={() => handleDeleteSection(index)}
+									className="delete-section-button"
+								>
+									Delete
+								</button>
+							</div>
+						}
 					>
-						{Object.keys(formTypes).map((type) => (
-							<option key={type} value={type}>
-								{type}
-							</option>
-						))}
-					</select>
-					<button
-						type="button"
-						onClick={handleSaveNewSection}
-						disabled={!newSectionName.trim()}
-					>
-						Save Section
-					</button>
-					<button type="button" onClick={handleCancelAddSection}>
-						Cancel
-					</button>
-				</div>
-			)}
+						{section.type === "Personal" ? (
+							<Form
+								form={section.form}
+								initialValues={section.data || {}}
+								onSave={(data) => handleSaveDetails(index, null, data)}
+								onCancel={handleCancelAddSection}
+							/>
+						) : (
+							<List
+								items={{ form: section.form }}
+								onSave={(itemIndex, data) =>
+									handleSaveDetails(index, itemIndex, data)
+								}
+								data={section.data}
+								onAdd={(data) => handleAddEntry(index, data)}
+								onDelete={(itemIndex) => handleDeleteEntry(index, itemIndex)}
+							/>
+						)}
+					</Accordion>
+				))}
+
+				<button type="button" onClick={handleAddSection}>
+					Add New Section
+				</button>
+				{isAddingSection && (
+					<div className="new-section-form">
+						<h3>Add New Section</h3>
+						<input
+							type="text"
+							placeholder="Section Name"
+							value={newSectionName}
+							onChange={(e) => setNewSectionName(e.target.value)}
+						/>
+						<select
+							value={newSectionType}
+							onChange={(e) => setNewSectionType(e.target.value)}
+						>
+							{Object.keys(formTypes).map((type) => (
+								<option key={type} value={type}>
+									{type}
+								</option>
+							))}
+						</select>
+						<button
+							type="button"
+							onClick={handleSaveNewSection}
+							disabled={!newSectionName.trim()}
+						>
+							Save Section
+						</button>
+						<button type="button" onClick={handleCancelAddSection}>
+							Cancel
+						</button>
+					</div>
+				)}
+			</div>
+			<PDFViewerComponent personalDetails={personalDetails} />
 		</div>
 	);
 }
