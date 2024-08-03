@@ -1,4 +1,3 @@
-// Form.jsx
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import InputField from "./InputField";
@@ -55,15 +54,25 @@ function Form({ form, initialValues, onSave, onCancel }) {
 		setDescriptions([]); // Clear all descriptions
 	};
 
-	const isFormEmpty = () => {
-		// Check if all fields are empty and there are no descriptions
+	const isFormInvalid = () => {
+		// Check if the required title field is empty or if all fields are empty
+		const titleFieldName =
+			form.id === "education-details"
+				? "universityName"
+				: form.id === "work-experience-details"
+				? "position"
+				: form.id === "project-details"
+				? "projectName"
+				: ""; // Handle additional forms if necessary
+
+		const isTitleFieldEmpty =
+			!formData[titleFieldName] || formData[titleFieldName].trim() === "";
+
 		const areFieldsEmpty = form.fields.every(
 			(field) => !formData[field.name] || formData[field.name].trim() === ""
 		);
-		const areDescriptionsEmpty = descriptions.every(
-			(description) => description.trim() === ""
-		);
-		return areFieldsEmpty && areDescriptionsEmpty;
+
+		return isTitleFieldEmpty || (areFieldsEmpty && descriptions.length === 0);
 	};
 
 	return (
@@ -106,7 +115,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 					id="save-btn"
 					type="button"
 					onClick={handleSave}
-					disabled={isFormEmpty()}
+					disabled={isFormInvalid()} // Disable if the form is invalid
 				>
 					Save
 				</button>
