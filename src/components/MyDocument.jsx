@@ -8,7 +8,22 @@ import {
 	StyleSheet,
 	Image,
 	Link,
+	Font,
 } from "@react-pdf/renderer";
+
+// Register fonts
+Font.register({
+	family: "Open Sans",
+	fonts: [
+		{
+			src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-regular.ttf",
+		},
+		{
+			src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-600.ttf",
+			fontWeight: 600,
+		},
+	],
+});
 
 // Import PNG icons
 import PhoneIcon from "../assets/phone.png"; // Ensure the path and file name are correct
@@ -23,9 +38,11 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		backgroundColor: "#FFFFFF",
 		padding: 10,
+		paddingBottom: 0,
+		fontFamily: "Open Sans", // Use registered font family
 	},
 	header: {
-		marginBottom: 10,
+		marginBottom: 3,
 		textAlign: "center",
 	},
 	link: {
@@ -38,7 +55,7 @@ const styles = StyleSheet.create({
 	},
 	boldText: {
 		fontSize: 12,
-		fontWeight: "bold",
+		fontWeight: 800, // Use the registered bold font
 	},
 	icon: {
 		width: 16,
@@ -49,7 +66,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-evenly",
-		marginBottom: 10,
+		marginBottom: 5,
 	},
 	contactItem: {
 		flexDirection: "row",
@@ -61,23 +78,23 @@ const styles = StyleSheet.create({
 	},
 	separator: {
 		borderBottomWidth: 1,
-		marginBottom: 5,
+		marginBottom: 3,
 	},
 	educationItem: {
-		marginBottom: 10,
+		marginBottom: 3,
 	},
 	universityRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginBottom: 2,
+		marginBottom: 0,
 	},
 	degreeRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginBottom: 2,
+		marginBottom: 0,
 	},
 	bulletPoints: {
-		marginLeft: 15,
+		marginLeft: 5,
 	},
 	bulletText: {
 		fontSize: 12,
@@ -94,6 +111,16 @@ const extractUsername = (url) => {
 		console.error("Invalid URL:", url);
 		return url; // Return the original URL if there's an error
 	}
+};
+
+// Utility function to format the date as "Month Year"
+const formatDate = (dateString) => {
+	if (!dateString) return "";
+
+	const [year, month] = dateString.split("-");
+	const date = new Date(year, month - 1);
+
+	return date.toLocaleString("default", { month: "long", year: "numeric" });
 };
 
 // Create Document Component
@@ -158,11 +185,11 @@ const MyDocument = ({ personalDetails, educationData }) => (
 
 						{/* Degree and Graduation Date */}
 						<View style={styles.degreeRow}>
-							<Text style={styles.text}>
+							<Text style={styles.boldText}>
 								{education?.content?.degree || ""}
 							</Text>
 							<Text style={styles.text}>
-								{education?.content?.graduationDate || ""}
+								{formatDate(education?.content?.graduationDate) || ""}
 							</Text>
 						</View>
 

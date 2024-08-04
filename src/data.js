@@ -80,7 +80,10 @@ export const certificationsItems = {
 
 export const skillsForm = {
 	id: "skills-details",
-	fields: [{ label: "Skill", type: "text", name: "skill" }],
+	fields: [
+		{ label: "Skill", type: "text", name: "skill" },
+		{ label: "Specifics", type: "text", name: "specifics" },
+	],
 };
 
 export const skillsItems = {
@@ -90,12 +93,14 @@ export const skillsItems = {
 			title: "Skill 1",
 			content: {
 				skill: "Skill 1",
+				specifics: "Specifics 1, Specifics 2",
 			},
 		},
 		{
 			title: "Skill 2",
 			content: {
 				skill: "Skill 2",
+				specifics: "Specifics 3, Specifics 4",
 			},
 		},
 	],
