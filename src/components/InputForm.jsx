@@ -198,6 +198,8 @@ function InputForm() {
 		(section) => section.type === "Education"
 	)?.data;
 
+	const skillsData = sections.find((section) => section.type === "Skill")?.data;
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -294,6 +296,7 @@ function InputForm() {
 			<PDFViewerComponent
 				personalDetails={personalDetails}
 				educationData={educationData}
+				skillsData={skillsData}
 			/>
 		</div>
 	);

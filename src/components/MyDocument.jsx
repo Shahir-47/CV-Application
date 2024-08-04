@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 	},
 	boldText: {
 		fontSize: 12,
-		fontWeight: 800, // Use the registered bold font
+		fontWeight: 600, // Use the registered bold font
 	},
 	icon: {
 		width: 16,
@@ -99,6 +99,13 @@ const styles = StyleSheet.create({
 	bulletText: {
 		fontSize: 12,
 	},
+	skillItem: {
+		marginBottom: 2,
+		flexDirection: "row", // Make skill and specifics part of the same line
+	},
+	skillText: {
+		fontSize: 12,
+	},
 });
 
 // Utility function to extract username from URL
@@ -124,7 +131,7 @@ const formatDate = (dateString) => {
 };
 
 // Create Document Component
-const MyDocument = ({ personalDetails, educationData }) => (
+const MyDocument = ({ personalDetails, educationData, skillsData }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
 			{/* Header Section */}
@@ -221,6 +228,21 @@ const MyDocument = ({ personalDetails, educationData }) => (
 								))}
 							</View>
 						)}
+					</View>
+				))}
+			</View>
+
+			{/* Skills Section */}
+			<View>
+				<Text style={styles.sectionTitle}>SKILLS</Text>
+				<View style={styles.separator} />
+
+				{skillsData?.map((skill, index) => (
+					<View key={index} style={styles.skillItem}>
+						<Text style={styles.boldText}>{skill?.content?.skill || ""}</Text>
+						<Text style={styles.skillText}>
+							: {skill?.content?.specifics || ""}
+						</Text>
 					</View>
 				))}
 			</View>
