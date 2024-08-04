@@ -155,37 +155,32 @@ function InputForm() {
 
 	const handleMoveSection = (index, direction) => {
 		const updatedSections = [...sections];
-		const sectionToMove = updatedSections[index];
+		let newIndex = index;
 
-		// Move section up or down
 		if (direction === "up" && index > 0) {
-			updatedSections.splice(index, 1);
-			updatedSections.splice(index - 1, 0, sectionToMove);
-			if (activeAccordionIndex === index) {
-				setActiveAccordionIndex(index - 1); // Keep the accordion open
-			}
+			// Swap the current section with the one above it
+			[updatedSections[index], updatedSections[index - 1]] = [
+				updatedSections[index - 1],
+				updatedSections[index],
+			];
+			newIndex = index - 1;
 		} else if (direction === "down" && index < updatedSections.length - 1) {
-			updatedSections.splice(index, 1);
-			updatedSections.splice(index + 1, 0, sectionToMove);
-			if (activeAccordionIndex === index) {
-				setActiveAccordionIndex(index + 1); // Keep the accordion open
-			}
-		}
-
-		// Ensure the accordion stays open
-		if (direction === "up" && activeAccordionIndex === index) {
-			setActiveAccordionIndex(index - 1);
-		} else if (direction === "down" && activeAccordionIndex === index) {
-			setActiveAccordionIndex(index + 1);
-		} else {
-			// Re-find the accordion by its unique identifier or title
-			const openSection = updatedSections.findIndex(
-				(section) => section.title === sections[activeAccordionIndex].title
-			);
-			setActiveAccordionIndex(openSection);
+			// Swap the current section with the one below it
+			[updatedSections[index], updatedSections[index + 1]] = [
+				updatedSections[index + 1],
+				updatedSections[index],
+			];
+			newIndex = index + 1;
 		}
 
 		setSections(updatedSections);
+		setActiveAccordionIndex((prevIndex) =>
+			prevIndex === index
+				? newIndex
+				: prevIndex === newIndex
+				? index
+				: prevIndex
+		); // Maintain active accordion
 	};
 
 	// Extract personal details
@@ -272,7 +267,7 @@ function InputForm() {
 								form={section.form}
 								initialValues={section.data || {}}
 								onSave={(data) => handleSaveDetails(index, null, data)}
-								onCancel={handleCancelAddSection}
+								onCancel={() => setActiveAccordionIndex(-1)} // Close accordion on cancel
 							/>
 						) : (
 							<List
