@@ -11,22 +11,18 @@ import {
 } from "@react-pdf/renderer";
 
 // Import PNG icons
-import PhoneIcon from "../assets/phone.svg"; // Ensure the path and file name are correct
+import PhoneIcon from "../assets/phone.png"; // Ensure the path and file name are correct
 import EmailIcon from "../assets/email.png";
-import GitHubIcon from "../assets/github.svg";
-import LinkedInIcon from "../assets/linkedin.svg";
-import AddressIcon from "../assets/address.svg";
+import GitHubIcon from "../assets/github.png";
+import LinkedInIcon from "../assets/linkedin.png";
+import AddressIcon from "../assets/address.png";
 
 // Create styles for the PDF
 const styles = StyleSheet.create({
 	page: {
 		flexDirection: "column",
 		backgroundColor: "#FFFFFF",
-		paddingTop: 10,
-		paddingLeft: 0, // Ensure no left padding
-		paddingRight: 0, // Ensure no right padding
-		paddingBottom: 0, // Add this line if needed
-		alignItems: "flex-start",
+		padding: 10,
 	},
 	header: {
 		marginBottom: 10,
@@ -34,12 +30,11 @@ const styles = StyleSheet.create({
 	},
 	link: {
 		fontSize: 12,
-		marginBottom: 4,
 		textDecoration: "underline",
+		color: "#000000",
 	},
 	text: {
 		fontSize: 12,
-		marginBottom: 4,
 	},
 	icon: {
 		width: 16, // Set a size for the PNG icon
@@ -49,15 +44,11 @@ const styles = StyleSheet.create({
 	contactInfo: {
 		flexDirection: "row",
 		flexWrap: "wrap",
-		justifyContent: "flex-start",
-		marginLeft: 0, // Ensure no left margin
-		paddingLeft: 0, // Ensure no left padding
+		justifyContent: "space-evenly", // Evenly space the contact items
 	},
 	contactItem: {
 		flexDirection: "row", // Make the text and icon in a row
 		alignItems: "center", // Align items vertically center
-		margin: "0 15px 0 0", // Space between contact items, ensure no left margin
-		padding: 0,
 	},
 });
 
