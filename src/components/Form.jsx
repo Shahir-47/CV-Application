@@ -63,6 +63,24 @@ function Form({ form, initialValues, onSave, onCancel }) {
 		"interests-details",
 	].includes(form.id);
 
+	// Validation logic for required fields
+	const isFormInvalid = () => {
+		const validations = {
+			"education-details": () => !formData.universityName?.trim(),
+			"work-experience-details": () => !formData.position?.trim(),
+			"project-details": () => !formData.projectName?.trim(),
+			"achievements-details": () => !formData.achievement?.trim(),
+			"certifications-details": () => !formData.certification?.trim(),
+			"skills-details": () =>
+				!formData.skill?.trim() || !formData.specifics?.trim(),
+			"languages-details": () => !formData.language?.trim(),
+			"hobbies-details": () => !formData.hobby?.trim(),
+			"interests-details": () => !formData.interest?.trim(),
+			"other-details": () => !formData.title?.trim(),
+		};
+		return validations[form.id]?.();
+	};
+
 	return (
 		<form id={form.id}>
 			{form.fields.map((field, index) => (
@@ -107,7 +125,12 @@ function Form({ form, initialValues, onSave, onCancel }) {
 				</div>
 			)}
 			<div className="form-actions">
-				<button id="save-btn" type="button" onClick={handleSave}>
+				<button
+					id="save-btn"
+					type="button"
+					onClick={handleSave}
+					disabled={isFormInvalid()} // Disable if the form is invalid
+				>
 					Save
 				</button>
 				{onCancel && (
