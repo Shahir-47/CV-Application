@@ -193,6 +193,11 @@ function InputForm() {
 		(section) => section.type === "Personal"
 	)?.data;
 
+	// Extract education data
+	const educationData = sections.find(
+		(section) => section.type === "Education"
+	)?.data;
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -286,7 +291,10 @@ function InputForm() {
 					</div>
 				)}
 			</div>
-			<PDFViewerComponent personalDetails={personalDetails} />
+			<PDFViewerComponent
+				personalDetails={personalDetails}
+				educationData={educationData}
+			/>
 		</div>
 	);
 }
