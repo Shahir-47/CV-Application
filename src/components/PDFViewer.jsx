@@ -11,6 +11,7 @@ const PDFViewerComponent = ({
 	projectData,
 	achievementsData,
 	certificationsData,
+	languagesData,
 }) => {
 	return (
 		<PDFViewer width="100%" height="600">
@@ -22,6 +23,7 @@ const PDFViewerComponent = ({
 				projectData={projectData}
 				achievementsData={achievementsData}
 				certificationsData={certificationsData}
+				languagesData={languagesData}
 			/>
 		</PDFViewer>
 	);

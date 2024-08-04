@@ -48,10 +48,6 @@ const styles = StyleSheet.create({
 		textDecoration: "underline",
 		color: "#0000FF", // Link color
 	},
-	projectLink: {
-		fontSize: 10,
-		color: "#0000FF",
-	},
 	text: {
 		fontSize: 12,
 	},
@@ -192,6 +188,7 @@ const MyDocument = ({
 	projectData,
 	achievementsData,
 	certificationsData,
+	languagesData,
 }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
@@ -462,6 +459,22 @@ const MyDocument = ({
 						)}
 					</View>
 				))}
+			</View>
+
+			{/* Languages Section */}
+			<View>
+				<Text style={styles.sectionTitle}>LANGUAGES</Text>
+				<View style={styles.separator} />
+
+				{/* Comma-separated list of languages and proficiency */}
+				<Text style={styles.text}>
+					{languagesData
+						?.map(
+							(language) =>
+								`${language.content.language} (${language.content.proficiency})`
+						)
+						.join(", ")}
+				</Text>
 			</View>
 		</Page>
 	</Document>
