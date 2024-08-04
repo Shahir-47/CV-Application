@@ -35,6 +35,7 @@ export const achievementsItems = {
 			content: {
 				achievement: "Achievement 1",
 				date: "2021-06",
+				description: ["Won first place in competition", "Received award"], // Bullet points
 			},
 		},
 		{
@@ -42,6 +43,7 @@ export const achievementsItems = {
 			content: {
 				achievement: "Achievement 2",
 				date: "2020-12",
+				description: ["Published research paper", "Presented at conference"],
 			},
 		},
 	],
@@ -216,6 +218,7 @@ export const projectItems = {
 			content: {
 				projectName: "Project 1",
 				projectUrl: "https://project1.com",
+				description: ["Built a website", "Implemented user authentication"], // Bullet points
 			},
 		},
 		{
@@ -223,6 +226,10 @@ export const projectItems = {
 			content: {
 				projectName: "Project 2",
 				projectUrl: "https://project2.com",
+				description: [
+					"Developed a mobile app",
+					"Integrated with social media APIs",
+				],
 			},
 		},
 	],

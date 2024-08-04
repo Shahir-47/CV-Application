@@ -1,5 +1,3 @@
-// MyDocument.jsx
-
 import {
 	Page,
 	Text,
@@ -46,9 +44,13 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 	},
 	link: {
-		fontSize: 12,
+		fontSize: 10, // Smaller font size for the link
 		textDecoration: "underline",
-		color: "#000000",
+		color: "#0000FF", // Link color
+	},
+	projectLink: {
+		fontSize: 10,
+		color: "#0000FF",
 	},
 	text: {
 		fontSize: 12,
@@ -119,6 +121,32 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		marginBottom: 0,
 	},
+	projectItem: {
+		marginBottom: 3,
+	},
+	projectHeader: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
+	projectName: {
+		fontSize: 12,
+		fontWeight: 600,
+		marginRight: 2,
+		color: "#000000", // Project name and brackets in black
+	},
+	projectLink: {
+		fontSize: 10,
+		color: "#0000FF",
+	},
+	achievementItem: {
+		marginBottom: 3,
+	},
+	achievementRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
+	},
 });
 
 // Utility function to extract username from URL
@@ -149,6 +177,8 @@ const MyDocument = ({
 	educationData,
 	skillsData,
 	workExperienceData,
+	projectData,
+	achievementsData,
 }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
@@ -299,6 +329,73 @@ const MyDocument = ({
 						{work?.content?.description?.length > 0 && (
 							<View style={styles.bulletPoints}>
 								{work.content.description.map((desc, idx) => (
+									<Text key={idx} style={styles.bulletText}>
+										• {desc}
+									</Text>
+								))}
+							</View>
+						)}
+					</View>
+				))}
+			</View>
+
+			{/* Projects Section */}
+			<View>
+				<Text style={styles.sectionTitle}>PROJECTS</Text>
+				<View style={styles.separator} />
+
+				{projectData?.map((project, index) => (
+					<View key={index} style={styles.projectItem}>
+						<View style={styles.projectHeader}>
+							<Text style={styles.projectName}>
+								{project?.content?.projectName || ""}
+							</Text>
+							<Text style={styles.projectName}>
+								[
+								<Link
+									style={styles.projectLink}
+									src={project?.content?.projectUrl || ""}
+								>
+									{project?.content?.projectUrl || ""}
+								</Link>
+								]
+							</Text>
+						</View>
+						{/* Description */}
+						{project?.content?.description?.length > 0 && (
+							<View style={styles.bulletPoints}>
+								{project.content.description.map((desc, idx) => (
+									<Text key={idx} style={styles.bulletText}>
+										• {desc}
+									</Text>
+								))}
+							</View>
+						)}
+					</View>
+				))}
+			</View>
+
+			{/* Achievements Section */}
+			<View>
+				<Text style={styles.sectionTitle}>ACHIEVEMENTS</Text>
+				<View style={styles.separator} />
+
+				{achievementsData?.map((achievement, index) => (
+					<View key={index} style={styles.achievementItem}>
+						{/* Achievement Name and Date */}
+						<View style={styles.achievementRow}>
+							<Text style={styles.boldText}>
+								{achievement?.content?.achievement || ""}
+							</Text>
+							<Text style={styles.text}>
+								{formatDate(achievement?.content?.date) || ""}
+							</Text>
+						</View>
+
+						{/* Description */}
+						{achievement?.content?.description?.length > 0 && (
+							<View style={styles.bulletPoints}>
+								{achievement.content.description.map((desc, idx) => (
 									<Text key={idx} style={styles.bulletText}>
 										• {desc}
 									</Text>
