@@ -8,15 +8,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	const [descriptions, setDescriptions] = useState([]);
 
 	useEffect(() => {
-		// Initialize formData with initialValues or default values
-		setFormData((prevFormData) => ({
-			...form.fields.reduce((acc, field) => {
-				acc[field.name] = field.name === "endDate" ? "Present" : "";
-				return acc;
-			}, {}),
-			...initialValues,
-		}));
-
+		setFormData(initialValues);
 		if (initialValues.description) {
 			setDescriptions(initialValues.description);
 		} else {
@@ -52,19 +44,14 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	};
 
 	const handleClear = () => {
-		// Reset formData to initial empty values
+		// Reset formData to initial empty values, defaulting "End Date" to "Present"
 		const clearedData = form.fields.reduce((acc, field) => {
-			acc[field.name] = field.name === "endDate" ? "Present" : ""; // Default "Present" for endDate
+			acc[field.name] = field.name === "endDate" ? "Present" : ""; // Default "End Date" to "Present"
 			return acc;
 		}, {});
 
 		setFormData(clearedData);
 		setDescriptions([]); // Clear all descriptions
-	};
-
-	const isFormInvalid = () => {
-		// For your requirement, no form fields are mandatory, so return false
-		return false;
 	};
 
 	// Determine if the description field should be shown
@@ -78,55 +65,16 @@ function Form({ form, initialValues, onSave, onCancel }) {
 
 	return (
 		<form id={form.id}>
-			{form.fields.map((field, index) => {
-				if (field.type === "select" && field.name === "endDate") {
-					// Dynamically create options for end date
-					const pastMonths = [];
-					const today = new Date();
-					for (let year = 2000; year <= today.getFullYear(); year++) {
-						for (let month = 0; month < 12; month++) {
-							const date = new Date(year, month);
-							if (date <= today) {
-								const value = date.toISOString().substr(0, 7);
-								const label = date.toLocaleString("default", {
-									month: "long",
-									year: "numeric",
-								});
-								pastMonths.push({ label, value });
-							}
-						}
-					}
-
-					return (
-						<div key={index} className="input-field">
-							<label>{field.label}</label>
-							<select
-								name={field.name}
-								value={formData[field.name] || "Present"}
-								onChange={handleInputChange}
-							>
-								{pastMonths.map((option, i) => (
-									<option key={`month-${i}`} value={option.value}>
-										{option.label}
-									</option>
-								))}
-								<option value="Present">Present</option>
-							</select>
-						</div>
-					);
-				} else {
-					return (
-						<InputField
-							key={index}
-							label={field.label}
-							type={field.type}
-							name={field.name}
-							value={formData[field.name] || ""}
-							onChange={handleInputChange}
-						/>
-					);
-				}
-			})}
+			{form.fields.map((field, index) => (
+				<InputField
+					key={index}
+					label={field.label}
+					type={field.type}
+					name={field.name}
+					value={formData[field.name] || ""}
+					onChange={handleInputChange}
+				/>
+			))}
 			{shouldShowDescription && (
 				<div className="description">
 					<label>Description:</label>
@@ -159,12 +107,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 				</div>
 			)}
 			<div className="form-actions">
-				<button
-					id="save-btn"
-					type="button"
-					onClick={handleSave}
-					disabled={isFormInvalid()} // Disable if the form is invalid
-				>
+				<button id="save-btn" type="button" onClick={handleSave}>
 					Save
 				</button>
 				{onCancel && (
