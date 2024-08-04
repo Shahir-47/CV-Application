@@ -214,6 +214,15 @@ const formatDateRange = (startDate, endDate) => {
 	return `${formatDate(startDate)} - ${formatDate(endDate)}`;
 };
 
+// Utility function to format language and proficiency
+const formatLanguageProficiency = (language, proficiency) => {
+	if (!language) return "";
+
+	if (!proficiency) return language;
+
+	return `${language} (${proficiency})`;
+};
+
 // Create Document Component
 const MyDocument = ({
 	personalDetails,
@@ -412,16 +421,18 @@ const MyDocument = ({
 								<Text style={styles.projectName}>
 									{project?.content?.projectName || ""}
 								</Text>
-								<Text style={styles.projectName}>
-									[
-									<Link
-										style={styles.projectLink}
-										src={project?.content?.projectUrl || ""}
-									>
-										{project?.content?.projectUrl || ""}
-									</Link>
-									]
-								</Text>
+								{project?.content?.projectUrl && (
+									<Text style={styles.projectName}>
+										[
+										<Link
+											style={styles.projectLink}
+											src={project.content.projectUrl}
+										>
+											{project.content.projectUrl}
+										</Link>
+										]
+									</Text>
+								)}
 							</View>
 							{/* Description */}
 							{project?.content?.description?.length > 0 && (
@@ -483,16 +494,18 @@ const MyDocument = ({
 									<Text style={styles.boldText}>
 										{certification?.content?.certification + " " || ""}
 									</Text>
-									<Text style={styles.boldText}>
-										[
-										<Link
-											style={styles.link}
-											src={certification?.content?.certificationLink || ""}
-										>
-											{certification?.content?.certificationLink || ""}
-										</Link>
-										]
-									</Text>
+									{certification?.content?.certificationLink && (
+										<Text style={styles.boldText}>
+											[
+											<Link
+												style={styles.link}
+												src={certification.content.certificationLink}
+											>
+												{certification.content.certificationLink}
+											</Link>
+											]
+										</Text>
+									)}
 								</View>
 
 								{/* Certification Date */}
@@ -524,9 +537,11 @@ const MyDocument = ({
 					{/* Comma-separated list of languages and proficiency */}
 					<Text style={styles.spaceText}>
 						{languagesData
-							?.map(
-								(language) =>
-									`${language.content.language} (${language.content.proficiency})`
+							?.map((language) =>
+								formatLanguageProficiency(
+									language.content.language,
+									language.content.proficiency
+								)
 							)
 							.join(", ")}
 					</Text>
@@ -572,13 +587,15 @@ const MyDocument = ({
 									<Text style={styles.boldText}>
 										{other?.content?.title + " " || ""}
 									</Text>
-									<Text style={styles.boldText}>
-										[
-										<Link style={styles.link} src={other?.content?.link || ""}>
-											{other?.content?.link || ""}
-										</Link>
-										]
-									</Text>
+									{other?.content?.link && (
+										<Text style={styles.boldText}>
+											[
+											<Link style={styles.link} src={other.content.link}>
+												{other.content.link}
+											</Link>
+											]
+										</Text>
+									)}
 								</View>
 								<Text style={styles.boldText}>
 									{other?.content?.location || ""}
