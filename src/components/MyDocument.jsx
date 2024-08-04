@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
 		textDecoration: "underline",
 		color: "#0000FF", // Link color
 	},
+	spaceText: {
+		fontSize: 12,
+		marginBottom: 3,
+	},
 	text: {
 		fontSize: 12,
 	},
@@ -189,6 +193,8 @@ const MyDocument = ({
 	achievementsData,
 	certificationsData,
 	languagesData,
+	hobbiesData,
+	interestsData,
 }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
@@ -467,12 +473,36 @@ const MyDocument = ({
 				<View style={styles.separator} />
 
 				{/* Comma-separated list of languages and proficiency */}
-				<Text style={styles.text}>
+				<Text style={styles.spaceText}>
 					{languagesData
 						?.map(
 							(language) =>
 								`${language.content.language} (${language.content.proficiency})`
 						)
+						.join(", ")}
+				</Text>
+			</View>
+
+			{/* Hobbies Section */}
+			<View>
+				<Text style={styles.sectionTitle}>HOBBIES</Text>
+				<View style={styles.separator} />
+
+				{/* Comma-separated list of hobbies */}
+				<Text style={styles.spaceText}>
+					{hobbiesData?.map((hobby) => hobby.content.hobby).join(", ")}
+				</Text>
+			</View>
+
+			{/* Interests Section */}
+			<View>
+				<Text style={styles.sectionTitle}>INTERESTS</Text>
+				<View style={styles.separator} />
+
+				{/* Comma-separated list of interests */}
+				<Text style={styles.spaceText}>
+					{interestsData
+						?.map((interest) => interest.content.interest)
 						.join(", ")}
 				</Text>
 			</View>

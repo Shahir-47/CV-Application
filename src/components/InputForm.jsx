@@ -220,6 +220,14 @@ function InputForm() {
 		(section) => section.type === "Language"
 	)?.data;
 
+	const hobbiesData = sections.find(
+		(section) => section.type === "Hobby"
+	)?.data;
+
+	const interestsData = sections.find(
+		(section) => section.type === "Interest"
+	)?.data;
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -322,6 +330,8 @@ function InputForm() {
 				achievementsData={achievementsData}
 				certificationsData={certificationsData}
 				languagesData={languagesData}
+				hobbiesData={hobbiesData}
+				interestsData={interestsData}
 			/>
 		</div>
 	);
