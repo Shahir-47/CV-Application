@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
 	contactInfo: {
 		flexDirection: "row",
 		flexWrap: "wrap",
-		justifyContent: "space-evenly",
+		justifyContent: "center",
+		gap: 10,
 		marginBottom: 3,
 	},
 	contactItem: {
@@ -219,36 +220,43 @@ const MyDocument = ({
 
 			{/* Contact Information */}
 			<View style={styles.contactInfo}>
-				<View style={styles.contactItem}>
-					<Image style={styles.icon} src={PhoneIcon} />
-					<Text style={styles.text}>{personalDetails?.phoneNumber || ""}</Text>
-				</View>
-				<View style={styles.contactItem}>
-					<Image style={styles.icon} src={EmailIcon} />
-					<Text style={styles.link}>{personalDetails?.email || ""}</Text>
-				</View>
-				<View style={styles.contactItem}>
-					<Image style={styles.icon} src={GitHubIcon} />
-					<Link
-						style={styles.link}
-						src={`https://${personalDetails?.github || ""}`}
-					>
-						{extractUsername(personalDetails?.github || "")}
-					</Link>
-				</View>
-				<View style={styles.contactItem}>
-					<Image style={styles.icon} src={LinkedInIcon} />
-					<Link
-						style={styles.link}
-						src={`https://${personalDetails?.linkedin || ""}`}
-					>
-						{extractUsername(personalDetails?.linkedin || "")}
-					</Link>
-				</View>
-				<View style={styles.contactItem}>
-					<Image style={styles.icon} src={AddressIcon} />
-					<Text style={styles.text}>{personalDetails?.address || ""}</Text>
-				</View>
+				{personalDetails?.phoneNumber && (
+					<View style={styles.contactItem}>
+						<Image style={styles.icon} src={PhoneIcon} />
+						<Text style={styles.text}>{personalDetails.phoneNumber}</Text>
+					</View>
+				)}
+				{personalDetails?.email && (
+					<View style={styles.contactItem}>
+						<Image style={styles.icon} src={EmailIcon} />
+						<Text style={styles.link}>{personalDetails.email}</Text>
+					</View>
+				)}
+				{personalDetails?.github && (
+					<View style={styles.contactItem}>
+						<Image style={styles.icon} src={GitHubIcon} />
+						<Link style={styles.link} src={`https://${personalDetails.github}`}>
+							{extractUsername(personalDetails.github)}
+						</Link>
+					</View>
+				)}
+				{personalDetails?.linkedin && (
+					<View style={styles.contactItem}>
+						<Image style={styles.icon} src={LinkedInIcon} />
+						<Link
+							style={styles.link}
+							src={`https://${personalDetails.linkedin}`}
+						>
+							{extractUsername(personalDetails.linkedin)}
+						</Link>
+					</View>
+				)}
+				{personalDetails?.address && (
+					<View style={styles.contactItem}>
+						<Image style={styles.icon} src={AddressIcon} />
+						<Text style={styles.text}>{personalDetails.address}</Text>
+					</View>
+				)}
 			</View>
 
 			{/* Education Section */}
