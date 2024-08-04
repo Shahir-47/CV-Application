@@ -1,5 +1,4 @@
 // data.js
-
 export const workExperienceForm = {
 	id: "work-experience-details",
 	fields: [
@@ -7,7 +6,16 @@ export const workExperienceForm = {
 		{ label: "Position", type: "text", name: "position" },
 		{ label: "Location", type: "text", name: "location" },
 		{ label: "Start Date", type: "month", name: "startDate" },
-		{ label: "End Date", type: "month", name: "endDate" },
+		{
+			label: "End Date",
+			type: "select", // Use select for dropdown
+			name: "endDate",
+			options: [
+				{ label: "Select End Date", value: "" },
+				// Past dates will be added dynamically in the Form component
+				{ label: "Present", value: "Present" },
+			],
+		},
 	],
 };
 

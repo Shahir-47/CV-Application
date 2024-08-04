@@ -8,7 +8,15 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	const [descriptions, setDescriptions] = useState([]);
 
 	useEffect(() => {
-		setFormData(initialValues);
+		// Initialize formData with initialValues or default values
+		setFormData((prevFormData) => ({
+			...form.fields.reduce((acc, field) => {
+				acc[field.name] = field.name === "endDate" ? "Present" : "";
+				return acc;
+			}, {}),
+			...initialValues,
+		}));
+
 		if (initialValues.description) {
 			setDescriptions(initialValues.description);
 		} else {
@@ -46,7 +54,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	const handleClear = () => {
 		// Reset formData to initial empty values
 		const clearedData = form.fields.reduce((acc, field) => {
-			acc[field.name] = ""; // Set each field to an empty string
+			acc[field.name] = field.name === "endDate" ? "Present" : ""; // Default "Present" for endDate
 			return acc;
 		}, {});
 
@@ -55,46 +63,13 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	};
 
 	const isFormInvalid = () => {
-		// Check if the required title field is empty for specific forms
-		const titleFieldName =
-			form.id === "education-details"
-				? "universityName"
-				: form.id === "work-experience-details"
-				? "position"
-				: form.id === "project-details"
-				? "projectName"
-				: form.id === "achievements-details"
-				? "achievement"
-				: form.id === "certifications-details"
-				? "certification"
-				: form.id === "skills-details"
-				? "skill"
-				: form.id === "languages-details"
-				? "language"
-				: form.id === "hobbies-details"
-				? "hobby"
-				: form.id === "interests-details"
-				? "interest"
-				: form.id === "other-details"
-				? "title"
-				: null; // Handle additional forms if necessary
-
-		// Check if the specific title field is empty if applicable
-		const isTitleFieldEmpty =
-			titleFieldName &&
-			(!formData[titleFieldName] || formData[titleFieldName].trim() === "");
-
-		// Only check if the form is empty if it requires a title field
-		if (titleFieldName) {
-			return isTitleFieldEmpty;
-		}
-
-		// For forms that don't require a title field, allow saving as long as any field is filled
+		// For your requirement, no form fields are mandatory, so return false
 		return false;
 	};
 
 	// Determine if the description field should be shown
 	const shouldShowDescription = ![
+		"personal-details",
 		"skills-details",
 		"languages-details",
 		"hobbies-details",
@@ -103,16 +78,55 @@ function Form({ form, initialValues, onSave, onCancel }) {
 
 	return (
 		<form id={form.id}>
-			{form.fields.map((field, index) => (
-				<InputField
-					key={index}
-					label={field.label}
-					type={field.type}
-					name={field.name}
-					value={formData[field.name] || ""}
-					onChange={handleInputChange}
-				/>
-			))}
+			{form.fields.map((field, index) => {
+				if (field.type === "select" && field.name === "endDate") {
+					// Dynamically create options for end date
+					const pastMonths = [];
+					const today = new Date();
+					for (let year = 2000; year <= today.getFullYear(); year++) {
+						for (let month = 0; month < 12; month++) {
+							const date = new Date(year, month);
+							if (date <= today) {
+								const value = date.toISOString().substr(0, 7);
+								const label = date.toLocaleString("default", {
+									month: "long",
+									year: "numeric",
+								});
+								pastMonths.push({ label, value });
+							}
+						}
+					}
+
+					return (
+						<div key={index} className="input-field">
+							<label>{field.label}</label>
+							<select
+								name={field.name}
+								value={formData[field.name] || "Present"}
+								onChange={handleInputChange}
+							>
+								{pastMonths.map((option, i) => (
+									<option key={`month-${i}`} value={option.value}>
+										{option.label}
+									</option>
+								))}
+								<option value="Present">Present</option>
+							</select>
+						</div>
+					);
+				} else {
+					return (
+						<InputField
+							key={index}
+							label={field.label}
+							type={field.type}
+							name={field.name}
+							value={formData[field.name] || ""}
+							onChange={handleInputChange}
+						/>
+					);
+				}
+			})}
 			{shouldShowDescription && (
 				<div className="description">
 					<label>Description:</label>

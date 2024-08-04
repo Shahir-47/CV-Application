@@ -191,10 +191,27 @@ const extractUsername = (url) => {
 const formatDate = (dateString) => {
 	if (!dateString) return "";
 
+	if (dateString === "Present") {
+		return "Present";
+	}
+
 	const [year, month] = dateString.split("-");
 	const date = new Date(year, month - 1);
 
 	return date.toLocaleString("default", { month: "long", year: "numeric" });
+};
+
+// Utility function to format date range
+const formatDateRange = (startDate, endDate) => {
+	if (!startDate && !endDate) return "";
+	if (!endDate || endDate === "Select End Date") return formatDate(startDate);
+	if (!startDate) return formatDate(endDate);
+
+	if (endDate === "Present") {
+		return `${formatDate(startDate)} - ${endDate}`;
+	}
+
+	return `${formatDate(startDate)} - ${formatDate(endDate)}`;
 };
 
 // Create Document Component
@@ -259,323 +276,337 @@ const MyDocument = ({
 				)}
 			</View>
 
-			{/* Education Section */}
-			<View>
-				<Text style={styles.sectionTitle}>EDUCATION</Text>
-				<View style={styles.separator} />
+			{/* Conditionally Render Sections if they have data */}
+			{educationData && educationData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>EDUCATION</Text>
+					<View style={styles.separator} />
 
-				{educationData?.map((education, index) => (
-					<View key={index} style={styles.educationItem}>
-						{/* University Name and Location */}
-						<View style={styles.universityRow}>
-							<Text style={styles.boldText}>
-								{education?.content?.universityName || ""}
-							</Text>
-							<Text style={styles.boldText}>
-								{education?.content?.location || ""}
-							</Text>
-						</View>
-
-						{/* Degree and Graduation Date */}
-						<View style={styles.degreeRow}>
-							<Text style={styles.boldText}>
-								{education?.content?.degree || ""}
-							</Text>
-							<Text style={styles.text}>
-								{formatDate(education?.content?.graduationDate) || ""}
-							</Text>
-						</View>
-
-						{/* GPA */}
-						{education?.content?.gpa && (
-							<View style={styles.bulletPoints}>
-								<Text style={styles.bulletText}>
-									• GPA: {education.content.gpa}
+					{educationData.map((education, index) => (
+						<View key={index} style={styles.educationItem}>
+							{/* University Name and Location */}
+							<View style={styles.universityRow}>
+								<Text style={styles.boldText}>
+									{education?.content?.universityName || ""}
+								</Text>
+								<Text style={styles.boldText}>
+									{education?.content?.location || ""}
 								</Text>
 							</View>
-						)}
 
-						{/* Relevant Coursework */}
-						{education?.content?.coursework && (
-							<View style={styles.bulletPoints}>
-								<Text style={styles.bulletText}>
-									• Relevant Coursework: {education.content.coursework}
+							{/* Degree and Graduation Date */}
+							<View style={styles.degreeRow}>
+								<Text style={styles.boldText}>
+									{education?.content?.degree || ""}
+								</Text>
+								<Text style={styles.text}>
+									{formatDate(education?.content?.graduationDate) || ""}
 								</Text>
 							</View>
-						)}
 
-						{/* Description */}
-						{education?.content?.description?.length > 0 && (
-							<View style={styles.bulletPoints}>
-								{education.content.description.map((desc, idx) => (
-									<Text key={idx} style={styles.bulletText}>
-										• {desc}
+							{/* GPA */}
+							{education?.content?.gpa && (
+								<View style={styles.bulletPoints}>
+									<Text style={styles.bulletText}>
+										• GPA: {education.content.gpa}
 									</Text>
-								))}
-							</View>
-						)}
-					</View>
-				))}
-			</View>
+								</View>
+							)}
 
-			{/* Skills Section */}
-			<View>
-				<Text style={styles.sectionTitle}>SKILLS</Text>
-				<View style={styles.separator} />
-				<View style={{ marginBottom: 5 }}>
-					{skillsData?.map((skill, index) => (
-						<View key={index} style={styles.skillItem}>
-							<Text style={styles.boldText}>{skill?.content?.skill || ""}</Text>
-							<Text style={styles.skillText}>
-								: {skill?.content?.specifics || ""}
-							</Text>
+							{/* Relevant Coursework */}
+							{education?.content?.coursework && (
+								<View style={styles.bulletPoints}>
+									<Text style={styles.bulletText}>
+										• Relevant Coursework: {education.content.coursework}
+									</Text>
+								</View>
+							)}
+
+							{/* Description */}
+							{education?.content?.description?.length > 0 && (
+								<View style={styles.bulletPoints}>
+									{education.content.description.map((desc, idx) => (
+										<Text key={idx} style={styles.bulletText}>
+											• {desc}
+										</Text>
+									))}
+								</View>
+							)}
 						</View>
 					))}
 				</View>
-			</View>
+			)}
 
-			{/* Work Experience Section */}
-			<View>
-				<Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
-				<View style={styles.separator} />
-
-				{workExperienceData?.map((work, index) => (
-					<View key={index} style={styles.workExperienceItem}>
-						{/* Position and Location */}
-						<View style={styles.positionRow}>
-							<Text style={styles.boldText}>
-								{work?.content?.position || ""}
-							</Text>
-							<Text style={styles.boldText}>
-								{work?.content?.location || ""}
-							</Text>
-						</View>
-
-						{/* Company Name and Dates */}
-						<View style={styles.companyRow}>
-							<Text style={styles.boldText}>
-								{work?.content?.companyName || ""}
-							</Text>
-							<Text style={styles.text}>
-								{`${formatDate(work?.content?.startDate)} - ${formatDate(
-									work?.content?.endDate
-								)}`}
-							</Text>
-						</View>
-
-						{/* Description */}
-						{work?.content?.description?.length > 0 && (
-							<View style={styles.bulletPoints}>
-								{work.content.description.map((desc, idx) => (
-									<Text key={idx} style={styles.bulletText}>
-										• {desc}
-									</Text>
-								))}
-							</View>
-						)}
-					</View>
-				))}
-			</View>
-
-			{/* Projects Section */}
-			<View>
-				<Text style={styles.sectionTitle}>PROJECTS</Text>
-				<View style={styles.separator} />
-
-				{projectData?.map((project, index) => (
-					<View key={index} style={styles.projectItem}>
-						<View style={styles.projectHeader}>
-							<Text style={styles.projectName}>
-								{project?.content?.projectName || ""}
-							</Text>
-							<Text style={styles.projectName}>
-								[
-								<Link
-									style={styles.projectLink}
-									src={project?.content?.projectUrl || ""}
-								>
-									{project?.content?.projectUrl || ""}
-								</Link>
-								]
-							</Text>
-						</View>
-						{/* Description */}
-						{project?.content?.description?.length > 0 && (
-							<View style={styles.bulletPoints}>
-								{project.content.description.map((desc, idx) => (
-									<Text key={idx} style={styles.bulletText}>
-										• {desc}
-									</Text>
-								))}
-							</View>
-						)}
-					</View>
-				))}
-			</View>
-
-			{/* Achievements Section */}
-			<View>
-				<Text style={styles.sectionTitle}>ACHIEVEMENTS</Text>
-				<View style={styles.separator} />
-
-				{achievementsData?.map((achievement, index) => (
-					<View key={index} style={styles.achievementItem}>
-						{/* Achievement Name and Date */}
-						<View style={styles.achievementRow}>
-							<Text style={styles.boldText}>
-								{achievement?.content?.achievement || ""}
-							</Text>
-							<Text style={styles.text}>
-								{formatDate(achievement?.content?.date) || ""}
-							</Text>
-						</View>
-
-						{/* Description */}
-						{achievement?.content?.description?.length > 0 && (
-							<View style={styles.bulletPoints}>
-								{achievement.content.description.map((desc, idx) => (
-									<Text key={idx} style={styles.bulletText}>
-										• {desc}
-									</Text>
-								))}
-							</View>
-						)}
-					</View>
-				))}
-			</View>
-
-			{/* Certifications Section */}
-			<View>
-				<Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
-				<View style={styles.separator} />
-
-				{certificationsData?.map((certification, index) => (
-					<View key={index} style={styles.certificationItem}>
-						<View style={styles.certificationRow}>
-							{/* Certification Name and URL */}
-							<View style={styles.certificationHeader}>
+			{skillsData && skillsData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>SKILLS</Text>
+					<View style={styles.separator} />
+					<View style={{ marginBottom: 5 }}>
+						{skillsData.map((skill, index) => (
+							<View key={index} style={styles.skillItem}>
 								<Text style={styles.boldText}>
-									{certification?.content?.certification + " " || ""}
+									{skill?.content?.skill || ""}
 								</Text>
-								<Text style={styles.boldText}>
-									[
-									<Link
-										style={styles.link}
-										src={certification?.content?.certificationLink || ""}
-									>
-										{certification?.content?.certificationLink || ""}
-									</Link>
-									]
+								<Text style={styles.skillText}>
+									: {skill?.content?.specifics || ""}
 								</Text>
-							</View>
-
-							{/* Certification Date */}
-							<Text style={styles.text}>
-								{formatDate(certification?.content?.date) || ""}
-							</Text>
-						</View>
-
-						{/* Description */}
-						{certification?.content?.description?.length > 0 && (
-							<View style={styles.bulletPoints}>
-								{certification.content.description.map((desc, idx) => (
-									<Text key={idx} style={styles.bulletText}>
-										• {desc}
-									</Text>
-								))}
-							</View>
-						)}
-					</View>
-				))}
-			</View>
-
-			{/* Languages Section */}
-			<View>
-				<Text style={styles.sectionTitle}>LANGUAGES</Text>
-				<View style={styles.separator} />
-
-				{/* Comma-separated list of languages and proficiency */}
-				<Text style={styles.spaceText}>
-					{languagesData
-						?.map(
-							(language) =>
-								`${language.content.language} (${language.content.proficiency})`
-						)
-						.join(", ")}
-				</Text>
-			</View>
-
-			{/* Hobbies Section */}
-			<View>
-				<Text style={styles.sectionTitle}>HOBBIES</Text>
-				<View style={styles.separator} />
-
-				{/* Comma-separated list of hobbies */}
-				<Text style={styles.spaceText}>
-					{hobbiesData?.map((hobby) => hobby.content.hobby).join(", ")}
-				</Text>
-			</View>
-
-			{/* Interests Section */}
-			<View>
-				<Text style={styles.sectionTitle}>INTERESTS</Text>
-				<View style={styles.separator} />
-
-				{/* Comma-separated list of interests */}
-				<Text style={styles.spaceText}>
-					{interestsData
-						?.map((interest) => interest.content.interest)
-						.join(", ")}
-				</Text>
-			</View>
-
-			{/* Other Section */}
-			<View>
-				<Text style={styles.sectionTitle}>OTHER</Text>
-				<View style={styles.separator} />
-
-				{otherData?.map((other, index) => (
-					<View key={index} style={styles.otherItem}>
-						{/* Title, Link and Location */}
-						<View style={styles.otherRow}>
-							<View style={styles.otherHeader}>
-								<Text style={styles.boldText}>
-									{other?.content?.title + " " || ""}
-								</Text>
-								<Text style={styles.boldText}>
-									[
-									<Link style={styles.link} src={other?.content?.link || ""}>
-										{other?.content?.link || ""}
-									</Link>
-									]
-								</Text>
-							</View>
-							<Text style={styles.boldText}>
-								{other?.content?.location || ""}
-							</Text>
-						</View>
-
-						{/* Description and Date */}
-						<View style={styles.otherRow}>
-							{other?.content?.description?.[0] && (
-								<Text style={styles.bulletText}>
-									• {other.content.description[0]}
-								</Text>
-							)}
-							<Text style={styles.text}>
-								{formatDate(other?.content?.date) || ""}
-							</Text>
-						</View>
-
-						{/* Additional Descriptions */}
-						{other?.content?.description?.slice(1).map((desc, idx) => (
-							<View key={idx} style={styles.bulletPoints}>
-								<Text style={styles.bulletText}>• {desc}</Text>
 							</View>
 						))}
 					</View>
-				))}
-			</View>
+				</View>
+			)}
+
+			{workExperienceData && workExperienceData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
+					<View style={styles.separator} />
+
+					{workExperienceData.map((work, index) => (
+						<View key={index} style={styles.workExperienceItem}>
+							{/* Position and Location */}
+							<View style={styles.positionRow}>
+								<Text style={styles.boldText}>
+									{work?.content?.position || ""}
+								</Text>
+								<Text style={styles.boldText}>
+									{work?.content?.location || ""}
+								</Text>
+							</View>
+
+							{/* Company Name and Dates */}
+							<View style={styles.companyRow}>
+								<Text style={styles.boldText}>
+									{work?.content?.companyName || ""}
+								</Text>
+								<Text style={styles.text}>
+									{formatDateRange(
+										work?.content?.startDate,
+										work?.content?.endDate
+									)}
+								</Text>
+							</View>
+
+							{/* Description */}
+							{work?.content?.description?.length > 0 && (
+								<View style={styles.bulletPoints}>
+									{work.content.description.map((desc, idx) => (
+										<Text key={idx} style={styles.bulletText}>
+											• {desc}
+										</Text>
+									))}
+								</View>
+							)}
+						</View>
+					))}
+				</View>
+			)}
+
+			{projectData && projectData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>PROJECTS</Text>
+					<View style={styles.separator} />
+
+					{projectData.map((project, index) => (
+						<View key={index} style={styles.projectItem}>
+							<View style={styles.projectHeader}>
+								<Text style={styles.projectName}>
+									{project?.content?.projectName || ""}
+								</Text>
+								<Text style={styles.projectName}>
+									[
+									<Link
+										style={styles.projectLink}
+										src={project?.content?.projectUrl || ""}
+									>
+										{project?.content?.projectUrl || ""}
+									</Link>
+									]
+								</Text>
+							</View>
+							{/* Description */}
+							{project?.content?.description?.length > 0 && (
+								<View style={styles.bulletPoints}>
+									{project.content.description.map((desc, idx) => (
+										<Text key={idx} style={styles.bulletText}>
+											• {desc}
+										</Text>
+									))}
+								</View>
+							)}
+						</View>
+					))}
+				</View>
+			)}
+
+			{achievementsData && achievementsData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>ACHIEVEMENTS</Text>
+					<View style={styles.separator} />
+
+					{achievementsData.map((achievement, index) => (
+						<View key={index} style={styles.achievementItem}>
+							{/* Achievement Name and Date */}
+							<View style={styles.achievementRow}>
+								<Text style={styles.boldText}>
+									{achievement?.content?.achievement || ""}
+								</Text>
+								<Text style={styles.text}>
+									{formatDate(achievement?.content?.date) || ""}
+								</Text>
+							</View>
+
+							{/* Description */}
+							{achievement?.content?.description?.length > 0 && (
+								<View style={styles.bulletPoints}>
+									{achievement.content.description.map((desc, idx) => (
+										<Text key={idx} style={styles.bulletText}>
+											• {desc}
+										</Text>
+									))}
+								</View>
+							)}
+						</View>
+					))}
+				</View>
+			)}
+
+			{certificationsData && certificationsData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
+					<View style={styles.separator} />
+
+					{certificationsData.map((certification, index) => (
+						<View key={index} style={styles.certificationItem}>
+							<View style={styles.certificationRow}>
+								{/* Certification Name and URL */}
+								<View style={styles.certificationHeader}>
+									<Text style={styles.boldText}>
+										{certification?.content?.certification + " " || ""}
+									</Text>
+									<Text style={styles.boldText}>
+										[
+										<Link
+											style={styles.link}
+											src={certification?.content?.certificationLink || ""}
+										>
+											{certification?.content?.certificationLink || ""}
+										</Link>
+										]
+									</Text>
+								</View>
+
+								{/* Certification Date */}
+								<Text style={styles.text}>
+									{formatDate(certification?.content?.date) || ""}
+								</Text>
+							</View>
+
+							{/* Description */}
+							{certification?.content?.description?.length > 0 && (
+								<View style={styles.bulletPoints}>
+									{certification.content.description.map((desc, idx) => (
+										<Text key={idx} style={styles.bulletText}>
+											• {desc}
+										</Text>
+									))}
+								</View>
+							)}
+						</View>
+					))}
+				</View>
+			)}
+
+			{languagesData && languagesData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>LANGUAGES</Text>
+					<View style={styles.separator} />
+
+					{/* Comma-separated list of languages and proficiency */}
+					<Text style={styles.spaceText}>
+						{languagesData
+							?.map(
+								(language) =>
+									`${language.content.language} (${language.content.proficiency})`
+							)
+							.join(", ")}
+					</Text>
+				</View>
+			)}
+
+			{hobbiesData && hobbiesData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>HOBBIES</Text>
+					<View style={styles.separator} />
+
+					{/* Comma-separated list of hobbies */}
+					<Text style={styles.spaceText}>
+						{hobbiesData?.map((hobby) => hobby.content.hobby).join(", ")}
+					</Text>
+				</View>
+			)}
+
+			{interestsData && interestsData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>INTERESTS</Text>
+					<View style={styles.separator} />
+
+					{/* Comma-separated list of interests */}
+					<Text style={styles.spaceText}>
+						{interestsData
+							?.map((interest) => interest.content.interest)
+							.join(", ")}
+					</Text>
+				</View>
+			)}
+
+			{otherData && otherData.length > 0 && (
+				<View>
+					<Text style={styles.sectionTitle}>OTHER</Text>
+					<View style={styles.separator} />
+
+					{otherData.map((other, index) => (
+						<View key={index} style={styles.otherItem}>
+							{/* Title, Link and Location */}
+							<View style={styles.otherRow}>
+								<View style={styles.otherHeader}>
+									<Text style={styles.boldText}>
+										{other?.content?.title + " " || ""}
+									</Text>
+									<Text style={styles.boldText}>
+										[
+										<Link style={styles.link} src={other?.content?.link || ""}>
+											{other?.content?.link || ""}
+										</Link>
+										]
+									</Text>
+								</View>
+								<Text style={styles.boldText}>
+									{other?.content?.location || ""}
+								</Text>
+							</View>
+
+							{/* Description and Date */}
+							<View style={styles.otherRow}>
+								{other?.content?.description?.[0] && (
+									<Text style={styles.bulletText}>
+										• {other.content.description[0]}
+									</Text>
+								)}
+								<Text style={styles.text}>
+									{formatDate(other?.content?.date) || ""}
+								</Text>
+							</View>
+
+							{/* Additional Descriptions */}
+							{other?.content?.description?.slice(1).map((desc, idx) => (
+								<View key={idx} style={styles.bulletPoints}>
+									<Text style={styles.bulletText}>• {desc}</Text>
+								</View>
+							))}
+						</View>
+					))}
+				</View>
+			)}
 		</Page>
 	</Document>
 );
