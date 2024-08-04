@@ -228,6 +228,8 @@ function InputForm() {
 		(section) => section.type === "Interest"
 	)?.data;
 
+	const otherData = sections.find((section) => section.type === "Other")?.data;
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -332,6 +334,7 @@ function InputForm() {
 				languagesData={languagesData}
 				hobbiesData={hobbiesData}
 				interestsData={interestsData}
+				otherData={otherData}
 			/>
 		</div>
 	);

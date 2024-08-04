@@ -196,6 +196,7 @@ export const otherItems = {
 				date: "2021-06",
 				location: "Location 1",
 				link: "https://other1.com",
+				description: ["Description 1", "Description 2"], // Bullet points
 			},
 		},
 		{
@@ -205,6 +206,7 @@ export const otherItems = {
 				date: "2020-12",
 				location: "Location 2",
 				link: "https://other2.com",
+				description: ["Description 3", "Description 4"],
 			},
 		},
 	],

@@ -159,6 +159,19 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 	},
+	otherItem: {
+		marginBottom: 3,
+	},
+	otherRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
+		marginLeft: 5,
+	},
+	otherHeader: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
 });
 
 // Utility function to extract username from URL
@@ -195,6 +208,7 @@ const MyDocument = ({
 	languagesData,
 	hobbiesData,
 	interestsData,
+	otherData,
 }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
@@ -505,6 +519,54 @@ const MyDocument = ({
 						?.map((interest) => interest.content.interest)
 						.join(", ")}
 				</Text>
+			</View>
+
+			{/* Other Section */}
+			<View>
+				<Text style={styles.sectionTitle}>OTHER</Text>
+				<View style={styles.separator} />
+
+				{otherData?.map((other, index) => (
+					<View key={index} style={styles.otherItem}>
+						{/* Title, Link and Location */}
+						<View style={styles.otherRow}>
+							<View style={styles.otherHeader}>
+								<Text style={styles.boldText}>
+									{other?.content?.title + " " || ""}
+								</Text>
+								<Text style={styles.boldText}>
+									[
+									<Link style={styles.link} src={other?.content?.link || ""}>
+										{other?.content?.link || ""}
+									</Link>
+									]
+								</Text>
+							</View>
+							<Text style={styles.boldText}>
+								{other?.content?.location || ""}
+							</Text>
+						</View>
+
+						{/* Description and Date */}
+						<View style={styles.otherRow}>
+							{other?.content?.description?.[0] && (
+								<Text style={styles.bulletText}>
+									• {other.content.description[0]}
+								</Text>
+							)}
+							<Text style={styles.text}>
+								{formatDate(other?.content?.date) || ""}
+							</Text>
+						</View>
+
+						{/* Additional Descriptions */}
+						{other?.content?.description?.slice(1).map((desc, idx) => (
+							<View key={idx} style={styles.bulletPoints}>
+								<Text style={styles.bulletText}>• {desc}</Text>
+							</View>
+						))}
+					</View>
+				))}
 			</View>
 		</Page>
 	</Document>
