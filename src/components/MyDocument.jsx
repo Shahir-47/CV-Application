@@ -147,6 +147,18 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		marginBottom: 0,
 	},
+	certificationItem: {
+		marginBottom: 3,
+	},
+	certificationRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
+	},
+	certificationHeader: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
 });
 
 // Utility function to extract username from URL
@@ -179,6 +191,7 @@ const MyDocument = ({
 	workExperienceData,
 	projectData,
 	achievementsData,
+	certificationsData,
 }) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
@@ -396,6 +409,51 @@ const MyDocument = ({
 						{achievement?.content?.description?.length > 0 && (
 							<View style={styles.bulletPoints}>
 								{achievement.content.description.map((desc, idx) => (
+									<Text key={idx} style={styles.bulletText}>
+										• {desc}
+									</Text>
+								))}
+							</View>
+						)}
+					</View>
+				))}
+			</View>
+
+			{/* Certifications Section */}
+			<View>
+				<Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
+				<View style={styles.separator} />
+
+				{certificationsData?.map((certification, index) => (
+					<View key={index} style={styles.certificationItem}>
+						<View style={styles.certificationRow}>
+							{/* Certification Name and URL */}
+							<View style={styles.certificationHeader}>
+								<Text style={styles.boldText}>
+									{certification?.content?.certification + " " || ""}
+								</Text>
+								<Text style={styles.boldText}>
+									[
+									<Link
+										style={styles.link}
+										src={certification?.content?.certificationLink || ""}
+									>
+										{certification?.content?.certificationLink || ""}
+									</Link>
+									]
+								</Text>
+							</View>
+
+							{/* Certification Date */}
+							<Text style={styles.text}>
+								{formatDate(certification?.content?.date) || ""}
+							</Text>
+						</View>
+
+						{/* Description */}
+						{certification?.content?.description?.length > 0 && (
+							<View style={styles.bulletPoints}>
+								{certification.content.description.map((desc, idx) => (
 									<Text key={idx} style={styles.bulletText}>
 										• {desc}
 									</Text>

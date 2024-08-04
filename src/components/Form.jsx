@@ -93,6 +93,14 @@ function Form({ form, initialValues, onSave, onCancel }) {
 		return false;
 	};
 
+	// Determine if the description field should be shown
+	const shouldShowDescription = ![
+		"skills-details",
+		"languages-details",
+		"hobbies-details",
+		"interests-details",
+	].includes(form.id);
+
 	return (
 		<form id={form.id}>
 			{form.fields.map((field, index) => (
@@ -105,29 +113,37 @@ function Form({ form, initialValues, onSave, onCancel }) {
 					onChange={handleInputChange}
 				/>
 			))}
-			<div className="description">
-				<label>Description:</label>
-				<div className="bullet-points">
-					{descriptions.map((desc, index) => (
-						<div key={index} className="description-field">
-							<input
-								type="text"
-								value={desc}
-								onChange={(e) => handleDescriptionChange(index, e.target.value)}
-							/>
-							<button
-								type="button"
-								onClick={() => handleRemoveDescription(index)}
-							>
-								Remove
-							</button>
-						</div>
-					))}
-					<button type="button" id="add-bullet" onClick={handleAddDescription}>
-						Add Bullet Point
-					</button>
+			{shouldShowDescription && (
+				<div className="description">
+					<label>Description:</label>
+					<div className="bullet-points">
+						{descriptions.map((desc, index) => (
+							<div key={index} className="description-field">
+								<input
+									type="text"
+									value={desc}
+									onChange={(e) =>
+										handleDescriptionChange(index, e.target.value)
+									}
+								/>
+								<button
+									type="button"
+									onClick={() => handleRemoveDescription(index)}
+								>
+									Remove
+								</button>
+							</div>
+						))}
+						<button
+							type="button"
+							id="add-bullet"
+							onClick={handleAddDescription}
+						>
+							Add Bullet Point
+						</button>
+					</div>
 				</div>
-			</div>
+			)}
 			<div className="form-actions">
 				<button
 					id="save-btn"
