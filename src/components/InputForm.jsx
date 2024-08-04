@@ -200,6 +200,10 @@ function InputForm() {
 
 	const skillsData = sections.find((section) => section.type === "Skill")?.data;
 
+	const workExperienceData = sections.find(
+		(section) => section.type === "Work Experience"
+	)?.data;
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -297,6 +301,7 @@ function InputForm() {
 				personalDetails={personalDetails}
 				educationData={educationData}
 				skillsData={skillsData}
+				workExperienceData={workExperienceData}
 			/>
 		</div>
 	);

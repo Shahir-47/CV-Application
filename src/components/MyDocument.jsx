@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-evenly",
-		marginBottom: 5,
+		marginBottom: 3,
 	},
 	contactItem: {
 		flexDirection: "row",
@@ -100,11 +100,24 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 	skillItem: {
-		marginBottom: 2,
+		marginBottom: 0,
 		flexDirection: "row", // Make skill and specifics part of the same line
 	},
 	skillText: {
 		fontSize: 12,
+	},
+	workExperienceItem: {
+		marginBottom: 3,
+	},
+	positionRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
+	},
+	companyRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
 	},
 });
 
@@ -131,7 +144,12 @@ const formatDate = (dateString) => {
 };
 
 // Create Document Component
-const MyDocument = ({ personalDetails, educationData, skillsData }) => (
+const MyDocument = ({
+	personalDetails,
+	educationData,
+	skillsData,
+	workExperienceData,
+}) => (
 	<Document>
 		<Page size="A4" style={styles.page}>
 			{/* Header Section */}
@@ -236,13 +254,57 @@ const MyDocument = ({ personalDetails, educationData, skillsData }) => (
 			<View>
 				<Text style={styles.sectionTitle}>SKILLS</Text>
 				<View style={styles.separator} />
+				<View style={{ marginBottom: 5 }}>
+					{skillsData?.map((skill, index) => (
+						<View key={index} style={styles.skillItem}>
+							<Text style={styles.boldText}>{skill?.content?.skill || ""}</Text>
+							<Text style={styles.skillText}>
+								: {skill?.content?.specifics || ""}
+							</Text>
+						</View>
+					))}
+				</View>
+			</View>
 
-				{skillsData?.map((skill, index) => (
-					<View key={index} style={styles.skillItem}>
-						<Text style={styles.boldText}>{skill?.content?.skill || ""}</Text>
-						<Text style={styles.skillText}>
-							: {skill?.content?.specifics || ""}
-						</Text>
+			{/* Work Experience Section */}
+			<View>
+				<Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
+				<View style={styles.separator} />
+
+				{workExperienceData?.map((work, index) => (
+					<View key={index} style={styles.workExperienceItem}>
+						{/* Position and Location */}
+						<View style={styles.positionRow}>
+							<Text style={styles.boldText}>
+								{work?.content?.position || ""}
+							</Text>
+							<Text style={styles.boldText}>
+								{work?.content?.location || ""}
+							</Text>
+						</View>
+
+						{/* Company Name and Dates */}
+						<View style={styles.companyRow}>
+							<Text style={styles.boldText}>
+								{work?.content?.companyName || ""}
+							</Text>
+							<Text style={styles.text}>
+								{`${formatDate(work?.content?.startDate)} - ${formatDate(
+									work?.content?.endDate
+								)}`}
+							</Text>
+						</View>
+
+						{/* Description */}
+						{work?.content?.description?.length > 0 && (
+							<View style={styles.bulletPoints}>
+								{work.content.description.map((desc, idx) => (
+									<Text key={idx} style={styles.bulletText}>
+										• {desc}
+									</Text>
+								))}
+							</View>
+						)}
 					</View>
 				))}
 			</View>
