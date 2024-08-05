@@ -183,48 +183,6 @@ function InputForm() {
 		); // Maintain active accordion
 	};
 
-	// Extract personal details
-	const personalDetails = sections.find(
-		(section) => section.type === "Personal"
-	)?.data;
-
-	// Extract education data
-	const educationData = sections.find(
-		(section) => section.type === "Education"
-	)?.data;
-
-	const skillsData = sections.find((section) => section.type === "Skill")?.data;
-
-	const workExperienceData = sections.find(
-		(section) => section.type === "Work Experience"
-	)?.data;
-
-	const projectData = sections.find(
-		(section) => section.type === "Project"
-	)?.data;
-
-	const achievementsData = sections.find(
-		(section) => section.type === "Achievement"
-	)?.data;
-
-	const certificationsData = sections.find(
-		(section) => section.type === "Certification"
-	)?.data;
-
-	const languagesData = sections.find(
-		(section) => section.type === "Language"
-	)?.data;
-
-	const hobbiesData = sections.find(
-		(section) => section.type === "Hobby"
-	)?.data;
-
-	const interestsData = sections.find(
-		(section) => section.type === "Interest"
-	)?.data;
-
-	const otherData = sections.find((section) => section.type === "Other")?.data;
-
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -318,19 +276,7 @@ function InputForm() {
 					</div>
 				)}
 			</div>
-			<PDFViewerComponent
-				personalDetails={personalDetails}
-				educationData={educationData}
-				skillsData={skillsData}
-				workExperienceData={workExperienceData}
-				projectData={projectData}
-				achievementsData={achievementsData}
-				certificationsData={certificationsData}
-				languagesData={languagesData}
-				hobbiesData={hobbiesData}
-				interestsData={interestsData}
-				otherData={otherData}
-			/>
+			<PDFViewerComponent sections={sections} />
 		</div>
 	);
 }
