@@ -248,7 +248,13 @@ const MyDocument = ({ sections }) => (
 								{section.data?.phoneNumber && (
 									<View style={styles.contactItem}>
 										<Image style={styles.icon} src={PhoneIcon} />
-										<Text style={styles.text}>{section.data.phoneNumber}</Text>
+										{/* Link component used for clickable phone number */}
+										<Link
+											style={styles.linkBlack}
+											src={`tel:${section.data.phoneNumber}`}
+										>
+											{section.data.phoneNumber}
+										</Link>
 									</View>
 								)}
 								{section.data?.email && (
@@ -282,7 +288,15 @@ const MyDocument = ({ sections }) => (
 								{section.data?.address && (
 									<View style={styles.contactItem}>
 										<Image style={styles.icon} src={AddressIcon} />
-										<Text style={styles.text}>{section.data.address}</Text>
+										{/* Link component used for clickable address */}
+										<Link
+											style={styles.linkBlack}
+											src={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+												section.data.address
+											)}`}
+										>
+											{section.data.address}
+										</Link>
 									</View>
 								)}
 							</View>
