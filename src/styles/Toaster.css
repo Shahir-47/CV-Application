@@ -4,7 +4,7 @@
 	position: fixed;
 	top: 20px; /* Position the toaster at the top of the viewport */
 	left: 50%; /* Center horizontally */
-	transform: translateX(-50%); /* Adjust for centering */
+	transform: translate(-50%, -100px); /* Start from above */
 	padding: 10px 20px;
 	background-color: #333;
 	color: #fff;
@@ -12,7 +12,17 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	z-index: 1000;
 	transition: opacity 0.3s ease, transform 0.3s ease;
+	opacity: 0;
+}
+
+.toaster-visible {
 	opacity: 1;
+	transform: translate(-50%, 0); /* Slide down into view */
+}
+
+.toaster-hidden {
+	opacity: 0;
+	transform: translate(-50%, -30px); /* Move up when hidden */
 }
 
 .toaster-success {
@@ -21,9 +31,4 @@
 
 .toaster-error {
 	background-color: #f44336;
-}
-
-.toaster-hidden {
-	opacity: 0;
-	transform: translate(-50%, -30px); /* Move up when hidden */
 }

@@ -1,5 +1,5 @@
 // List.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Form from "./Form";
 import Modal from "./Modal"; // Import the Modal component
 import Toaster from "./Toaster"; // Import the Toaster component
