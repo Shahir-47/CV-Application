@@ -1,9 +1,11 @@
-import { useState } from "react";
+// InputForm.js
+import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
 import Form from "./Form";
 import PDFViewerComponent from "./PDFViewer";
 import Modal from "./Modal"; // Import the Modal component
+import Toaster from "./Toaster"; // Import the Toaster component
 import {
 	sectionsData,
 	educationForm,
@@ -34,6 +36,9 @@ function InputForm() {
 	const [editTitle, setEditTitle] = useState("");
 	const [showModal, setShowModal] = useState(false); // State for controlling modal visibility
 	const [deleteSectionId, setDeleteSectionId] = useState(null); // State to track the section to be deleted
+	const [toastMessage, setToastMessage] = useState(""); // State for toaster message
+	const [toastType, setToastType] = useState("success"); // State for toaster type
+	const [isToastVisible, setIsToastVisible] = useState(false); // State for toaster visibility
 
 	const formTypes = {
 		Education: educationForm,
@@ -96,6 +101,9 @@ function InputForm() {
 		});
 
 		setSections(updatedSections);
+		setToastMessage("Saved successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleAddEntry = (id, data) => {
@@ -134,6 +142,9 @@ function InputForm() {
 		});
 
 		setSections(updatedSections);
+		setToastMessage("Entry added successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleDeleteEntry = (sectionId, itemIndex) => {
@@ -145,6 +156,9 @@ function InputForm() {
 		});
 
 		setSections(updatedSections);
+		setToastMessage("Entry deleted successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleAddSection = () => {
@@ -159,6 +173,13 @@ function InputForm() {
 	};
 
 	const handleSaveNewSection = () => {
+		if (!newSectionName.trim()) {
+			setToastMessage("Section name cannot be empty.");
+			setToastType("error");
+			setIsToastVisible(true);
+			return;
+		}
+
 		const newSection = {
 			title: newSectionName,
 			type: newSectionType,
@@ -168,6 +189,9 @@ function InputForm() {
 		};
 		setSections([...sections, newSection]);
 		handleCancelAddSection();
+		setToastMessage("Section added successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleDeleteSection = (id) => {
@@ -183,6 +207,9 @@ function InputForm() {
 		setSections(updatedSections);
 		setActiveAccordionId(null); // Collapse active accordion after deleting
 		setShowModal(false); // Close the modal
+		setToastMessage("Section deleted successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleMoveSection = (index, direction) => {
@@ -233,16 +260,37 @@ function InputForm() {
 
 	// Save the new name
 	const handleSaveRename = (index) => {
+		if (!editTitle.trim()) {
+			setToastMessage("Section title cannot be empty.");
+			setToastType("error");
+			setIsToastVisible(true);
+			return;
+		}
+
 		const updatedSections = [...sections];
 		updatedSections[index].title = editTitle;
 		setSections(updatedSections);
 		setEditingIndex(-1);
+		setToastMessage("Section renamed successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	// Cancel the rename action
 	const handleCancelRename = () => {
 		setEditingIndex(-1);
 	};
+
+	// Effect to automatically hide the toaster after a few seconds
+	useEffect(() => {
+		if (isToastVisible) {
+			const timer = setTimeout(() => {
+				setIsToastVisible(false);
+			}, 3000); // Hide after 3 seconds
+
+			return () => clearTimeout(timer);
+		}
+	}, [isToastVisible]);
 
 	return (
 		<div className="content">
@@ -375,6 +423,11 @@ function InputForm() {
 				onClose={() => setShowModal(false)}
 				onConfirm={confirmDeleteSection}
 				message="Are you sure you want to delete this section?"
+			/>
+			<Toaster
+				message={toastMessage}
+				type={toastType}
+				isVisible={isToastVisible}
 			/>
 		</div>
 	);

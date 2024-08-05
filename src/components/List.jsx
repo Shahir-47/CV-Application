@@ -1,12 +1,17 @@
-import { useState } from "react";
+// List.js
+import React, { useState, useEffect } from "react";
 import Form from "./Form";
 import Modal from "./Modal"; // Import the Modal component
+import Toaster from "./Toaster"; // Import the Toaster component
 
 function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
 	const [isAdding, setIsAdding] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [deleteItemIndex, setDeleteItemIndex] = useState(null);
+	const [toastMessage, setToastMessage] = useState(""); // State for toaster message
+	const [toastType, setToastType] = useState("success"); // State for toaster type
+	const [isToastVisible, setIsToastVisible] = useState(false); // State for toaster visibility
 
 	const handleItemClick = (index) => {
 		if (isAdding) {
@@ -23,6 +28,9 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 	const handleSaveNew = (newData) => {
 		onAdd(newData);
 		setIsAdding(false);
+		setToastMessage("Entry added successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleCancelAdd = () => {
@@ -42,6 +50,9 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 		onDelete(deleteItemIndex);
 		setShowModal(false); // Close the modal after confirming
 		setActiveIndex(-1); // Close the form after deleting an item
+		setToastMessage("Entry deleted successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
 
 	const handleMoveItem = (index, direction) => {
@@ -72,7 +83,21 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 		);
 
 		onSave(null, updatedData); // Save updated data
+		setToastMessage("Item moved successfully!");
+		setToastType("success");
+		setIsToastVisible(true);
 	};
+
+	// Effect to automatically hide the toaster after a few seconds
+	useEffect(() => {
+		if (isToastVisible) {
+			const timer = setTimeout(() => {
+				setIsToastVisible(false);
+			}, 3000); // Hide after 3 seconds
+
+			return () => clearTimeout(timer);
+		}
+	}, [isToastVisible]);
 
 	return (
 		<div>
@@ -141,6 +166,11 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 				onClose={() => setShowModal(false)}
 				onConfirm={confirmDeleteItem}
 				message="Are you sure you want to delete this item?"
+			/>
+			<Toaster
+				message={toastMessage}
+				type={toastType}
+				isVisible={isToastVisible}
 			/>
 		</div>
 	);
