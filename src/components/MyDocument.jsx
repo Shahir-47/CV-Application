@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		fontFamily: "Open Sans", // Use registered font family
 	},
 	header: {
-		marginBottom: 3,
+		marginBottom: 1,
 		textAlign: "center",
 	},
 	link: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 	},
 	spaceText: {
 		fontSize: 12,
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	text: {
 		fontSize: 12,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		justifyContent: "center",
 		gap: 10,
-		marginBottom: 3,
+		marginBottom: 5,
 	},
 	contactItem: {
 		flexDirection: "row",
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
 	},
 	separator: {
 		borderBottomWidth: 1,
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	educationItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	universityRow: {
 		flexDirection: "row",
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 	workExperienceItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	positionRow: {
 		flexDirection: "row",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 		marginBottom: 0,
 	},
 	projectItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	projectHeader: {
 		flexDirection: "row",
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
 		color: "#0000FF",
 	},
 	achievementItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	achievementRow: {
 		flexDirection: "row",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
 		marginBottom: 0,
 	},
 	certificationItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	certificationRow: {
 		flexDirection: "row",
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	otherItem: {
-		marginBottom: 3,
+		marginBottom: 1,
 	},
 	otherRow: {
 		flexDirection: "row",
