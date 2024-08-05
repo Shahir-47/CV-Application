@@ -37,10 +37,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFFFFF",
 		padding: 10,
 		paddingBottom: 0,
+		paddingTop: 5,
 		fontFamily: "Open Sans", // Use registered font family
 	},
 	header: {
-		marginBottom: 1,
+		marginBottom: 5,
 		textAlign: "center",
 	},
 	linkBlack: {
@@ -54,14 +55,14 @@ const styles = StyleSheet.create({
 		color: "#0000FF", // Link color
 	},
 	spaceText: {
-		fontSize: 12,
+		fontSize: 10,
 		marginBottom: 1,
 	},
 	text: {
-		fontSize: 12,
+		fontSize: 10,
 	},
 	boldText: {
-		fontSize: 12,
+		fontSize: 10,
 		fontWeight: 600, // Use the registered bold font
 	},
 	icon: {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	sectionTitle: {
-		fontSize: 14,
+		fontSize: 12,
 		fontWeight: 900,
 	},
 	separator: {
@@ -105,14 +106,14 @@ const styles = StyleSheet.create({
 		marginLeft: 5,
 	},
 	bulletText: {
-		fontSize: 12,
+		fontSize: 10,
 	},
 	skillItem: {
 		marginBottom: 0,
 		flexDirection: "row", // Make skill and specifics part of the same line
 	},
 	skillText: {
-		fontSize: 12,
+		fontSize: 10,
 	},
 	workExperienceItem: {
 		marginBottom: 1,
@@ -136,13 +137,13 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	projectName: {
-		fontSize: 12,
+		fontSize: 10,
 		fontWeight: 600,
 		marginRight: 2,
 		color: "#000000", // Project name and brackets in black
 	},
 	projectLink: {
-		fontSize: 10,
+		fontSize: 9,
 		color: "#0000FF",
 	},
 	achievementItem: {
@@ -250,7 +251,7 @@ const MyDocument = ({ sections, title }) => (
 					{section.type === "Personal" && (
 						<View>
 							<View style={styles.header}>
-								<Text style={{ fontSize: 24 }}>
+								<Text style={{ fontSize: 20 }}>
 									{section.data?.fullName || ""}
 								</Text>
 							</View>
@@ -501,7 +502,7 @@ const MyDocument = ({ sections, title }) => (
 													<Text style={styles.boldText}>
 														[
 														<Link
-															style={styles.link}
+															style={styles.projectLink}
 															src={certification.content.certificationLink}
 														>
 															{certification.content.certificationLink}
@@ -572,7 +573,10 @@ const MyDocument = ({ sections, title }) => (
 												{other?.content?.link && (
 													<Text style={styles.boldText}>
 														[
-														<Link style={styles.link} src={other.content.link}>
+														<Link
+															style={styles.projectLink}
+															src={other.content.link}
+														>
 															{other.content.link}
 														</Link>
 														]
