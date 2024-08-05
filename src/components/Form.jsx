@@ -6,6 +6,7 @@ import "../styles/Form.css";
 function Form({ form, initialValues, onSave, onCancel }) {
 	const [formData, setFormData] = useState({});
 	const [descriptions, setDescriptions] = useState([]);
+	const [errors, setErrors] = useState({});
 
 	useEffect(() => {
 		setFormData(initialValues);
@@ -40,7 +41,12 @@ function Form({ form, initialValues, onSave, onCancel }) {
 	};
 
 	const handleSave = () => {
-		onSave({ ...formData, description: descriptions });
+		const newErrors = validateForm();
+		if (Object.keys(newErrors).length === 0) {
+			onSave({ ...formData, description: descriptions });
+		} else {
+			setErrors(newErrors);
+		}
 	};
 
 	const handleClear = () => {
@@ -52,6 +58,17 @@ function Form({ form, initialValues, onSave, onCancel }) {
 
 		setFormData(clearedData);
 		setDescriptions([]); // Clear all descriptions
+		setErrors({}); // Clear all errors
+	};
+
+	const validateForm = () => {
+		const newErrors = {};
+		form.fields.forEach((field) => {
+			if (!formData[field.name]?.trim() && field.required) {
+				newErrors[field.name] = `${field.label} is required`;
+			}
+		});
+		return newErrors;
 	};
 
 	// Determine if the description field should be shown
@@ -65,33 +82,26 @@ function Form({ form, initialValues, onSave, onCancel }) {
 
 	// Validation logic for required fields
 	const isFormInvalid = () => {
-		const validations = {
-			"education-details": () => !formData.universityName?.trim(),
-			"work-experience-details": () => !formData.position?.trim(),
-			"project-details": () => !formData.projectName?.trim(),
-			"achievements-details": () => !formData.achievement?.trim(),
-			"certifications-details": () => !formData.certification?.trim(),
-			"skills-details": () =>
-				!formData.skill?.trim() || !formData.specifics?.trim(),
-			"languages-details": () => !formData.language?.trim(),
-			"hobbies-details": () => !formData.hobby?.trim(),
-			"interests-details": () => !formData.interest?.trim(),
-			"other-details": () => !formData.title?.trim(),
-		};
-		return validations[form.id]?.();
+		return Object.keys(validateForm()).length > 0;
 	};
 
 	return (
 		<form id={form.id}>
+			<p className="required-info">
+				Fields with a <span className="required-asterisk">*</span> are required.
+			</p>
 			{form.fields.map((field, index) => (
-				<InputField
-					key={index}
-					label={field.label}
-					type={field.type}
-					name={field.name}
-					value={formData[field.name] || ""}
-					onChange={handleInputChange}
-				/>
+				<div key={index} className="form-group">
+					<InputField
+						label={field.label}
+						type={field.type}
+						name={field.name}
+						value={formData[field.name] || ""}
+						onChange={handleInputChange}
+						required={field.required}
+						error={errors[field.name]}
+					/>
+				</div>
 			))}
 			{shouldShowDescription && (
 				<div className="description">
@@ -154,6 +164,7 @@ Form.propTypes = {
 				label: PropTypes.string.isRequired,
 				type: PropTypes.string.isRequired,
 				name: PropTypes.string.isRequired,
+				required: PropTypes.bool, // Add required prop to the field definition
 			})
 		).isRequired,
 	}).isRequired,

@@ -31,3 +31,17 @@
 .accordion-content form div.form-actions {
 	justify-content: space-evenly;
 }
+
+.required-asterisk {
+	color: red;
+}
+
+.error-message {
+	color: red;
+	font-size: 0.875em;
+	margin-top: 0.25em;
+}
+
+.required-info {
+	margin-bottom: 1em;
+}

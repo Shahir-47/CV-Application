@@ -3,7 +3,7 @@ export const workExperienceForm = {
 	id: "work-experience-details",
 	fields: [
 		{ label: "Company Name", type: "text", name: "companyName" },
-		{ label: "Position", type: "text", name: "position" },
+		{ label: "Position", type: "text", name: "position", required: true },
 		{ label: "Location", type: "text", name: "location" },
 		{ label: "Start Date", type: "month", name: "startDate" },
 		{
@@ -22,7 +22,12 @@ export const workExperienceForm = {
 export const projectForm = {
 	id: "project-details",
 	fields: [
-		{ label: "Project Name", type: "text", name: "projectName" },
+		{
+			label: "Project Name",
+			type: "text",
+			name: "projectName",
+			required: true,
+		},
 		{ label: "Link", type: "url", name: "projectUrl" },
 	],
 };
@@ -30,7 +35,7 @@ export const projectForm = {
 export const achievementsForm = {
 	id: "achievements-details",
 	fields: [
-		{ label: "Achievement", type: "text", name: "achievement" },
+		{ label: "Achievement", type: "text", name: "achievement", required: true },
 		{ label: "Date", type: "month", name: "date" },
 	],
 };
@@ -60,7 +65,12 @@ export const achievementsItems = {
 export const certificationsForm = {
 	id: "certifications-details",
 	fields: [
-		{ label: "Certification", type: "text", name: "certification" },
+		{
+			label: "Certification",
+			type: "text",
+			name: "certification",
+			required: true,
+		},
 		{ label: "Date", type: "month", name: "date" },
 		{ label: "Link", type: "url", name: "certificationLink" },
 	],
@@ -91,8 +101,8 @@ export const certificationsItems = {
 export const skillsForm = {
 	id: "skills-details",
 	fields: [
-		{ label: "Skill", type: "text", name: "skill" },
-		{ label: "Specifics", type: "text", name: "specifics" },
+		{ label: "Skill", type: "text", name: "skill", required: true },
+		{ label: "Specifics", type: "text", name: "specifics", required: true },
 	],
 };
 
@@ -119,7 +129,7 @@ export const skillsItems = {
 export const languagesForm = {
 	id: "languages-details",
 	fields: [
-		{ label: "Language", type: "text", name: "language" },
+		{ label: "Language", type: "text", name: "language", required: true },
 		{ label: "Proficiency", type: "text", name: "proficiency" },
 	],
 };
@@ -140,7 +150,7 @@ export const languagesItems = {
 
 export const hobbiesForm = {
 	id: "hobbies-details",
-	fields: [{ label: "Hobby", type: "text", name: "hobby" }],
+	fields: [{ label: "Hobby", type: "text", name: "hobby", required: true }],
 };
 
 export const hobbiesItems = {
@@ -163,7 +173,9 @@ export const hobbiesItems = {
 
 export const interestsForm = {
 	id: "interests-details",
-	fields: [{ label: "Interest", type: "text", name: "interest" }],
+	fields: [
+		{ label: "Interest", type: "text", name: "interest", required: true },
+	],
 };
 
 export const interestsItems = {
@@ -187,7 +199,7 @@ export const interestsItems = {
 export const otherForm = {
 	id: "other-details",
 	fields: [
-		{ label: "Title", type: "text", name: "title" },
+		{ label: "Title", type: "text", name: "title", required: true },
 		{ label: "Date", type: "month", name: "date" },
 		{ label: "Location", type: "text", name: "location" },
 		{ label: "Link", type: "url", name: "link" },
@@ -308,7 +320,12 @@ export const personalDetails = {
 export const educationForm = {
 	id: "education-details",
 	fields: [
-		{ label: "University Name", type: "text", name: "universityName" },
+		{
+			label: "University Name",
+			type: "text",
+			name: "universityName",
+			required: true,
+		},
 		{ label: "Degree", type: "text", name: "degree" },
 		{ label: "Location", type: "text", name: "location" },
 		{ label: "Graduation Month & Year", type: "month", name: "graduationDate" },

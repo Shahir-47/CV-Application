@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
 
-function InputField({ label, type, name, value, onChange }) {
+function InputField({ label, type, name, value, onChange, required, error }) {
 	return (
 		<div className="input-field">
-			<label htmlFor={name}>{label}</label>
+			<label htmlFor={name}>
+				{label} {required && <span className="required-asterisk">*</span>}
+			</label>
 			{type === "month" && name === "endDate" ? (
 				<select name={name} value={value || "Present"} onChange={onChange}>
+					<option value="">Select End Date</option>
 					<option value="Present">Present</option>
 					{/* Populate with past dates */}
 					{Array.from({ length: new Date().getFullYear() - 1999 }, (_, i) => (
@@ -28,6 +31,7 @@ function InputField({ label, type, name, value, onChange }) {
 					onChange={onChange}
 				/>
 			)}
+			{error && <span className="error-message">{error}</span>}
 		</div>
 	);
 }
@@ -38,6 +42,8 @@ InputField.propTypes = {
 	name: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
+	required: PropTypes.bool,
+	error: PropTypes.string,
 };
 
 export default InputField;
