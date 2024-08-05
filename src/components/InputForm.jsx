@@ -19,13 +19,18 @@ import {
 import "../styles/InputForm.css";
 
 function InputForm() {
-	const [activeAccordionIndex, setActiveAccordionIndex] = useState(-1);
-	const [sections, setSections] = useState(sectionsData); // Use sectionsData to initialize the state
+	const [activeAccordionId, setActiveAccordionId] = useState(null);
+	const [sections, setSections] = useState(
+		sectionsData.map((section, index) => ({
+			...section,
+			id: `${section.title}-${index}`, // Assign a unique ID to each section
+		}))
+	);
 	const [isAddingSection, setIsAddingSection] = useState(false);
 	const [newSectionName, setNewSectionName] = useState("");
 	const [newSectionType, setNewSectionType] = useState("Education");
-	const [editingIndex, setEditingIndex] = useState(-1); // Track which section is being renamed
-	const [editTitle, setEditTitle] = useState(""); // Track the new title being edited
+	const [editingIndex, setEditingIndex] = useState(-1);
+	const [editTitle, setEditTitle] = useState("");
 
 	const formTypes = {
 		Education: educationForm,
@@ -40,103 +45,108 @@ function InputForm() {
 		Other: otherForm,
 	};
 
-	const handleAccordionClick = (index) => {
+	const handleAccordionClick = (id) => {
 		// Disable toggle action if in edit mode
 		if (editingIndex !== -1) return;
 
 		setIsAddingSection(false); // Collapse new section form
-		setActiveAccordionIndex((prevIndex) => (prevIndex === index ? -1 : index));
+		setActiveAccordionId((prevId) => (prevId === id ? null : id));
 	};
 
-	const handleSaveDetails = (index, itemIndex, data) => {
-		const updatedSections = [...sections];
-		const section = updatedSections[index];
-
-		// Update the entire data array within the section
-		if (itemIndex === null) {
-			// Update entire section data array
-			section.data = data;
-		} else if (section.type === "Personal") {
-			section.data = data; // Update personal details
-		} else {
-			section.data[itemIndex] = {
-				...section.data[itemIndex],
-				title:
-					data[
-						section.type === "Education"
-							? "universityName"
-							: section.type === "Work Experience"
-							? "position"
-							: section.type === "Project"
-							? "projectName"
-							: section.type === "Achievement"
-							? "achievement"
-							: section.type === "Certification"
-							? "certification"
-							: section.type === "Skill"
-							? "skill"
-							: section.type === "Language"
-							? "language"
-							: section.type === "Hobby"
-							? "hobby"
-							: section.type === "Interest"
-							? "interest"
-							: "title" // Handle the "Other" form
-					], // Update title based on section type
-				content: { ...data },
-			};
-		}
+	const handleSaveDetails = (id, itemIndex, data) => {
+		const updatedSections = sections.map((section) => {
+			if (section.id === id) {
+				if (itemIndex === null) {
+					section.data = data;
+				} else if (section.type === "Personal") {
+					section.data = data;
+				} else {
+					section.data[itemIndex] = {
+						...section.data[itemIndex],
+						title:
+							data[
+								section.type === "Education"
+									? "universityName"
+									: section.type === "Work Experience"
+									? "position"
+									: section.type === "Project"
+									? "projectName"
+									: section.type === "Achievement"
+									? "achievement"
+									: section.type === "Certification"
+									? "certification"
+									: section.type === "Skill"
+									? "skill"
+									: section.type === "Language"
+									? "language"
+									: section.type === "Hobby"
+									? "hobby"
+									: section.type === "Interest"
+									? "interest"
+									: "title"
+							],
+						content: { ...data },
+					};
+				}
+			}
+			return section;
+		});
 
 		setSections(updatedSections);
 	};
 
-	const handleAddEntry = (index, data) => {
-		const updatedSections = [...sections];
-		const section = updatedSections[index];
+	const handleAddEntry = (id, data) => {
+		const updatedSections = sections.map((section) => {
+			if (section.id === id) {
+				const newEntry = {
+					title:
+						data[
+							section.type === "Education"
+								? "universityName"
+								: section.type === "Work Experience"
+								? "position"
+								: section.type === "Project"
+								? "projectName"
+								: section.type === "Achievement"
+								? "achievement"
+								: section.type === "Certification"
+								? "certification"
+								: section.type === "Skill"
+								? "skill"
+								: section.type === "Language"
+								? "language"
+								: section.type === "Hobby"
+								? "hobby"
+								: section.type === "Interest"
+								? "interest"
+								: "title"
+						],
+					content: { ...data },
+					position: section.data.length,
+				};
 
-		const newEntry = {
-			title:
-				data[
-					section.type === "Education"
-						? "universityName"
-						: section.type === "Work Experience"
-						? "position"
-						: section.type === "Project"
-						? "projectName"
-						: section.type === "Achievement"
-						? "achievement"
-						: section.type === "Certification"
-						? "certification"
-						: section.type === "Skill"
-						? "skill"
-						: section.type === "Language"
-						? "language"
-						: section.type === "Hobby"
-						? "hobby"
-						: section.type === "Interest"
-						? "interest"
-						: "title" // Handle the "Other" form
-				],
-			content: { ...data },
-			// Add a position field to each entry to keep track of its position
-			position: section.data.length,
-		};
+				section.data.push(newEntry);
+			}
+			return section;
+		});
 
-		section.data.push(newEntry);
 		setSections(updatedSections);
 	};
 
-	const handleDeleteEntry = (sectionIndex, itemIndex) => {
-		const updatedSections = [...sections];
-		updatedSections[sectionIndex].data = updatedSections[
-			sectionIndex
-		].data.filter((_, i) => i !== itemIndex);
+	const handleDeleteEntry = (sectionId, itemIndex) => {
+		const updatedSections = sections.map((section) => {
+			if (section.id === sectionId) {
+				section.data = section.data.filter((_, i) => i !== itemIndex);
+			}
+			return section;
+		});
+
 		setSections(updatedSections);
 	};
 
 	const handleAddSection = () => {
 		setIsAddingSection(true);
-		setActiveAccordionIndex(-1); // Collapse all existing accordions
+		setActiveAccordionId(null); // Collapse all existing accordions
 	};
 
 	const handleCancelAddSection = () => {
@@ -151,15 +161,16 @@ function InputForm() {
 			type: newSectionType,
 			data: [],
 			form: formTypes[newSectionType],
+			id: `${newSectionName}-${sections.length}`, // Assign a unique ID to the new section
 		};
 		setSections([...sections, newSection]);
-		handleCancelAddSection(); // Reset form and close
+		handleCancelAddSection();
 	};
 
-	const handleDeleteSection = (index) => {
-		const updatedSections = sections.filter((_, i) => i !== index);
+	const handleDeleteSection = (id) => {
+		const updatedSections = sections.filter((section) => section.id !== id);
 		setSections(updatedSections);
-		setActiveAccordionIndex(-1); // Collapse active accordion after deleting
+		setActiveAccordionId(null); // Collapse active accordion after deleting
 	};
 
 	const handleMoveSection = (index, direction) => {
@@ -167,14 +178,12 @@ function InputForm() {
 		let newIndex = index;
 
 		if (direction === "up" && index > 0) {
-			// Swap the current section with the one above it
 			[updatedSections[index], updatedSections[index - 1]] = [
 				updatedSections[index - 1],
 				updatedSections[index],
 			];
 			newIndex = index - 1;
 		} else if (direction === "down" && index < updatedSections.length - 1) {
-			// Swap the current section with the one below it
 			[updatedSections[index], updatedSections[index + 1]] = [
 				updatedSections[index + 1],
 				updatedSections[index],
@@ -184,14 +193,16 @@ function InputForm() {
 
 		setSections(updatedSections);
 
-		// Maintain active accordion and update editing index
-		setActiveAccordionIndex((prevIndex) =>
-			prevIndex === index
-				? newIndex
-				: prevIndex === newIndex
-				? index
-				: prevIndex
-		);
+		// Ensure the active section remains active
+		setActiveAccordionId((prevId) => {
+			if (prevId === sections[index].id) {
+				// If the active section is the one being moved, it should remain active
+				return updatedSections[newIndex].id;
+			} else {
+				// Otherwise, keep the current active section
+				return prevId;
+			}
+		});
 
 		setEditingIndex((prevIndex) =>
 			prevIndex === index
@@ -204,21 +215,21 @@ function InputForm() {
 
 	// Handle rename action
 	const handleRenameSection = (index) => {
-		setEditingIndex(index); // Set the section to be edited
-		setEditTitle(sections[index].title); // Set the current title as the initial edit title
+		setEditingIndex(index);
+		setEditTitle(sections[index].title);
 	};
 
 	// Save the new name
 	const handleSaveRename = (index) => {
 		const updatedSections = [...sections];
-		updatedSections[index].title = editTitle; // Update the section title
+		updatedSections[index].title = editTitle;
 		setSections(updatedSections);
-		setEditingIndex(-1); // Exit edit mode
+		setEditingIndex(-1);
 	};
 
 	// Cancel the rename action
 	const handleCancelRename = () => {
-		setEditingIndex(-1); // Exit edit mode
+		setEditingIndex(-1);
 	};
 
 	return (
@@ -226,21 +237,21 @@ function InputForm() {
 			<div className="input-form">
 				{sections.map((section, index) => (
 					<Accordion
-						key={index}
+						key={section.id} // Use the unique ID as the key
 						title={section.title}
-						isActive={activeAccordionIndex === index}
-						onClick={() => handleAccordionClick(index)}
-						editing={editingIndex === index} // Pass editing state
+						isActive={activeAccordionId === section.id}
+						onClick={() => handleAccordionClick(section.id)}
+						editing={editingIndex === index}
 						editTitle={editTitle}
 						onTitleChange={setEditTitle}
 						controls={
-							editingIndex === index ? ( // Check if this section is being edited
+							editingIndex === index ? (
 								<div className="section-controls">
 									<button
 										type="button"
 										onClick={() => handleSaveRename(index)}
 										className="save-button"
-										disabled={!editTitle.trim()} // Disable save button if field is empty
+										disabled={!editTitle.trim()}
 									>
 										Save
 									</button>
@@ -258,7 +269,7 @@ function InputForm() {
 										type="button"
 										onClick={() => handleMoveSection(index, "up")}
 										className="move-up-button"
-										disabled={index === 0} // Disable if at the top
+										disabled={index === 0}
 									>
 										Up
 									</button>
@@ -266,13 +277,13 @@ function InputForm() {
 										type="button"
 										onClick={() => handleMoveSection(index, "down")}
 										className="move-down-button"
-										disabled={index === sections.length - 1} // Disable if at the bottom
+										disabled={index === sections.length - 1}
 									>
 										Down
 									</button>
 									<button
 										type="button"
-										onClick={() => handleDeleteSection(index)}
+										onClick={() => handleDeleteSection(section.id)}
 										className="delete-section-button"
 									>
 										Delete
@@ -292,18 +303,20 @@ function InputForm() {
 							<Form
 								form={section.form}
 								initialValues={section.data || {}}
-								onSave={(data) => handleSaveDetails(index, null, data)}
-								onCancel={() => setActiveAccordionIndex(-1)} // Close accordion on cancel
+								onSave={(data) => handleSaveDetails(section.id, null, data)}
+								onCancel={() => setActiveAccordionId(null)}
 							/>
 						) : (
 							<List
 								items={{ form: section.form }}
 								onSave={(itemIndex, formData) =>
-									handleSaveDetails(index, itemIndex, formData)
+									handleSaveDetails(section.id, itemIndex, formData)
 								}
 								data={section.data}
-								onAdd={(data) => handleAddEntry(index, data)}
-								onDelete={(itemIndex) => handleDeleteEntry(index, itemIndex)}
+								onAdd={(data) => handleAddEntry(section.id, data)}
+								onDelete={(itemIndex) =>
+									handleDeleteEntry(section.id, itemIndex)
+								}
 							/>
 						)}
 					</Accordion>
