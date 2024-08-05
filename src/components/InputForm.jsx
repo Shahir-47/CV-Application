@@ -48,8 +48,11 @@ function InputForm() {
 		const updatedSections = [...sections];
 		const section = updatedSections[index];
 
-		// Update the data within the section
-		if (section.type === "Personal") {
+		// Update the entire data array within the section
+		if (itemIndex === null) {
+			// Update entire section data array
+			section.data = data;
+		} else if (section.type === "Personal") {
 			section.data = data; // Update personal details
 		} else {
 			section.data[itemIndex] = {
@@ -111,6 +114,8 @@ function InputForm() {
 						: "title" // Handle the "Other" form
 				],
 			content: { ...data },
+			// Add a position field to each entry to keep track of its position
+			position: section.data.length,
 		};
 
 		section.data.push(newEntry);
@@ -230,8 +235,8 @@ function InputForm() {
 						) : (
 							<List
 								items={{ form: section.form }}
-								onSave={(itemIndex, data) =>
-									handleSaveDetails(index, itemIndex, data)
+								onSave={(itemIndex, formData) =>
+									handleSaveDetails(index, itemIndex, formData)
 								}
 								data={section.data}
 								onAdd={(data) => handleAddEntry(index, data)}

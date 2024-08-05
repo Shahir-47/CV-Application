@@ -1,4 +1,3 @@
-// List.jsx
 import { useState } from "react";
 import Form from "./Form";
 
@@ -35,6 +34,36 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 		onDelete(index); // Call the onDelete prop with the index to delete the item
 	};
 
+	const handleMoveItem = (index, direction) => {
+		const updatedData = [...data];
+		let newIndex = index;
+
+		if (direction === "up" && index > 0) {
+			[updatedData[index], updatedData[index - 1]] = [
+				updatedData[index - 1],
+				updatedData[index],
+			];
+			newIndex = index - 1;
+		} else if (direction === "down" && index < updatedData.length - 1) {
+			[updatedData[index], updatedData[index + 1]] = [
+				updatedData[index + 1],
+				updatedData[index],
+			];
+			newIndex = index + 1;
+		}
+
+		// Ensure the active item stays active when moved
+		setActiveIndex((prevIndex) =>
+			prevIndex === index
+				? newIndex
+				: prevIndex === newIndex
+				? index
+				: prevIndex
+		);
+
+		onSave(null, updatedData); // Save updated data
+	};
+
 	return (
 		<div>
 			{data.map((item, index) => (
@@ -44,13 +73,31 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 				>
 					<div className="item-header">
 						<h2 onClick={() => handleItemClick(index)}>{item.title}</h2>
-						<button
-							type="button"
-							className="delete-button"
-							onClick={() => handleDelete(index)}
-						>
-							Delete
-						</button>
+						<div className="item-controls">
+							<button
+								type="button"
+								className="move-up-button"
+								onClick={() => handleMoveItem(index, "up")}
+								disabled={index === 0} // Disable if at the top
+							>
+								Up
+							</button>
+							<button
+								type="button"
+								className="move-down-button"
+								onClick={() => handleMoveItem(index, "down")}
+								disabled={index === data.length - 1} // Disable if at the bottom
+							>
+								Down
+							</button>
+							<button
+								type="button"
+								className="delete-button"
+								onClick={() => handleDelete(index)}
+							>
+								Delete
+							</button>
+						</div>
 					</div>
 					{activeIndex === index && (
 						<div className="item-content">
