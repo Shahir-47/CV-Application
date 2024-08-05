@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
 		marginBottom: 1,
 		textAlign: "center",
 	},
+	linkBlack: {
+		fontSize: 10,
+		textDecoration: "underline",
+		color: "#000000", // Black link color
+	},
 	link: {
 		fontSize: 10, // Smaller font size for the link
 		textDecoration: "underline",
@@ -249,14 +254,14 @@ const MyDocument = ({ sections }) => (
 								{section.data?.email && (
 									<View style={styles.contactItem}>
 										<Image style={styles.icon} src={EmailIcon} />
-										<Text style={styles.link}>{section.data.email}</Text>
+										<Text style={styles.linkBlack}>{section.data.email}</Text>
 									</View>
 								)}
 								{section.data?.github && (
 									<View style={styles.contactItem}>
 										<Image style={styles.icon} src={GitHubIcon} />
 										<Link
-											style={styles.link}
+											style={styles.linkBlack}
 											src={`https://${section.data.github}`}
 										>
 											{extractUsername(section.data.github)}
@@ -267,7 +272,7 @@ const MyDocument = ({ sections }) => (
 									<View style={styles.contactItem}>
 										<Image style={styles.icon} src={LinkedInIcon} />
 										<Link
-											style={styles.link}
+											style={styles.linkBlack}
 											src={`https://${section.data.linkedin}`}
 										>
 											{extractUsername(section.data.linkedin)}

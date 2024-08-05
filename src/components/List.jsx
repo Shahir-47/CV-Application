@@ -32,7 +32,7 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 
 	const handleDelete = (index) => {
 		onDelete(index); // Call the onDelete prop with the index to delete the item
-		setActiveIndex(-1); // Close the item if it's open
+		setActiveIndex(-1); // Close the form after deleting an item
 	};
 
 	const handleMoveItem = (index, direction) => {
