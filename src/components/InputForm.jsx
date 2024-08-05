@@ -1,4 +1,4 @@
-// InputForm.js
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
@@ -23,12 +23,15 @@ import "../styles/InputForm.css";
 
 function InputForm() {
 	const [activeAccordionId, setActiveAccordionId] = useState(null);
-	const [sections, setSections] = useState(
-		sectionsData.map((section, index) => ({
-			...section,
-			id: `${section.title}-${index}`, // Assign a unique ID to each section
-		}))
-	);
+	const [sections, setSections] = useState(() => {
+		const savedSections = localStorage.getItem("sectionsData");
+		return savedSections
+			? JSON.parse(savedSections)
+			: sectionsData.map((section, index) => ({
+					...section,
+					id: `${section.title}-${index}`,
+			  }));
+	});
 	const [isAddingSection, setIsAddingSection] = useState(false);
 	const [newSectionName, setNewSectionName] = useState("");
 	const [newSectionType, setNewSectionType] = useState("Education");
@@ -104,6 +107,9 @@ function InputForm() {
 		setToastMessage("Saved successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	const handleAddEntry = (id, data) => {
@@ -145,6 +151,9 @@ function InputForm() {
 		setToastMessage("Entry added successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	const handleDeleteEntry = (sectionId, itemIndex) => {
@@ -159,6 +168,9 @@ function InputForm() {
 		setToastMessage("Entry deleted successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	const handleAddSection = () => {
@@ -187,11 +199,15 @@ function InputForm() {
 			form: formTypes[newSectionType],
 			id: `${newSectionName}-${sections.length}`, // Assign a unique ID to the new section
 		};
-		setSections([...sections, newSection]);
+		const updatedSections = [...sections, newSection];
+		setSections(updatedSections);
 		handleCancelAddSection();
 		setToastMessage("Section added successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	const handleDeleteSection = (id) => {
@@ -210,6 +226,9 @@ function InputForm() {
 		setToastMessage("Section deleted successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	const handleMoveSection = (index, direction) => {
@@ -250,6 +269,9 @@ function InputForm() {
 				? index
 				: prevIndex
 		);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	// Handle rename action
@@ -274,6 +296,9 @@ function InputForm() {
 		setToastMessage("Section renamed successfully!");
 		setToastType("success");
 		setIsToastVisible(true);
+
+		// Save updated sections to local storage
+		localStorage.setItem("sectionsData", JSON.stringify(updatedSections));
 	};
 
 	// Cancel the rename action
