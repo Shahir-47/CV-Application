@@ -183,13 +183,23 @@ function InputForm() {
 		}
 
 		setSections(updatedSections);
+
+		// Maintain active accordion and update editing index
 		setActiveAccordionIndex((prevIndex) =>
 			prevIndex === index
 				? newIndex
 				: prevIndex === newIndex
 				? index
 				: prevIndex
-		); // Maintain active accordion
+		);
+
+		setEditingIndex((prevIndex) =>
+			prevIndex === index
+				? newIndex
+				: prevIndex === newIndex
+				? index
+				: prevIndex
+		);
 	};
 
 	// Handle rename action
