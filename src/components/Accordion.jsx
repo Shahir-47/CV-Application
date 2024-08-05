@@ -1,10 +1,18 @@
-// Accordion.jsx
 import PropTypes from "prop-types";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
 import "../styles/Accordion.css";
 
-function Accordion({ title, children, isActive, onClick, controls }) {
+function Accordion({
+	title,
+	children,
+	isActive,
+	onClick,
+	controls,
+	editing,
+	onTitleChange,
+	editTitle,
+}) {
 	return (
 		<div className="accordion">
 			<div
@@ -13,9 +21,17 @@ function Accordion({ title, children, isActive, onClick, controls }) {
 			>
 				<div
 					style={{ flexGrow: 1, display: "flex", alignItems: "center" }}
-					onClick={onClick}
+					onClick={!editing ? onClick : undefined} // Disable onClick if editing
 				>
-					<h2>{title}</h2>
+					{editing ? (
+						<input
+							type="text"
+							value={editTitle}
+							onChange={(e) => onTitleChange(e.target.value)}
+						/>
+					) : (
+						<h2>{title}</h2>
+					)}
 					{isActive ? (
 						<img src={upArrow} alt="up arrow" />
 					) : (
@@ -35,6 +51,9 @@ Accordion.propTypes = {
 	isActive: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,
 	controls: PropTypes.node, // Add this line to accept controls
+	editing: PropTypes.bool.isRequired,
+	onTitleChange: PropTypes.func.isRequired,
+	editTitle: PropTypes.string.isRequired,
 };
 
 export default Accordion;

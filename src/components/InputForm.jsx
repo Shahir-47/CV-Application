@@ -24,6 +24,8 @@ function InputForm() {
 	const [isAddingSection, setIsAddingSection] = useState(false);
 	const [newSectionName, setNewSectionName] = useState("");
 	const [newSectionType, setNewSectionType] = useState("Education");
+	const [editingIndex, setEditingIndex] = useState(-1); // Track which section is being renamed
+	const [editTitle, setEditTitle] = useState(""); // Track the new title being edited
 
 	const formTypes = {
 		Education: educationForm,
@@ -39,7 +41,9 @@ function InputForm() {
 	};
 
 	const handleAccordionClick = (index) => {
-		// Collapse the "Add New Section" form whenever an accordion is clicked
+		// Disable toggle action if in edit mode
+		if (editingIndex !== -1) return;
+
 		setIsAddingSection(false); // Collapse new section form
 		setActiveAccordionIndex((prevIndex) => (prevIndex === index ? -1 : index));
 	};
@@ -188,6 +192,25 @@ function InputForm() {
 		); // Maintain active accordion
 	};
 
+	// Handle rename action
+	const handleRenameSection = (index) => {
+		setEditingIndex(index); // Set the section to be edited
+		setEditTitle(sections[index].title); // Set the current title as the initial edit title
+	};
+
+	// Save the new name
+	const handleSaveRename = (index) => {
+		const updatedSections = [...sections];
+		updatedSections[index].title = editTitle; // Update the section title
+		setSections(updatedSections);
+		setEditingIndex(-1); // Exit edit mode
+	};
+
+	// Cancel the rename action
+	const handleCancelRename = () => {
+		setEditingIndex(-1); // Exit edit mode
+	};
+
 	return (
 		<div className="content">
 			<div className="input-form">
@@ -197,32 +220,62 @@ function InputForm() {
 						title={section.title}
 						isActive={activeAccordionIndex === index}
 						onClick={() => handleAccordionClick(index)}
+						editing={editingIndex === index} // Pass editing state
+						editTitle={editTitle}
+						onTitleChange={setEditTitle}
 						controls={
-							<div className="section-controls">
-								<button
-									type="button"
-									onClick={() => handleMoveSection(index, "up")}
-									className="move-up-button"
-									disabled={index === 0} // Disable if at the top
-								>
-									Up
-								</button>
-								<button
-									type="button"
-									onClick={() => handleMoveSection(index, "down")}
-									className="move-down-button"
-									disabled={index === sections.length - 1} // Disable if at the bottom
-								>
-									Down
-								</button>
-								<button
-									type="button"
-									onClick={() => handleDeleteSection(index)}
-									className="delete-section-button"
-								>
-									Delete
-								</button>
-							</div>
+							editingIndex === index ? ( // Check if this section is being edited
+								<div className="section-controls">
+									<button
+										type="button"
+										onClick={() => handleSaveRename(index)}
+										className="save-button"
+										disabled={!editTitle.trim()} // Disable save button if field is empty
+									>
+										Save
+									</button>
+									<button
+										type="button"
+										onClick={handleCancelRename}
+										className="cancel-button"
+									>
+										Cancel
+									</button>
+								</div>
+							) : (
+								<div className="section-controls">
+									<button
+										type="button"
+										onClick={() => handleMoveSection(index, "up")}
+										className="move-up-button"
+										disabled={index === 0} // Disable if at the top
+									>
+										Up
+									</button>
+									<button
+										type="button"
+										onClick={() => handleMoveSection(index, "down")}
+										className="move-down-button"
+										disabled={index === sections.length - 1} // Disable if at the bottom
+									>
+										Down
+									</button>
+									<button
+										type="button"
+										onClick={() => handleDeleteSection(index)}
+										className="delete-section-button"
+									>
+										Delete
+									</button>
+									<button
+										type="button"
+										onClick={() => handleRenameSection(index)}
+										className="rename-button"
+									>
+										Rename
+									</button>
+								</div>
+							)
 						}
 					>
 						{section.type === "Personal" ? (
