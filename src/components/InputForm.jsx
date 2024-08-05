@@ -3,6 +3,7 @@ import Accordion from "./Accordion";
 import List from "./List";
 import Form from "./Form";
 import PDFViewerComponent from "./PDFViewer";
+import Modal from "./Modal"; // Import the Modal component
 import {
 	sectionsData,
 	educationForm,
@@ -31,6 +32,8 @@ function InputForm() {
 	const [newSectionType, setNewSectionType] = useState("Education");
 	const [editingIndex, setEditingIndex] = useState(-1);
 	const [editTitle, setEditTitle] = useState("");
+	const [showModal, setShowModal] = useState(false); // State for controlling modal visibility
+	const [deleteSectionId, setDeleteSectionId] = useState(null); // State to track the section to be deleted
 
 	const formTypes = {
 		Education: educationForm,
@@ -168,9 +171,18 @@ function InputForm() {
 	};
 
 	const handleDeleteSection = (id) => {
-		const updatedSections = sections.filter((section) => section.id !== id);
+		// Set the section ID to be deleted and show the confirmation modal
+		setDeleteSectionId(id);
+		setShowModal(true); // Open the modal
+	};
+
+	const confirmDeleteSection = () => {
+		const updatedSections = sections.filter(
+			(section) => section.id !== deleteSectionId
+		);
 		setSections(updatedSections);
 		setActiveAccordionId(null); // Collapse active accordion after deleting
+		setShowModal(false); // Close the modal
 	};
 
 	const handleMoveSection = (index, direction) => {
@@ -358,6 +370,12 @@ function InputForm() {
 				)}
 			</div>
 			<PDFViewerComponent sections={sections} />
+			<Modal
+				isOpen={showModal}
+				onClose={() => setShowModal(false)}
+				onConfirm={confirmDeleteSection}
+				message="Are you sure you want to delete this section?"
+			/>
 		</div>
 	);
 }

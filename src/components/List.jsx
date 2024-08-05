@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Form from "./Form";
+import Modal from "./Modal"; // Import the Modal component
 
 function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
 	const [isAdding, setIsAdding] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	const [deleteItemIndex, setDeleteItemIndex] = useState(null);
 
 	const handleItemClick = (index) => {
 		if (isAdding) {
@@ -31,7 +34,13 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 	};
 
 	const handleDelete = (index) => {
-		onDelete(index); // Call the onDelete prop with the index to delete the item
+		setDeleteItemIndex(index);
+		setShowModal(true); // Show the modal when delete action is triggered
+	};
+
+	const confirmDeleteItem = () => {
+		onDelete(deleteItemIndex);
+		setShowModal(false); // Close the modal after confirming
 		setActiveIndex(-1); // Close the form after deleting an item
 	};
 
@@ -127,6 +136,12 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 					Add New
 				</button>
 			)}
+			<Modal
+				isOpen={showModal}
+				onClose={() => setShowModal(false)}
+				onConfirm={confirmDeleteItem}
+				message="Are you sure you want to delete this item?"
+			/>
 		</div>
 	);
 }
