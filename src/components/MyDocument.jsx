@@ -229,8 +229,8 @@ const formatLanguageProficiency = (language, proficiency) => {
 };
 
 // Create Document Component
-const MyDocument = ({ sections }) => (
-	<Document>
+const MyDocument = ({ sections, title }) => (
+	<Document title={title}>
 		<Page size="A4" style={styles.page}>
 			{/* Header Section */}
 			{sections.map((section, index) => (
