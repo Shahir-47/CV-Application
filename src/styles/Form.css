@@ -11,8 +11,25 @@
 }
 
 .accordion-content form div.description {
-	align-items: flex-start;
+	display: grid;
+	grid-template-columns: min-content 1fr;
+	align-items: start;
+	margin-bottom: 10px;
+	gap: 1rem;
 	padding-top: 0.5rem;
+}
+
+.accordion-content form div.description-field {
+	display: grid;
+	grid-template-columns: 1fr min-content;
+	gap: 1rem;
+}
+
+.form-actions {
+	display: flex;
+	justify-content: space-evenly;
+	gap: 1rem;
+	align-items: center;
 }
 
 .accordion-content form div.description-field button {
@@ -43,5 +60,7 @@
 }
 
 .required-info {
+	margin-top: 0;
 	margin-bottom: 1em;
+	color: #666;
 }

@@ -122,15 +122,22 @@ function Form({ form, initialValues, onSave, onCancel }) {
 								>
 									Remove
 								</button>
+								{index === descriptions.length - 1 && (
+									<button
+										type="button"
+										id="add-bullet"
+										onClick={handleAddDescription}
+									>
+										Add Bullet Point
+									</button>
+								)}
 							</div>
 						))}
-						<button
-							type="button"
-							id="add-bullet"
-							onClick={handleAddDescription}
-						>
-							Add Bullet Point
-						</button>
+						{descriptions.length === 0 && (
+							<button type="button" onClick={handleAddDescription}>
+								Add Bullet Point
+							</button>
+						)}
 					</div>
 				</div>
 			)}

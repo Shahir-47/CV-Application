@@ -4,7 +4,7 @@ function InputField({ label, type, name, value, onChange, required, error }) {
 	return (
 		<div className="input-field">
 			<label htmlFor={name}>
-				{label} {required && <span className="required-asterisk">*</span>}
+				{label + ":"} {required && <span className="required-asterisk">*</span>}
 			</label>
 			{type === "month" && name === "endDate" ? (
 				<select name={name} value={value || "Present"} onChange={onChange}>

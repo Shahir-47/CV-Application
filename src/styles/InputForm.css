@@ -1,6 +1,6 @@
-.accordion-content form div {
-	display: flex;
-	justify-content: space-between;
+.accordion-content form div.input-field {
+	display: grid;
+	grid-template-columns: min-content 1fr;
 	align-items: center;
 	margin-bottom: 10px;
 	gap: 1rem;
