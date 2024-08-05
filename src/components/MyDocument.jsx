@@ -284,72 +284,71 @@ const MyDocument = ({ sections }) => (
 						</View>
 					)}
 
-					{section.type === "Education" && section.data.length > 0 && (
+					{/* Dynamically Render Sections Based on Title */}
+					{section.data.length > 0 && (
 						<View>
-							<Text style={styles.sectionTitle}>EDUCATION</Text>
+							<Text style={styles.sectionTitle}>
+								{section.title.toUpperCase()}
+							</Text>
 							<View style={styles.separator} />
 
-							{section.data.map((education, index) => (
-								<View key={index} style={styles.educationItem}>
-									{/* University Name and Location */}
-									<View style={styles.universityRow}>
-										<Text style={styles.boldText}>
-											{education?.content?.universityName || ""}
-										</Text>
-										<Text style={styles.boldText}>
-											{education?.content?.location || ""}
-										</Text>
-									</View>
-
-									{/* Degree and Graduation Date */}
-									<View style={styles.degreeRow}>
-										<Text style={styles.boldText}>
-											{education?.content?.degree || ""}
-										</Text>
-										<Text style={styles.text}>
-											{formatDate(education?.content?.graduationDate) || ""}
-										</Text>
-									</View>
-
-									{/* GPA */}
-									{education?.content?.gpa && (
-										<View style={styles.bulletPoints}>
-											<Text style={styles.bulletText}>
-												• GPA: {education.content.gpa}
+							{/* Render Different Sections Dynamically */}
+							{section.type === "Education" &&
+								section.data.map((education, index) => (
+									<View key={index} style={styles.educationItem}>
+										{/* University Name and Location */}
+										<View style={styles.universityRow}>
+											<Text style={styles.boldText}>
+												{education?.content?.universityName || ""}
+											</Text>
+											<Text style={styles.boldText}>
+												{education?.content?.location || ""}
 											</Text>
 										</View>
-									)}
 
-									{/* Relevant Coursework */}
-									{education?.content?.coursework && (
-										<View style={styles.bulletPoints}>
-											<Text style={styles.bulletText}>
-												• Relevant Coursework: {education.content.coursework}
+										{/* Degree and Graduation Date */}
+										<View style={styles.degreeRow}>
+											<Text style={styles.boldText}>
+												{education?.content?.degree || ""}
+											</Text>
+											<Text style={styles.text}>
+												{formatDate(education?.content?.graduationDate) || ""}
 											</Text>
 										</View>
-									)}
 
-									{/* Description */}
-									{education?.content?.description?.length > 0 && (
-										<View style={styles.bulletPoints}>
-											{education.content.description.map((desc, idx) => (
-												<Text key={idx} style={styles.bulletText}>
-													• {desc}
+										{/* GPA */}
+										{education?.content?.gpa && (
+											<View style={styles.bulletPoints}>
+												<Text style={styles.bulletText}>
+													• GPA: {education.content.gpa}
 												</Text>
-											))}
-										</View>
-									)}
-								</View>
-							))}
-						</View>
-					)}
+											</View>
+										)}
 
-					{section.type === "Skill" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>SKILLS</Text>
-							<View style={styles.separator} />
-							<View style={{ marginBottom: 5 }}>
-								{section.data.map((skill, index) => (
+										{/* Relevant Coursework */}
+										{education?.content?.coursework && (
+											<View style={styles.bulletPoints}>
+												<Text style={styles.bulletText}>
+													• Relevant Coursework: {education.content.coursework}
+												</Text>
+											</View>
+										)}
+
+										{/* Description */}
+										{education?.content?.description?.length > 0 && (
+											<View style={styles.bulletPoints}>
+												{education.content.description.map((desc, idx) => (
+													<Text key={idx} style={styles.bulletText}>
+														• {desc}
+													</Text>
+												))}
+											</View>
+										)}
+									</View>
+								))}
+
+							{section.type === "Skill" &&
+								section.data.map((skill, index) => (
 									<View key={index} style={styles.skillItem}>
 										<Text style={styles.boldText}>
 											{skill?.content?.skill || ""}
@@ -359,267 +358,221 @@ const MyDocument = ({ sections }) => (
 										</Text>
 									</View>
 								))}
-							</View>
-						</View>
-					)}
 
-					{section.type === "Work Experience" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
-							<View style={styles.separator} />
-
-							{section.data.map((work, index) => (
-								<View key={index} style={styles.workExperienceItem}>
-									{/* Position and Location */}
-									<View style={styles.positionRow}>
-										<Text style={styles.boldText}>
-											{work?.content?.position || ""}
-										</Text>
-										<Text style={styles.boldText}>
-											{work?.content?.location || ""}
-										</Text>
-									</View>
-
-									{/* Company Name and Dates */}
-									<View style={styles.companyRow}>
-										<Text style={styles.boldText}>
-											{work?.content?.companyName || ""}
-										</Text>
-										<Text style={styles.text}>
-											{formatDateRange(
-												work?.content?.startDate,
-												work?.content?.endDate
-											)}
-										</Text>
-									</View>
-
-									{/* Description */}
-									{work?.content?.description?.length > 0 && (
-										<View style={styles.bulletPoints}>
-											{work.content.description.map((desc, idx) => (
-												<Text key={idx} style={styles.bulletText}>
-													• {desc}
-												</Text>
-											))}
-										</View>
-									)}
-								</View>
-							))}
-						</View>
-					)}
-
-					{section.type === "Project" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>PROJECTS</Text>
-							<View style={styles.separator} />
-
-							{section.data.map((project, index) => (
-								<View key={index} style={styles.projectItem}>
-									<View style={styles.projectHeader}>
-										<Text style={styles.projectName}>
-											{project?.content?.projectName || ""}
-										</Text>
-										{project?.content?.projectUrl && (
-											<Text style={styles.projectName}>
-												[
-												<Link
-													style={styles.projectLink}
-													src={project.content.projectUrl}
-												>
-													{project.content.projectUrl}
-												</Link>
-												]
+							{section.type === "Work Experience" &&
+								section.data.map((work, index) => (
+									<View key={index} style={styles.workExperienceItem}>
+										{/* Position and Location */}
+										<View style={styles.positionRow}>
+											<Text style={styles.boldText}>
+												{work?.content?.position || ""}
 											</Text>
+											<Text style={styles.boldText}>
+												{work?.content?.location || ""}
+											</Text>
+										</View>
+
+										{/* Company Name and Dates */}
+										<View style={styles.companyRow}>
+											<Text style={styles.boldText}>
+												{work?.content?.companyName || ""}
+											</Text>
+											<Text style={styles.text}>
+												{formatDateRange(
+													work?.content?.startDate,
+													work?.content?.endDate
+												)}
+											</Text>
+										</View>
+
+										{/* Description */}
+										{work?.content?.description?.length > 0 && (
+											<View style={styles.bulletPoints}>
+												{work.content.description.map((desc, idx) => (
+													<Text key={idx} style={styles.bulletText}>
+														• {desc}
+													</Text>
+												))}
+											</View>
 										)}
 									</View>
-									{/* Description */}
-									{project?.content?.description?.length > 0 && (
-										<View style={styles.bulletPoints}>
-											{project.content.description.map((desc, idx) => (
-												<Text key={idx} style={styles.bulletText}>
-													• {desc}
-												</Text>
-											))}
-										</View>
-									)}
-								</View>
-							))}
-						</View>
-					)}
+								))}
 
-					{section.type === "Achievement" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>ACHIEVEMENTS</Text>
-							<View style={styles.separator} />
-
-							{section.data.map((achievement, index) => (
-								<View key={index} style={styles.achievementItem}>
-									{/* Achievement Name and Date */}
-									<View style={styles.achievementRow}>
-										<Text style={styles.boldText}>
-											{achievement?.content?.achievement || ""}
-										</Text>
-										<Text style={styles.text}>
-											{formatDate(achievement?.content?.date) || ""}
-										</Text>
-									</View>
-
-									{/* Description */}
-									{achievement?.content?.description?.length > 0 && (
-										<View style={styles.bulletPoints}>
-											{achievement.content.description.map((desc, idx) => (
-												<Text key={idx} style={styles.bulletText}>
-													• {desc}
-												</Text>
-											))}
-										</View>
-									)}
-								</View>
-							))}
-						</View>
-					)}
-
-					{section.type === "Certification" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
-							<View style={styles.separator} />
-
-							{section.data.map((certification, index) => (
-								<View key={index} style={styles.certificationItem}>
-									<View style={styles.certificationRow}>
-										{/* Certification Name and URL */}
-										<View style={styles.certificationHeader}>
-											<Text style={styles.boldText}>
-												{certification?.content?.certification + " " || ""}
+							{section.type === "Project" &&
+								section.data.map((project, index) => (
+									<View key={index} style={styles.projectItem}>
+										<View style={styles.projectHeader}>
+											<Text style={styles.projectName}>
+												{project?.content?.projectName || ""}
 											</Text>
-											{certification?.content?.certificationLink && (
-												<Text style={styles.boldText}>
+											{project?.content?.projectUrl && (
+												<Text style={styles.projectName}>
 													[
 													<Link
-														style={styles.link}
-														src={certification.content.certificationLink}
+														style={styles.projectLink}
+														src={project.content.projectUrl}
 													>
-														{certification.content.certificationLink}
+														{project.content.projectUrl}
 													</Link>
 													]
 												</Text>
 											)}
 										</View>
-
-										{/* Certification Date */}
-										<Text style={styles.text}>
-											{formatDate(certification?.content?.date) || ""}
-										</Text>
-									</View>
-
-									{/* Description */}
-									{certification?.content?.description?.length > 0 && (
-										<View style={styles.bulletPoints}>
-											{certification.content.description.map((desc, idx) => (
-												<Text key={idx} style={styles.bulletText}>
-													• {desc}
-												</Text>
-											))}
-										</View>
-									)}
-								</View>
-							))}
-						</View>
-					)}
-
-					{section.type === "Language" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>LANGUAGES</Text>
-							<View style={styles.separator} />
-
-							{/* Comma-separated list of languages and proficiency */}
-							<Text style={styles.spaceText}>
-								{section.data
-									?.map((language) =>
-										formatLanguageProficiency(
-											language.content.language,
-											language.content.proficiency
-										)
-									)
-									.join(", ")}
-							</Text>
-						</View>
-					)}
-
-					{section.type === "Hobby" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>HOBBIES</Text>
-							<View style={styles.separator} />
-
-							{/* Comma-separated list of hobbies */}
-							<Text style={styles.spaceText}>
-								{section.data?.map((hobby) => hobby.content.hobby).join(", ")}
-							</Text>
-						</View>
-					)}
-
-					{section.type === "Interest" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>INTERESTS</Text>
-							<View style={styles.separator} />
-
-							{/* Comma-separated list of interests */}
-							<Text style={styles.spaceText}>
-								{section.data
-									?.map((interest) => interest.content.interest)
-									.join(", ")}
-							</Text>
-						</View>
-					)}
-
-					{section.type === "Other" && section.data.length > 0 && (
-						<View>
-							<Text style={styles.sectionTitle}>OTHER</Text>
-							<View style={styles.separator} />
-
-							{section.data.map((other, index) => (
-								<View key={index} style={styles.otherItem}>
-									{/* Title, Link and Location */}
-									<View style={styles.otherRow}>
-										<View style={styles.otherHeader}>
-											<Text style={styles.boldText}>
-												{other?.content?.title + " " || ""}
-											</Text>
-											{other?.content?.link && (
-												<Text style={styles.boldText}>
-													[
-													<Link style={styles.link} src={other.content.link}>
-														{other.content.link}
-													</Link>
-													]
-												</Text>
-											)}
-										</View>
-										<Text style={styles.boldText}>
-											{other?.content?.location || ""}
-										</Text>
-									</View>
-
-									{/* Description and Date */}
-									<View style={styles.otherRow}>
-										{other?.content?.description?.[0] && (
-											<Text style={styles.bulletText}>
-												• {other.content.description[0]}
-											</Text>
+										{/* Description */}
+										{project?.content?.description?.length > 0 && (
+											<View style={styles.bulletPoints}>
+												{project.content.description.map((desc, idx) => (
+													<Text key={idx} style={styles.bulletText}>
+														• {desc}
+													</Text>
+												))}
+											</View>
 										)}
-										<Text style={styles.text}>
-											{formatDate(other?.content?.date) || ""}
-										</Text>
 									</View>
+								))}
 
-									{/* Additional Descriptions */}
-									{other?.content?.description?.slice(1).map((desc, idx) => (
-										<View key={idx} style={styles.bulletPoints}>
-											<Text style={styles.bulletText}>• {desc}</Text>
+							{section.type === "Achievement" &&
+								section.data.map((achievement, index) => (
+									<View key={index} style={styles.achievementItem}>
+										{/* Achievement Name and Date */}
+										<View style={styles.achievementRow}>
+											<Text style={styles.boldText}>
+												{achievement?.content?.achievement || ""}
+											</Text>
+											<Text style={styles.text}>
+												{formatDate(achievement?.content?.date) || ""}
+											</Text>
 										</View>
-									))}
-								</View>
-							))}
+
+										{/* Description */}
+										{achievement?.content?.description?.length > 0 && (
+											<View style={styles.bulletPoints}>
+												{achievement.content.description.map((desc, idx) => (
+													<Text key={idx} style={styles.bulletText}>
+														• {desc}
+													</Text>
+												))}
+											</View>
+										)}
+									</View>
+								))}
+
+							{section.type === "Certification" &&
+								section.data.map((certification, index) => (
+									<View key={index} style={styles.certificationItem}>
+										<View style={styles.certificationRow}>
+											{/* Certification Name and URL */}
+											<View style={styles.certificationHeader}>
+												<Text style={styles.boldText}>
+													{certification?.content?.certification + " " || ""}
+												</Text>
+												{certification?.content?.certificationLink && (
+													<Text style={styles.boldText}>
+														[
+														<Link
+															style={styles.link}
+															src={certification.content.certificationLink}
+														>
+															{certification.content.certificationLink}
+														</Link>
+														]
+													</Text>
+												)}
+											</View>
+
+											{/* Certification Date */}
+											<Text style={styles.text}>
+												{formatDate(certification?.content?.date) || ""}
+											</Text>
+										</View>
+
+										{/* Description */}
+										{certification?.content?.description?.length > 0 && (
+											<View style={styles.bulletPoints}>
+												{certification.content.description.map((desc, idx) => (
+													<Text key={idx} style={styles.bulletText}>
+														• {desc}
+													</Text>
+												))}
+											</View>
+										)}
+									</View>
+								))}
+
+							{section.type === "Language" && (
+								<Text style={styles.spaceText}>
+									{/* Comma-separated list of languages and proficiency */}
+									{section.data
+										?.map((language) =>
+											formatLanguageProficiency(
+												language.content.language,
+												language.content.proficiency
+											)
+										)
+										.join(", ")}
+								</Text>
+							)}
+
+							{section.type === "Hobby" && (
+								<Text style={styles.spaceText}>
+									{/* Comma-separated list of hobbies */}
+									{section.data?.map((hobby) => hobby.content.hobby).join(", ")}
+								</Text>
+							)}
+
+							{section.type === "Interest" && (
+								<Text style={styles.spaceText}>
+									{/* Comma-separated list of interests */}
+									{section.data
+										?.map((interest) => interest.content.interest)
+										.join(", ")}
+								</Text>
+							)}
+
+							{section.type === "Other" &&
+								section.data.map((other, index) => (
+									<View key={index} style={styles.otherItem}>
+										{/* Title, Link and Location */}
+										<View style={styles.otherRow}>
+											<View style={styles.otherHeader}>
+												<Text style={styles.boldText}>
+													{other?.content?.title + " " || ""}
+												</Text>
+												{other?.content?.link && (
+													<Text style={styles.boldText}>
+														[
+														<Link style={styles.link} src={other.content.link}>
+															{other.content.link}
+														</Link>
+														]
+													</Text>
+												)}
+											</View>
+											<Text style={styles.boldText}>
+												{other?.content?.location || ""}
+											</Text>
+										</View>
+
+										{/* Description and Date */}
+										<View style={styles.otherRow}>
+											{other?.content?.description?.[0] && (
+												<Text style={styles.bulletText}>
+													• {other.content.description[0]}
+												</Text>
+											)}
+											<Text style={styles.text}>
+												{formatDate(other?.content?.date) || ""}
+											</Text>
+										</View>
+
+										{/* Additional Descriptions */}
+										{other?.content?.description?.slice(1).map((desc, idx) => (
+											<View key={idx} style={styles.bulletPoints}>
+												<Text style={styles.bulletText}>• {desc}</Text>
+											</View>
+										))}
+									</View>
+								))}
 						</View>
 					)}
 				</View>
