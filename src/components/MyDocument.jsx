@@ -172,11 +172,23 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginBottom: 0,
+		marginLeft: 0,
+	},
+	specialCase: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 0,
 		marginLeft: 5,
 	},
 	otherHeader: {
 		flexDirection: "row",
 		alignItems: "center",
+	},
+	subtextRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginTop: 0,
+		marginBottom: 0,
 	},
 });
 
@@ -572,24 +584,37 @@ const MyDocument = ({ sections, title }) => (
 											</Text>
 										</View>
 
-										{/* Description and Date */}
-										<View style={styles.otherRow}>
-											{other?.content?.description?.[0] && (
-												<Text style={styles.bulletText}>
-													• {other.content.description[0]}
+										{/* Subtext and Date or Description and Date */}
+										{other?.content?.subtext ? (
+											<View style={styles.subtextRow}>
+												<Text style={styles.boldText}>
+													{other.content.subtext}
 												</Text>
-											)}
-											<Text style={styles.text}>
-												{formatDate(other?.content?.date) || ""}
-											</Text>
-										</View>
+												<Text style={styles.text}>
+													{formatDate(other?.content?.date) || ""}
+												</Text>
+											</View>
+										) : (
+											<View style={styles.specialCase}>
+												{other?.content?.description?.[0] && (
+													<Text style={styles.bulletText}>
+														• {other.content.description[0]}
+													</Text>
+												)}
+												<Text style={styles.text}>
+													{formatDate(other?.content?.date) || ""}
+												</Text>
+											</View>
+										)}
 
 										{/* Additional Descriptions */}
-										{other?.content?.description?.slice(1).map((desc, idx) => (
-											<View key={idx} style={styles.bulletPoints}>
-												<Text style={styles.bulletText}>• {desc}</Text>
-											</View>
-										))}
+										{other?.content?.description
+											?.slice(other.content.subtext ? 0 : 1)
+											.map((desc, idx) => (
+												<View key={idx} style={styles.bulletPoints}>
+													<Text style={styles.bulletText}>• {desc}</Text>
+												</View>
+											))}
 									</View>
 								))}
 						</View>

@@ -200,6 +200,7 @@ export const otherForm = {
 	id: "other-details",
 	fields: [
 		{ label: "Title", type: "text", name: "title", required: true },
+		{ label: "Subtext", type: "text", name: "subtext" },
 		{ label: "Date", type: "month", name: "date" },
 		{ label: "Location", type: "text", name: "location" },
 		{ label: "Link", type: "url", name: "link" },
@@ -213,6 +214,7 @@ export const otherItems = {
 			title: "Other 1",
 			content: {
 				title: "Other 1",
+				subtext: "Subtext 1",
 				date: "2021-06",
 				location: "Location 1",
 				link: "https://other1.com",
