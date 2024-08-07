@@ -72,4 +72,6 @@
 .input-form {
 	border: 1px solid #ccc;
 	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
 }

@@ -87,6 +87,13 @@ function Form({ form, initialValues, onSave, onCancel }) {
 		return Object.keys(validateForm()).length > 0;
 	};
 
+	const calculateRows = (text) => {
+		const lineBreaks = text.split("\n").length;
+		const charWidth = 50; // Adjust this based on your textarea width
+		const lines = Math.ceil(text.length / charWidth);
+		return Math.max(lineBreaks, lines, 1); // Ensure at least one row
+	};
+
 	return (
 		<form id={form.id}>
 			<p className="required-info">
@@ -111,12 +118,12 @@ function Form({ form, initialValues, onSave, onCancel }) {
 					<div className="bullet-points">
 						{descriptions.map((desc, index) => (
 							<div key={index} className="description-field">
-								<input
-									type="text"
+								<textarea
 									value={desc}
 									onChange={(e) =>
 										handleDescriptionChange(index, e.target.value)
 									}
+									rows={calculateRows(desc)}
 								/>
 								<button
 									type="button"
