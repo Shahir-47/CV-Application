@@ -15,7 +15,7 @@ const PDFViewerComponent = ({ sections }) => {
 	const documentTitle = fullName ? `${fullName} Resume` : "Resume";
 
 	return (
-		<PDFViewer width="100%" height="600">
+		<PDFViewer width="100%" height="100%">
 			<MyDocument sections={sections} title={documentTitle} />
 		</PDFViewer>
 	);
