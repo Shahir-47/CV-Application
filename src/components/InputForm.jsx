@@ -8,6 +8,7 @@ import ascendLogo from "../assets/ascend.svg";
 import descendLogo from "../assets/descend.svg";
 import deleteLogo from "../assets/delete.svg";
 import renameLogo from "../assets/rename.svg";
+import add from "../assets/add.svg";
 import PDFViewerComponent from "./PDFViewer";
 import Modal from "./Modal"; // Import the Modal component
 import Toaster from "./Toaster"; // Import the Toaster component
@@ -412,8 +413,12 @@ function InputForm() {
 					</Accordion>
 				))}
 
-				<button type="button" onClick={handleAddSection}>
-					Add New Section
+				<button
+					className="add-section-btn"
+					type="button"
+					onClick={handleAddSection}
+				>
+					<img src={add} alt="Add" />
 				</button>
 				{isAddingSection && (
 					<div className="new-section-form">
