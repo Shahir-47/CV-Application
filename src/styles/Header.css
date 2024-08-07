@@ -1,0 +1,75 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 1rem;
+	background-color: #213547;
+	color: #f9f9f9;
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.title:hover {
+	cursor: pointer;
+}
+
+.title h1 {
+	margin: 0;
+	font-size: 2.5rem;
+	text-shadow: none;
+	transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.title:hover h1 {
+	text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+	transform: translateY(-2px);
+}
+
+.title img {
+	width: 2.5rem;
+	height: 2.5rem;
+	transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.title:hover img {
+	filter: brightness(1.1);
+	transform: translateY(-2px);
+}
+
+.header button img {
+	width: 2rem;
+	height: 2rem;
+	transition: filter 0.3s ease;
+}
+
+.header button {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.header button:hover {
+	background-color: #f9f9f9;
+	color: #213547;
+}
+
+.header button:hover img {
+	filter: invert(1);
+}
+
+.header button:hover span {
+	color: #213547;
+}
+
+.header button span {
+	color: #f9f9f9;
+	transition: color 0.3s ease;
+}

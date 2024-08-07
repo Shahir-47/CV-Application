@@ -54,6 +54,12 @@
 	transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.item-controls button:disabled,
+.section-controls button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 .item-controls button:hover:not(:disabled),
 .section-controls button:hover:not(:disabled) {
 	transform: scale(1.2);
