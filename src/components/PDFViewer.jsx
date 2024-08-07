@@ -1,10 +1,8 @@
-// PDFViewerComponent.jsx
-
 import { PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "./MyDocument";
+import "../styles/PDFViewerComponent.css";
 
 const PDFViewerComponent = ({ sections }) => {
-	// Extract full name from the sections data
 	// Extract full name from the sections data
 	const personalDetails = sections.find(
 		(section) => section.type === "Personal"
@@ -15,9 +13,11 @@ const PDFViewerComponent = ({ sections }) => {
 	const documentTitle = fullName ? `${fullName} Resume` : "Resume";
 
 	return (
-		<PDFViewer width="100%" height="100%">
-			<MyDocument sections={sections} title={documentTitle} />
-		</PDFViewer>
+		<div className="pdf-viewer-container">
+			<PDFViewer className="pdf-viewer">
+				<MyDocument sections={sections} title={documentTitle} />
+			</PDFViewer>
+		</div>
 	);
 };
 
