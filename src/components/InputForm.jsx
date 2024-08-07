@@ -1,5 +1,3 @@
-// InputForm.js
-
 import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
@@ -347,7 +345,6 @@ function InputForm() {
 											borderRadius: "7px",
 											marginRight: "1rem",
 											padding: "0.25rem 0.5rem",
-											marginLeft: "1.5rem",
 										}}
 									>
 										Save
@@ -423,42 +420,49 @@ function InputForm() {
 					</Accordion>
 				))}
 
-				<button
-					className="add-section-btn"
-					type="button"
-					onClick={handleAddSection}
-				>
-					<img src={add} alt="Add" />
-				</button>
+				{!isAddingSection && (
+					<button
+						className="add-section-btn"
+						type="button"
+						onClick={handleAddSection}
+					>
+						<img src={add} alt="Add" />
+					</button>
+				)}
+
 				{isAddingSection && (
 					<div className="new-section-form">
 						<h3>New Section</h3>
-						<input
-							type="text"
-							placeholder="Section Name"
-							value={newSectionName}
-							onChange={(e) => setNewSectionName(e.target.value)}
-						/>
-						<select
-							value={newSectionType}
-							onChange={(e) => setNewSectionType(e.target.value)}
-						>
-							{Object.keys(formTypes).map((type) => (
-								<option key={type} value={type}>
-									{type}
-								</option>
-							))}
-						</select>
-						<button
-							type="button"
-							onClick={handleSaveNewSection}
-							disabled={!newSectionName.trim()}
-						>
-							Save Section
-						</button>
-						<button type="button" onClick={handleCancelAddSection}>
-							Cancel
-						</button>
+						<div className="new-section-input">
+							<input
+								type="text"
+								placeholder="Section Name"
+								value={newSectionName}
+								onChange={(e) => setNewSectionName(e.target.value)}
+							/>
+							<select
+								value={newSectionType}
+								onChange={(e) => setNewSectionType(e.target.value)}
+							>
+								{Object.keys(formTypes).map((type) => (
+									<option key={type} value={type}>
+										{type}
+									</option>
+								))}
+							</select>
+						</div>
+						<div className="new-section-actions">
+							<button
+								type="button"
+								onClick={handleSaveNewSection}
+								disabled={!newSectionName.trim()}
+							>
+								Save Section
+							</button>
+							<button type="button" onClick={handleCancelAddSection}>
+								Cancel
+							</button>
+						</div>
 					</div>
 				)}
 			</div>

@@ -71,7 +71,7 @@
 	color: #ffffff; /* White */
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover:not(:disabled) {
 	background-color: #5a6268; /* Darker Gray */
 }
 
@@ -80,7 +80,7 @@
 	color: #000000; /* Black */
 }
 
-.clear-btn:hover {
+.clear-btn:hover:not(:disabled) {
 	background-color: #e0a800; /* Darker Orange */
 }
 
@@ -121,8 +121,8 @@
 	cursor: pointer;
 	transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.delete-btn:hover,
-.delete-btn:hover {
+.delete-btn:hover:not(:disabled),
+.delete-btn:hover:not(:disabled) {
 	transform: scale(1.2);
 	transform: translateY(-4px);
 	opacity: 1;
@@ -149,8 +149,8 @@
 	padding: 0;
 }
 
-.add-desc:hover,
-.add-item-btn:hover {
+.add-desc:hover:not(:disabled),
+.add-item-btn:hover:not(:disabled) {
 	transform: scale(1.2);
 	transform: translateY(-4px);
 	opacity: 1;

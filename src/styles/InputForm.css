@@ -54,8 +54,8 @@
 	transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.item-controls button:hover,
-.section-controls button:hover {
+.item-controls button:hover:not(:disabled),
+.section-controls button:hover:not(:disabled) {
 	transform: scale(1.2);
 	transform: translateY(-4px);
 	opacity: 1;
@@ -90,7 +90,7 @@
 	transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.add-section-btn:hover {
+.add-section-btn:hover:not(:disabled) {
 	transform: scale(1.2);
 	transform: translateY(-4px);
 	opacity: 1;
@@ -101,4 +101,20 @@
 .add-section-btn img {
 	width: 2rem;
 	height: 2rem;
+}
+
+.new-section-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.new-section-actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1rem;
 }
