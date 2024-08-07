@@ -161,7 +161,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 					className="save-btn"
 					type="button"
 					onClick={handleSave}
-					disabled={isFormInvalid()} // Disable if the form is invalid
+					disabled={isFormInvalid()}
 				>
 					Save
 				</button>
@@ -186,13 +186,13 @@ Form.propTypes = {
 				label: PropTypes.string.isRequired,
 				type: PropTypes.string.isRequired,
 				name: PropTypes.string.isRequired,
-				required: PropTypes.bool, // Add required prop to the field definition
+				required: PropTypes.bool,
 			})
 		).isRequired,
 	}).isRequired,
 	initialValues: PropTypes.object.isRequired,
 	onSave: PropTypes.func.isRequired,
-	onCancel: PropTypes.func, // Handle cancel action
+	onCancel: PropTypes.func,
 };
 
 export default Form;

@@ -10,6 +10,7 @@ import deleteLogo from "../assets/delete.svg";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
 import add from "../assets/add.svg";
+import PropTypes from "prop-types";
 
 function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
@@ -100,7 +101,7 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 		if (isToastVisible) {
 			const timer = setTimeout(() => {
 				setIsToastVisible(false);
-			}, 3000); // Hide after 3 seconds
+			}, 3000);
 
 			return () => clearTimeout(timer);
 		}
@@ -123,10 +124,7 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 								<img src={downArrow} alt="down arrow" />
 							)}
 						</div>
-						<div
-							className="item-controls"
-							onClick={(e) => e.stopPropagation()} // Prevent click propagation
-						>
+						<div className="item-controls" onClick={(e) => e.stopPropagation()}>
 							<button
 								type="button"
 								className="move-up-button"
@@ -202,5 +200,20 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 		</div>
 	);
 }
+
+List.propTypes = {
+	items: PropTypes.shape({
+		form: PropTypes.object.isRequired,
+	}).isRequired,
+	onSave: PropTypes.func.isRequired,
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			title: PropTypes.string.isRequired,
+			content: PropTypes.object.isRequired,
+		})
+	).isRequired,
+	onAdd: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
+};
 
 export default List;

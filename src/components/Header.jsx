@@ -8,7 +8,7 @@ function Header() {
 	};
 
 	const handleButtonClick = () => {
-		window.location.href = "https://github.com"; // Replace with the actual GitHub URL
+		window.location.href = "https://github.com/Shahir-47/CV-Application";
 	};
 
 	return (

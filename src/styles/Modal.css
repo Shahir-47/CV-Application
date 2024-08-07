@@ -26,3 +26,23 @@
 	margin: 0 10px;
 	padding: 10px 20px;
 }
+
+.confirm-yes {
+	background: #5cb85c;
+	color: white;
+	border: none;
+}
+
+.confirm-no {
+	background: #d9534f;
+	color: white;
+	border: none;
+}
+
+.confirm-yes:hover {
+	background: #4cae4c;
+}
+
+.confirm-no:hover {
+	background: #c9302c;
+}

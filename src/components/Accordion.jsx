@@ -1,5 +1,3 @@
-// Accordion.js
-
 import PropTypes from "prop-types";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
@@ -51,7 +49,6 @@ function Accordion({
 					)}
 				</div>
 				<div onClick={(e) => e.stopPropagation()}>{controls}</div>{" "}
-				{/* Prevent event bubbling */}
 			</div>
 			{isActive && <div className="accordion-content">{children}</div>}
 		</div>

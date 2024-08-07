@@ -8,7 +8,7 @@ export const workExperienceForm = {
 		{ label: "Start Date", type: "month", name: "startDate" },
 		{
 			label: "End Date",
-			type: "select", // Use select for dropdown
+			type: "select",
 			name: "endDate",
 			options: [
 				{ label: "Select End Date", value: "" },
@@ -48,7 +48,7 @@ export const achievementsItems = {
 			content: {
 				achievement: "Achievement 1",
 				date: "2021-06",
-				description: ["Won first place in competition", "Received award"], // Bullet points
+				description: ["Won first place in competition", "Received award"],
 			},
 		},
 		{
@@ -218,7 +218,7 @@ export const otherItems = {
 				date: "2021-06",
 				location: "Location 1",
 				link: "https://other1.com",
-				description: ["Description 1", "Description 2"], // Bullet points
+				description: ["Description 1", "Description 2"],
 			},
 		},
 		{
@@ -242,7 +242,7 @@ export const projectItems = {
 			content: {
 				projectName: "Project 1",
 				projectUrl: "https://project1.com",
-				description: ["Built a website", "Implemented user authentication"], // Bullet points
+				description: ["Built a website", "Implemented user authentication"],
 			},
 		},
 		{
@@ -270,7 +270,7 @@ export const workExperienceItems = {
 				location: "Mountain View, CA",
 				startDate: "2020-06",
 				endDate: "2021-08",
-				description: ["Worked on search algorithms", "Improved performance"], // Bullet points
+				description: ["Worked on search algorithms", "Improved performance"],
 			},
 		},
 		{
@@ -355,7 +355,7 @@ export const educationItems = {
 				graduationDate: "2023-06",
 				gpa: "3.95",
 				coursework: "Kido Magic, Hollow Studies",
-				description: [], // Add bullet points for courses or achievements
+				description: [],
 			},
 		},
 		{

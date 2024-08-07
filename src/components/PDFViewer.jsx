@@ -1,5 +1,6 @@
 import { PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "./MyDocument";
+import propTypes from "prop-types";
 import "../styles/PDFViewerComponent.css";
 
 const PDFViewerComponent = ({ sections }) => {
@@ -19,6 +20,10 @@ const PDFViewerComponent = ({ sections }) => {
 			</PDFViewer>
 		</div>
 	);
+};
+
+PDFViewerComponent.propTypes = {
+	sections: propTypes.array.isRequired,
 };
 
 export default PDFViewerComponent;

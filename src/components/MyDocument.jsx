@@ -1,3 +1,4 @@
+import propTypes from "prop-types";
 import {
 	Page,
 	Text,
@@ -22,9 +23,7 @@ Font.register({
 		},
 	],
 });
-
-// Import PNG icons
-import PhoneIcon from "../assets/phone.png"; // Ensure the path and file name are correct
+import PhoneIcon from "../assets/phone.png";
 import EmailIcon from "../assets/email.png";
 import GitHubIcon from "../assets/github.png";
 import LinkedInIcon from "../assets/linkedin.png";
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
 	},
 	skillItem: {
 		marginBottom: 0,
-		flexDirection: "row", // Make skill and specifics part of the same line
+		flexDirection: "row",
 	},
 	skillText: {
 		fontSize: 10,
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
 		fontSize: 10,
 		fontWeight: 600,
 		marginRight: 2,
-		color: "#000000", // Project name and brackets in black
+		color: "#000000",
 	},
 	projectLink: {
 		fontSize: 9,
@@ -628,5 +627,10 @@ const MyDocument = ({ sections, title }) => (
 		</Page>
 	</Document>
 );
+
+MyDocument.propTypes = {
+	sections: propTypes.array.isRequired,
+	title: propTypes.string.isRequired,
+};
 
 export default MyDocument;

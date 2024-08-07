@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
@@ -8,8 +9,8 @@ import deleteLogo from "../assets/delete.svg";
 import renameLogo from "../assets/rename.svg";
 import add from "../assets/add.svg";
 import PDFViewerComponent from "./PDFViewer";
-import Modal from "./Modal"; // Import the Modal component
-import Toaster from "./Toaster"; // Import the Toaster component
+import Modal from "./Modal";
+import Toaster from "./Toaster";
 import {
 	sectionsData,
 	educationForm,
@@ -22,7 +23,7 @@ import {
 	hobbiesForm,
 	interestsForm,
 	otherForm,
-} from "../data.js"; // Import sectionsData and other forms
+} from "../data.js";
 import "../styles/InputForm.css";
 
 function InputForm() {
