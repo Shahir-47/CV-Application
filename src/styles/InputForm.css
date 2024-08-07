@@ -14,5 +14,54 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: 2rem;
+	gap: 1rem;
+}
+
+.item-header h2 {
+	margin: 0.5rem 0 0.5rem 0;
+	font-size: 1.3rem;
+}
+
+.item-header .item-title {
+	display: flex;
+	align-items: center;
+}
+
+.item-controls {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.item-header img,
+.item-controls button img {
+	width: 2.5rem;
+	height: 1.75rem;
+}
+
+.section-controls button img {
+	width: 3rem;
+	height: 2rem;
+}
+
+.item-controls button,
+.section-controls button {
+	padding: 0.5rem 0;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.item-controls button:hover,
+.section-controls button:hover {
+	transform: scale(1.2);
+	transform: translateY(-4px);
+	opacity: 1;
+	outline: none;
+	filter: brightness(1.2);
+}
+
+.item-controls button:focus,
+.section-controls button:focus,
+.section-controls button:focus-visible {
+	outline: 1px auto #000;
 }

@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import Form from "./Form";
 import Modal from "./Modal"; // Import the Modal component
 import Toaster from "./Toaster"; // Import the Toaster component
+import ascendLogo from "../assets/ascend.svg";
+import descendLogo from "../assets/descend.svg";
+import deleteLogo from "../assets/delete.svg";
+import upArrow from "../assets/up-arrow.svg";
+import downArrow from "../assets/down-arrow.svg";
 
 function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
@@ -107,7 +112,14 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 					className={`item ${activeIndex === index ? "active" : ""}`}
 				>
 					<div className="item-header">
-						<h2 onClick={() => handleItemClick(index)}>{item.title}</h2>
+						<div className="item-title">
+							<h2 onClick={() => handleItemClick(index)}>{item.title}</h2>
+							{activeIndex === index ? (
+								<img src={upArrow} alt="up arrow" />
+							) : (
+								<img src={downArrow} alt="down arrow" />
+							)}
+						</div>
 						<div className="item-controls">
 							<button
 								type="button"
@@ -115,7 +127,7 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 								onClick={() => handleMoveItem(index, "up")}
 								disabled={index === 0} // Disable if at the top
 							>
-								Up
+								<img src={ascendLogo} alt="Move Up" />
 							</button>
 							<button
 								type="button"
@@ -123,14 +135,14 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 								onClick={() => handleMoveItem(index, "down")}
 								disabled={index === data.length - 1} // Disable if at the bottom
 							>
-								Down
+								<img src={descendLogo} alt="Move Down" />
 							</button>
 							<button
 								type="button"
 								className="delete-button"
 								onClick={() => handleDelete(index)}
 							>
-								Delete
+								<img src={deleteLogo} alt="Delete" />
 							</button>
 						</div>
 					</div>

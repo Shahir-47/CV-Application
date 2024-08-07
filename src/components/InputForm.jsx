@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
 import Form from "./Form";
+import ascendLogo from "../assets/ascend.svg";
+import descendLogo from "../assets/descend.svg";
+import deleteLogo from "../assets/delete.svg";
+import renameLogo from "../assets/rename.svg";
 import PDFViewerComponent from "./PDFViewer";
 import Modal from "./Modal"; // Import the Modal component
 import Toaster from "./Toaster"; // Import the Toaster component
@@ -356,7 +360,7 @@ function InputForm() {
 										className="move-up-button"
 										disabled={index === 0}
 									>
-										Up
+										<img src={ascendLogo} alt="Move Up" />
 									</button>
 									<button
 										type="button"
@@ -364,21 +368,21 @@ function InputForm() {
 										className="move-down-button"
 										disabled={index === sections.length - 1}
 									>
-										Down
+										<img src={descendLogo} alt="Move Down" />
 									</button>
 									<button
 										type="button"
 										onClick={() => handleDeleteSection(section.id)}
 										className="delete-section-button"
 									>
-										Delete
+										<img src={deleteLogo} alt="Delete" />
 									</button>
 									<button
 										type="button"
 										onClick={() => handleRenameSection(index)}
 										className="rename-button"
 									>
-										Rename
+										<img src={renameLogo} alt="Rename" />
 									</button>
 								</div>
 							)

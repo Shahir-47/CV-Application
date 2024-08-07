@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import InputField from "./InputField";
+import deleteLogo from "../assets/delete.svg";
 import "../styles/Form.css";
 
 function Form({ form, initialValues, onSave, onCancel }) {
@@ -118,9 +119,10 @@ function Form({ form, initialValues, onSave, onCancel }) {
 								/>
 								<button
 									type="button"
+									className="delete-btn"
 									onClick={() => handleRemoveDescription(index)}
 								>
-									Remove
+									<img className="desc-delete" src={deleteLogo} alt="Delete" />
 								</button>
 								{index === descriptions.length - 1 && (
 									<button
