@@ -345,6 +345,7 @@ function InputForm() {
 											borderRadius: "7px",
 											marginRight: "1rem",
 											padding: "0.25rem 0.5rem",
+											marginLeft: "1.5rem",
 										}}
 									>
 										Save
@@ -456,10 +457,15 @@ function InputForm() {
 								type="button"
 								onClick={handleSaveNewSection}
 								disabled={!newSectionName.trim()}
+								className="save-sec-btn"
 							>
 								Save Section
 							</button>
-							<button type="button" onClick={handleCancelAddSection}>
+							<button
+								type="button"
+								className="cancel-sec-btn"
+								onClick={handleCancelAddSection}
+							>
 								Cancel
 							</button>
 						</div>

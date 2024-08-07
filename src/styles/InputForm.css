@@ -103,6 +103,10 @@
 	height: 2rem;
 }
 
+.new-section-form h3 {
+	text-align: center;
+}
+
 .new-section-input {
 	display: flex;
 	justify-content: center;
@@ -117,4 +121,27 @@
 	align-items: center;
 	gap: 1rem;
 	margin-bottom: 1rem;
+}
+
+.new-section-actions .save-sec-btn {
+	background-color: #28a745;
+	color: white;
+}
+
+.new-section-actions .save-sec-btn:hover:not(:disabled) {
+	background-color: #218838;
+}
+
+.new-section-actions .save-sec-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.new-section-actions .cancel-sec-btn {
+	background-color: #6c757d; /* Gray */
+	color: #ffffff; /* White */
+}
+
+.new-section-actions .cancel-sec-btn:hover:not(:disabled) {
+	background-color: #5a6268; /* Darker Gray */
 }
