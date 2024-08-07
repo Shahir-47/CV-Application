@@ -151,7 +151,7 @@ function Form({ form, initialValues, onSave, onCancel }) {
 			)}
 			<div className="form-actions">
 				<button
-					id="save-btn"
+					className="save-btn"
 					type="button"
 					onClick={handleSave}
 					disabled={isFormInvalid()} // Disable if the form is invalid
@@ -159,11 +159,11 @@ function Form({ form, initialValues, onSave, onCancel }) {
 					Save
 				</button>
 				{onCancel && (
-					<button type="button" onClick={onCancel}>
+					<button className="cancel-btn" type="button" onClick={onCancel}>
 						Cancel
 					</button>
 				)}
-				<button type="button" onClick={handleClear}>
+				<button className="clear-btn" type="button" onClick={handleClear}>
 					Clear
 				</button>
 			</div>

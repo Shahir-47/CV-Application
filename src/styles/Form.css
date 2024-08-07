@@ -57,8 +57,36 @@
 	align-self: flex-start;
 }
 
-#save-btn:disabled {
+.save-btn {
+	background-color: #28a745;
+	color: white;
+}
+
+.save-btn:hover:not(:disabled) {
+	background-color: #218838;
+}
+
+.cancel-btn {
+	background-color: #6c757d; /* Gray */
+	color: #ffffff; /* White */
+}
+
+.cancel-btn:hover {
+	background-color: #5a6268; /* Darker Gray */
+}
+
+.clear-btn {
+	background-color: #ffc107; /* Orange */
+	color: #000000; /* Black */
+}
+
+.clear-btn:hover {
+	background-color: #e0a800; /* Darker Orange */
+}
+
+.save-btn:disabled {
 	cursor: not-allowed;
+	opacity: 0.5;
 }
 
 .accordion-content form div.form-actions {

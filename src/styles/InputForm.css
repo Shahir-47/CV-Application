@@ -16,6 +16,7 @@
 	align-items: center;
 	gap: 1rem;
 	border-bottom: 1px solid #ccc;
+	cursor: pointer;
 }
 
 .item-header h2 {

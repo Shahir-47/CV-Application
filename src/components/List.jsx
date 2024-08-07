@@ -153,7 +153,12 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 						</div>
 					</div>
 					{activeIndex === index && (
-						<div className="item-content">
+						<div
+							className="item-content"
+							onClick={(e) => {
+								e.stopPropagation();
+							}}
+						>
 							<Form
 								form={items.form}
 								initialValues={item.content}
