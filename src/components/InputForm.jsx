@@ -347,6 +347,7 @@ function InputForm() {
 											borderRadius: "7px",
 											marginRight: "1rem",
 											padding: "0.25rem 0.5rem",
+											marginLeft: "1.5rem",
 										}}
 									>
 										Save
