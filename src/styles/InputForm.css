@@ -68,3 +68,8 @@
 .section-controls button:focus-visible {
 	outline: 1px auto #0000001f;
 }
+
+.input-form {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}

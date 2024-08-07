@@ -417,7 +417,7 @@ function InputForm() {
 				</button>
 				{isAddingSection && (
 					<div className="new-section-form">
-						<h3>Add New Section</h3>
+						<h3>New Section</h3>
 						<input
 							type="text"
 							placeholder="Section Name"

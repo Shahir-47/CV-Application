@@ -171,6 +171,10 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 			))}
 			{isAdding && (
 				<div className="item new-item">
+					<h3 style={{ textAlign: "center", margin: 0, padding: "0.5rem 0" }}>
+						New Item
+					</h3>
+
 					<Form
 						form={items.form}
 						initialValues={{}}
