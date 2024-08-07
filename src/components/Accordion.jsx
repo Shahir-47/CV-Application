@@ -26,12 +26,18 @@ function Accordion({
 				}}
 			>
 				<div
-					style={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+					style={{
+						flexGrow: 1,
+						display: "flex",
+						alignItems: "center",
+						margin: "0.25rem 0",
+					}}
 					onClick={!editing ? onClick : undefined} // Disable onClick if editing
 				>
 					{editing ? (
 						<input
 							type="text"
+							className="edit-title"
 							value={editTitle}
 							onChange={(e) => onTitleChange(e.target.value)}
 						/>

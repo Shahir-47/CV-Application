@@ -341,15 +341,24 @@ function InputForm() {
 									<button
 										type="button"
 										onClick={() => handleSaveRename(index)}
-										className="save-button"
+										className="save-btn"
 										disabled={!editTitle.trim()}
+										style={{
+											borderRadius: "7px",
+											marginRight: "1rem",
+											padding: "0.25rem 0.5rem",
+										}}
 									>
 										Save
 									</button>
 									<button
 										type="button"
 										onClick={handleCancelRename}
-										className="cancel-button"
+										className="cancel-btn"
+										style={{
+											borderRadius: "7px",
+											padding: "0.5rem",
+										}}
 									>
 										Cancel
 									</button>
