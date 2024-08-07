@@ -1,3 +1,5 @@
+// Accordion.js
+
 import PropTypes from "prop-types";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
@@ -17,7 +19,11 @@ function Accordion({
 		<div className="accordion">
 			<div
 				className="accordion-header"
-				style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+				style={{
+					display: "flex",
+					alignItems: "center",
+					cursor: editing ? "default" : "pointer", // Only make it clickable if not editing
+				}}
 			>
 				<div
 					style={{ flexGrow: 1, display: "flex", alignItems: "center" }}
@@ -38,7 +44,8 @@ function Accordion({
 						<img src={downArrow} alt="down arrow" />
 					)}
 				</div>
-				<div>{controls}</div>
+				<div onClick={(e) => e.stopPropagation()}>{controls}</div>{" "}
+				{/* Prevent event bubbling */}
 			</div>
 			{isActive && <div className="accordion-content">{children}</div>}
 		</div>
@@ -50,7 +57,7 @@ Accordion.propTypes = {
 	children: PropTypes.node,
 	isActive: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,
-	controls: PropTypes.node, // Add this line to accept controls
+	controls: PropTypes.node,
 	editing: PropTypes.bool.isRequired,
 	onTitleChange: PropTypes.func.isRequired,
 	editTitle: PropTypes.string.isRequired,

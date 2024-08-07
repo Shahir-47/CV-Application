@@ -5,7 +5,7 @@
 	margin: 10px auto;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	color: #213547;
-	padding: 10px;
+	padding: 0.5px 10px;
 	margin: 0;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
@@ -16,7 +16,7 @@
 }
 
 .accordion-content {
-	padding: 10px;
+	padding: 0 5px;
 	border-top: 1px solid #ccc;
 }
 
@@ -38,4 +38,9 @@
 .accordion-header img {
 	width: 3rem;
 	height: 2rem;
+}
+
+.section-items {
+	display: flex;
+	flex-direction: column;
 }

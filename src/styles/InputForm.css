@@ -15,6 +15,7 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
+	border-bottom: 1px solid #ccc;
 }
 
 .item-header h2 {
@@ -25,6 +26,7 @@
 .item-header .item-title {
 	display: flex;
 	align-items: center;
+	gap: 0.5rem;
 }
 
 .item-controls {
@@ -45,7 +47,7 @@
 
 .item-controls button,
 .section-controls button {
-	padding: 0.5rem 0;
+	padding: 0.25rem 0;
 	border-radius: 50%;
 	cursor: pointer;
 	transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -63,5 +65,5 @@
 .item-controls button:focus,
 .section-controls button:focus,
 .section-controls button:focus-visible {
-	outline: 1px auto #000;
+	outline: 1px auto #0000001f;
 }

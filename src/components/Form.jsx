@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import InputField from "./InputField";
 import deleteLogo from "../assets/delete.svg";
+import add from "../assets/add.svg";
 import "../styles/Form.css";
 
 function Form({ form, initialValues, onSave, onCancel }) {
@@ -126,18 +127,23 @@ function Form({ form, initialValues, onSave, onCancel }) {
 								</button>
 								{index === descriptions.length - 1 && (
 									<button
+										className="add-desc"
 										type="button"
 										id="add-bullet"
 										onClick={handleAddDescription}
 									>
-										Add Bullet Point
+										<img src={add} alt="Add" />
 									</button>
 								)}
 							</div>
 						))}
 						{descriptions.length === 0 && (
-							<button type="button" onClick={handleAddDescription}>
-								Add Bullet Point
+							<button
+								className="add-desc"
+								type="button"
+								onClick={handleAddDescription}
+							>
+								<img src={add} alt="Add" />
 							</button>
 						)}
 					</div>

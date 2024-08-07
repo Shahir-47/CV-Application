@@ -8,6 +8,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0;
+	margin: 0;
 }
 
 .accordion-content form div.description {
@@ -16,13 +17,28 @@
 	align-items: start;
 	margin-bottom: 10px;
 	gap: 1rem;
-	padding-top: 0.5rem;
 }
 
 .accordion-content form div.description-field {
 	display: grid;
 	grid-template-columns: 1fr min-content;
-	gap: 1rem;
+	gap: 0.5rem;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+.accordion-content form div.description-field:last-child {
+	margin: 0;
+}
+
+.item.active {
+	border-top: 0;
+	border-bottom: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.item.active form {
+	margin-top: 0.5rem;
 }
 
 .form-actions {
@@ -89,4 +105,27 @@
 .desc-delete {
 	width: 1.5rem;
 	height: 1.5rem;
+}
+
+.add-desc img,
+.add-item-btn img {
+	width: 2rem;
+	height: 2rem;
+}
+
+.add-desc .add-item-btn {
+	align-self: center;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: box-shadow 0.3s ease, transform 0.3s ease;
+	padding: 0;
+}
+
+.add-desc:hover,
+.add-item-btn:hover {
+	transform: scale(1.2);
+	transform: translateY(-4px);
+	opacity: 1;
+	outline: none;
+	filter: brightness(1.2);
 }

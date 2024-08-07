@@ -1,4 +1,5 @@
 // List.js
+
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import Modal from "./Modal"; // Import the Modal component
@@ -8,6 +9,7 @@ import descendLogo from "../assets/descend.svg";
 import deleteLogo from "../assets/delete.svg";
 import upArrow from "../assets/up-arrow.svg";
 import downArrow from "../assets/down-arrow.svg";
+import add from "../assets/add.svg";
 
 function List({ items, onSave, data, onAdd, onDelete }) {
 	const [activeIndex, setActiveIndex] = useState(-1);
@@ -105,22 +107,26 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 	}, [isToastVisible]);
 
 	return (
-		<div>
+		<div className="section-items">
 			{data.map((item, index) => (
 				<div
 					key={index}
 					className={`item ${activeIndex === index ? "active" : ""}`}
+					onClick={() => handleItemClick(index)}
 				>
 					<div className="item-header">
 						<div className="item-title">
-							<h2 onClick={() => handleItemClick(index)}>{item.title}</h2>
+							<h2>{item.title}</h2>
 							{activeIndex === index ? (
 								<img src={upArrow} alt="up arrow" />
 							) : (
 								<img src={downArrow} alt="down arrow" />
 							)}
 						</div>
-						<div className="item-controls">
+						<div
+							className="item-controls"
+							onClick={(e) => e.stopPropagation()} // Prevent click propagation
+						>
 							<button
 								type="button"
 								className="move-up-button"
@@ -169,8 +175,8 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 				</div>
 			)}
 			{!isAdding && ( // Only show "Add New" button when not adding
-				<button type="button" onClick={handleAddNew}>
-					Add New
+				<button className="add-item-btn" type="button" onClick={handleAddNew}>
+					<img src={add} alt="Add" />
 				</button>
 			)}
 			<Modal

@@ -1,4 +1,5 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
+// InputForm.js
+
 import { useState, useEffect } from "react";
 import Accordion from "./Accordion";
 import List from "./List";
