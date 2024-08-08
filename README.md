@@ -1,6 +1,7 @@
 # Resume Builder Application
 
-![Resume Builder Screenshot]()
+![image](https://github.com/user-attachments/assets/bf735d2b-8779-429b-a47d-5575ad218610)
+
 
 ## Table of Contents
 
