@@ -344,9 +344,9 @@ function InputForm() {
 										disabled={!editTitle.trim()}
 										style={{
 											borderRadius: "7px",
-											marginRight: "1rem",
 											padding: "0.25rem 0.5rem",
 											marginLeft: "1.5rem",
+											fontSize: "0.75rem",
 										}}
 									>
 										Save
@@ -358,6 +358,7 @@ function InputForm() {
 										style={{
 											borderRadius: "7px",
 											padding: "0.5rem",
+											fontSize: "0.75rem",
 										}}
 									>
 										Cancel
