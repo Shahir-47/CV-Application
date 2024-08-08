@@ -1,6 +1,6 @@
 # Resume Builder Application
 
-![Resume Builder Screenshot](https://illustrious-fenglisu-b69eab.netlify.app/image.png)
+![Resume Builder Screenshot]()
 
 ## Table of Contents
 
@@ -53,7 +53,7 @@ The Resume Builder Application is a web application designed to help users creat
 1. Open the application in your browser:
 
    ```bash
-   http://localhost:3000
+   http://localhost:5173/
    ```
 
 2. Use the interface to add, edit, and delete resume sections.
@@ -62,6 +62,7 @@ The Resume Builder Application is a web application designed to help users creat
 
 ## Project Structure
 
+```
 CV-APPLICATION/
 ├── public/
 │ ├── resume.svg
@@ -107,6 +108,7 @@ CV-APPLICATION/
 ├── package-lock.json
 ├── package.json
 ├── README.md
+```
 
 ## Components
 

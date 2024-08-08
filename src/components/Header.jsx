@@ -1,4 +1,4 @@
-import resumeLogo from "../../public/resume.svg";
+import resumeLogo from "../assets/resume.svg";
 import githubLogo from "../assets/github.svg";
 import "../styles/Header.css";
 
