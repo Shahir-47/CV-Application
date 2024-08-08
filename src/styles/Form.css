@@ -150,6 +150,10 @@
 	padding: 0;
 }
 
+.add-item-btn {
+	padding-bottom: 0;
+}
+
 .add-desc:hover:not(:disabled),
 .add-item-btn:hover:not(:disabled) {
 	transform: scale(1.2);
