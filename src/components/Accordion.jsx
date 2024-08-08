@@ -29,6 +29,7 @@ function Accordion({
 						display: "flex",
 						alignItems: "center",
 						margin: "0.25rem 0",
+						gap: "0.5rem",
 					}}
 					onClick={!editing ? onClick : undefined} // Disable onClick if editing
 				>

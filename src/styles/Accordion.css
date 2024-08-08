@@ -31,12 +31,13 @@
 }
 
 .accordion-header h2 {
-	margin: 0.5rem 0 0.5rem 0;
+	margin: 0;
+	font-size: 1.3rem;
 }
 
 .accordion-header img {
-	width: 3rem;
-	height: 2rem;
+	width: 1.5rem;
+	height: 1.5rem;
 }
 
 .section-items {

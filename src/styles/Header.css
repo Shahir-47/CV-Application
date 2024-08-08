@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem 1rem;
+	padding: 0.35rem 1rem;
 	background-color: #213547;
 	color: #f9f9f9;
 }
@@ -19,7 +19,7 @@
 
 .title h1 {
 	margin: 0;
-	font-size: 2.5rem;
+	font-size: 2rem;
 	text-shadow: none;
 	transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
@@ -29,8 +29,8 @@
 }
 
 .title img {
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 2rem;
+	height: 2rem;
 	transition: filter 0.3s ease, transform 0.3s ease;
 }
 
