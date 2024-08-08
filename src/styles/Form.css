@@ -49,6 +49,10 @@
 	align-items: center;
 }
 
+.form-actions button {
+	font-size: 0.75rem;
+}
+
 .accordion-content form div.description-field button {
 	padding: 0;
 }

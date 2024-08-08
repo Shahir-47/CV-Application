@@ -88,6 +88,10 @@
 	flex-direction: column;
 }
 
+.new-section-actions button {
+	font-size: 0.8rem;
+}
+
 .add-section-btn {
 	display: flex;
 	justify-content: center;
