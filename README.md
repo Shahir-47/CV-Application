@@ -72,6 +72,10 @@ CV-APPLICATION/
 │ │ ├── ascend.svg
 │ │ ├── delete.svg
 │ │ ├── descend.svg
+| | ├── down-arrow.svg
+│ │ ├── rename.svg
+│ │ ├── resume.svg
+│ │ ├── up-arrow.svg
 │ │ ├── email.png
 │ │ ├── github.png
 │ │ ├── linkedin.png
@@ -98,16 +102,17 @@ CV-APPLICATION/
 │ │ ├── SelectionTab.css
 │ │ ├── Toaster.css
 │ ├── App.jsx
+│ ├── App.css
 │ ├── index.css
-│ ├── index.jsx
+│ ├── main.jsx
 │ ├── data.js
-│ ├── vite.config.js
 ├── .eslintrc.cjs
 ├── .gitignore
 ├── LICENSE
 ├── package-lock.json
 ├── package.json
 ├── README.md
+├── vite.config.js
 ```
 
 ## Components
