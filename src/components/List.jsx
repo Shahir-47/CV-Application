@@ -1,5 +1,3 @@
-// List.js
-
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import Modal from "./Modal"; // Import the Modal component
@@ -186,6 +184,7 @@ function List({ items, onSave, data, onAdd, onDelete }) {
 					<img src={add} alt="Add" />
 				</button>
 			)}
+			{showModal && <div className="modal-overlay" />}
 			<Modal
 				isOpen={showModal}
 				onClose={() => setShowModal(false)}
